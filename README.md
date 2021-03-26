@@ -2,7 +2,7 @@
 
 API de uma Biblioteca com cadastro de usuário, endereço, libros e locação de livros. 
 
-A documentação da API pode ser acessada em 
+A documentação da API pode ser acessada em [API Biblioteca]()
 
 ## Duke Gama Friends
 ### Team

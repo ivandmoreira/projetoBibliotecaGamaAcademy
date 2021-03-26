@@ -3,15 +3,20 @@ package br.com.projetoFinal.bibliotecaGama.controller;
 import java.util.List;
 import java.util.Scanner;
 
+import com.google.gson.Gson;
+
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
-import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
+import br.com.projetoFinal.bibliotecaGama.model.Endereco;
+import br.com.projetoFinal.bibliotecaGama.repository.JpaRepository;
+import br.com.projetoFinal.bibliotecaGama.service.EnderecoService;
+import br.com.projetoFinal.bibliotecaGama.util.Validadores;
 
 public class CadastroController {
 	private Scanner scanner;
 	
 	public void run() {
 
-		JpaCadastroRepository jpaCadastroRepository;
+		JpaRepository jpaRepository;
 		
 		System.out.println("\n## Abriu tela usuarios ##\n");
 
@@ -35,8 +40,16 @@ public class CadastroController {
 			case 0: break;
 			case 1:
 				System.out.println("tela de cadastrar pessoas\n");
-				System.out.print("Digite seu cpf: ");
-				String cpf 		= scanner.nextLine();
+
+				String cpf = null;
+				do {
+					if(cpf != null)
+						System.out.println("Cpf inválido, por favor digite novamente..");
+					System.out.print("Digite seu cpf: ");
+					cpf = scanner.nextLine();
+				} while (!Validadores.isCpf(cpf));
+				
+				
 				System.out.print("Digite seu nome: ");
 				String nome 	= scanner.nextLine();
 				System.out.print("Digite seu email: ");
@@ -47,36 +60,52 @@ public class CadastroController {
 				String login 	= scanner.nextLine();
 				System.out.print("Digite a senha: ");
 				String senha 	= scanner.nextLine();
+				System.out.println("Para finalizar.. vamos cadastrar seu endereco!");
+				System.out.print("Digite seu cep: ");
+				String cep = scanner.nextLine();
+				
+				Gson gson = new Gson();
 
-				Cadastro cadastro = new Cadastro(cpf, nome, email, telefone, login, senha);
+				Endereco endereco = null;
+				
+				try {
+					endereco = gson.fromJson(EnderecoService.viaCep(cep), Endereco.class);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println(endereco);
 
-				jpaCadastroRepository = new JpaCadastroRepository();
-				jpaCadastroRepository.insert(cadastro);
-				jpaCadastroRepository.fechar();
+				Cadastro cadastro = new Cadastro(cpf, nome, email, telefone, login, senha,endereco);
+
+				jpaRepository = new JpaRepository();
+				jpaRepository.insert(endereco);
+				jpaRepository.insert(cadastro);
+				jpaRepository.fechar();
 				
 				System.out.println("Cadastro efetuado com sucesso!\n");
 				break;
 			case 2:
 				System.out.println("imprimir todas as pessoas cadastradas\n");
 
-				jpaCadastroRepository = new JpaCadastroRepository();
-				List<Cadastro> results = jpaCadastroRepository.selectAll();
+				jpaRepository = new JpaRepository();
+				List<Cadastro> results = jpaRepository.selectAll();
 				
 				for (Cadastro result : results) {
 				      System.out.println(result.getCpf());
 				}
 				
-				jpaCadastroRepository.fechar();
+				jpaRepository.fechar();
 				break;
 			case 3:
 				System.out.println("Informe o id: ");
 				int idSearch = Integer.parseInt(scanner.nextLine());
 				
-				jpaCadastroRepository = new JpaCadastroRepository();
-				Cadastro auxCadastro = jpaCadastroRepository.select(idSearch);
+				jpaRepository = new JpaRepository();
+				Cadastro auxCadastro = jpaRepository.select(idSearch);
 				System.out.println(auxCadastro.getNome());
 				
-				jpaCadastroRepository.fechar();
+				jpaRepository.fechar();
 				
 				break;
 			default:

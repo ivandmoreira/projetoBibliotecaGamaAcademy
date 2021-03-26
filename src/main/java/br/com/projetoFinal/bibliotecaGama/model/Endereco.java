@@ -1,21 +1,41 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tbl_endereco")
 public class Endereco {
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", nullable = false)
 	private Integer id;
+
+	@Column(name="cep", length=9, nullable = false)
 	private String cep;
+
+	@Column(name="logradouro", length=40, nullable = true)
 	private String logradouro;
-	private String Bairro;
+	
+	@Column(name="bairro", length=40, nullable = true)
+	private String bairro;
+
+	@Column(name="localidade", length=40, nullable = true)
 	private String localidade;
+
+	@Column(name="uf", length=2, nullable = true)
 	private String uf;
+	
+	@Column(name="ibge", length=40, nullable = true)
 	private Integer ibge;
+	
+	public Endereco() {}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -35,10 +55,10 @@ public class Endereco {
 		this.logradouro = logradouro;
 	}
 	public String getBairro() {
-		return Bairro;
+		return bairro;
 	}
 	public void setBairro(String bairro) {
-		Bairro = bairro;
+		this.bairro = bairro;
 	}
 	public String getLocalidade() {
 		return localidade;
@@ -58,7 +78,11 @@ public class Endereco {
 	public void setIbge(Integer ibge) {
 		this.ibge = ibge;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Endereco {id=" + id + ", cep=" + cep + ", logradouro=" + logradouro + ", bairro=" + bairro
+				+ ", localidade=" + localidade + ", uf=" + uf + ", ibge=" + ibge + "}\n";
+	}	
 	
 }

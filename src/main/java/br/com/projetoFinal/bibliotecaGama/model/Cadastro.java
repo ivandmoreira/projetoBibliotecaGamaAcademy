@@ -7,12 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tbl_cadastro")
 public class Cadastro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id", nullable = false)
 	private Integer id;
 	
@@ -35,20 +37,19 @@ public class Cadastro {
 	private String senha;
 	
 	@OneToOne
-	@JoinColumn(name = "int_endereco_id", referencedColumnName="id")
+	@JoinColumn(name = "endereco_id", referencedColumnName="id")
 	private Endereco endereco;
 	
 	public Cadastro(){}
 	
-	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha) {
-//		super();
+	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha, Endereco endereco) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
 		this.login = login;
 		this.senha = senha;
-//		this.endereco = endereco;
+		this.endereco = endereco;
 	}
 
 	public Integer getId() {
