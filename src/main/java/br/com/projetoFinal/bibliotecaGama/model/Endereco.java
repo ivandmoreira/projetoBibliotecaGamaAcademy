@@ -5,9 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- * @author Ivan D. Moreira
- */
 @Entity
 public class Endereco {
 	@Id

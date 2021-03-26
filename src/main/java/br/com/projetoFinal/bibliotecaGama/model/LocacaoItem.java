@@ -1,9 +1,7 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.util.Date;
-/**
- * @author Ivan D. Moreira
- */
+
 public class LocacaoItem {
 
 	private Integer id;
