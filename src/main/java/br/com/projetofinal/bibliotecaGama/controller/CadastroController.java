@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,20 +33,21 @@ public class CadastroController {
 	@Autowired 
 	private EnderecoRepository enderecoRepository;
 	
-	@RequestMapping(method=RequestMethod.GET)
+	@CrossOrigin
+	@GetMapping
 	public ArrayList<Cadastro> listar() {
 		
 		ArrayList<Cadastro> listaCad = cadastroService.buscarTodos();
 		return listaCad;
 	}
 	
+	@CrossOrigin
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> buscarId(@PathVariable Integer id) {
 		
 		Optional<Cadastro> cad = cadastroService.buscarPorId(id);
 		return ResponseEntity.ok().body(cad);
 	}
-	
 	
 	
 	@RequestMapping(method=RequestMethod.POST)

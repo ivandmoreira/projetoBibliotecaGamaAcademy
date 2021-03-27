@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
 import br.com.projetofinal.bibliotecaGama.repository.CadastroRepository;
+import br.com.projetofinal.bibliotecaGama.repository.EnderecoRepository;
 
 @Service
 public class CadastroService {
@@ -15,7 +16,11 @@ public class CadastroService {
 	@Autowired
 	private CadastroRepository cadastroRespository;
 	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	public Cadastro salva(Cadastro cad) {
+		enderecoRepository.save(cad.getEndereco());
 		return cadastroRespository.save(cad);
 	}
 
@@ -26,7 +31,6 @@ public class CadastroService {
 	}
 
 	public ArrayList<Cadastro> buscarTodos() {
-
 		return (ArrayList<Cadastro>) cadastroRespository.findAll();
 	}
 }
