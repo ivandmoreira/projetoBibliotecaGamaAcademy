@@ -56,27 +56,46 @@ public class CadastroController {
 				String email 	= scanner.nextLine();
 				System.out.print("Digite o telefone: ");
 				String telefone = scanner.nextLine();
-				System.out.print("Digite o login: ");
-				String login 	= scanner.nextLine();
-				System.out.print("Digite a senha: ");
-				String senha 	= scanner.nextLine();
-				System.out.println("Para finalizar.. vamos cadastrar seu endereco!");
+				System.out.println("\nAgora... vamos cadastrar seu endereco!");
 				System.out.print("Digite seu cep: ");
 				String cep = scanner.nextLine();
 				
-				Gson gson = new Gson();
-
-				Endereco endereco = null;
+				System.out.println("\nPara finalizar... seu login poderá ser feito de 3 formas:");
+				do {
+					System.out.println("1 - com Cpf");
+					System.out.println("2 - com Telefone");
+					System.out.println("3 - com Apelido de até 20 caracteres");
+					System.out.println("_______________________");
+					System.out.print("Digite sua melhor forma de logar: ");
+					option = Integer.parseInt(scanner.nextLine());
+				} while (!(option == 1 | option == 2 | option == 3));
 				
+				String login;
+				if(option == 1) {
+					System.out.println("Forma selecionada: cpf");
+					login = cpf;
+				} else if(option == 2) {
+					System.out.println("Forma selecionada: telefone");
+					login = telefone;
+				}
+				else {
+					System.out.println("Forma selecionada: apelido");
+					System.out.print("Digite seu apelido: ");
+					login 	= scanner.nextLine();
+				}
+				
+				System.out.print("Digite sua senha: ");
+				String senha 	= scanner.nextLine();
+				
+				Gson gson = new Gson();
+				Endereco endereco = null;				
 				try {
 					endereco = gson.fromJson(EnderecoService.viaCep(cep), Endereco.class);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				
-				System.out.println(endereco);
-
-				Cadastro cadastro = new Cadastro(cpf, nome, email, telefone, login, senha,endereco);
+				Cadastro cadastro = new Cadastro(cpf, nome, email, telefone, login, senha, endereco);
 
 				jpaCadastroRepository = new JpaCadastroRepository();
 				jpaCadastroRepository.insert(cadastro);
