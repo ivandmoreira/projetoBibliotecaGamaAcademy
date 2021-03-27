@@ -19,16 +19,12 @@ public class Locacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JoinColumn(name = "dt_agenda")	
 	private Date dataAgendamento;
 	
-	@JoinColumn(name = "dt_Retir")
 	private Date dataRetirada;
 	
-	@JoinColumn(name = "dt_finaliz")
 	private Date dataFinalizacao;
 	
-	@JoinColumn(name = "vl_total")
 	private Double valorTotal;
 
 	@OneToOne
@@ -37,9 +33,6 @@ public class Locacao implements Serializable {
 
 	private LocacaoStatusEnum status;
 	@OneToOne
-	private LocacaoItem locacaoItem;
-	
-	@JoinColumn(name = "locItem_Id")
 	private LocacaoItem locacaoItem;
 
 	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
