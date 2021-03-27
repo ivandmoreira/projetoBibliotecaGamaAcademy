@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_endereco")
 public class Endereco {
 	
 	@Id
@@ -38,9 +37,6 @@ public class Endereco {
 	
 	public Integer getId() {
 		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getCep() {
 		return cep;

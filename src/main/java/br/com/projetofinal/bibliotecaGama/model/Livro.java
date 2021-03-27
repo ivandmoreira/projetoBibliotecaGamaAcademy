@@ -1,20 +1,30 @@
 package br.com.projetofinal.bibliotecaGama.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * @author Ivan D. Moreira
  */
+@Entity
 public class Livro {
-
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(length = 13)
 	private String isbn;
+	@Column(length = 50)
 	private String titulo;
+	@Column(precision = 4 , scale = 2)
 	private Double valorDiaria;
 	private Integer exemplares;
 	private Integer reservados;
+
 	public Integer getId() {
 		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getIsbn() {
 		return isbn;

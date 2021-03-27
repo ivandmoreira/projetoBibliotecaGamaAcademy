@@ -10,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_cadastro")
 public class Cadastro {
 
 	@Id
@@ -18,7 +17,7 @@ public class Cadastro {
 	@Column(name="id", nullable = false)
 	private Integer id;
 	
-	@Column(name="cpf", length=14, nullable = false)
+	@Column(name="cpf", length=14, nullable = false, unique = true)
 	private String cpf;
 	
 	@Column(name="nome", length=50)
@@ -30,14 +29,13 @@ public class Cadastro {
 	@Column(name="telefone", length=50)
 	private String telefone;
 
-	@Column(name="login", length=50)
+	@Column(name="login", length=20 , unique = true)
 	private String login;
 
 	@Column(name="senha", length=50)
 	private String senha;
 	
 	@OneToOne
-	@JoinColumn(name = "endereco_id", referencedColumnName="id")
 	private Endereco endereco;
 	
 	public Cadastro(){}
@@ -54,10 +52,6 @@ public class Cadastro {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getCpf() {
