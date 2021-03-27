@@ -12,15 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_cadastro")
 public class Cadastro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@Column(length = 14, nullable = false)
+	private Integer id;	
+	
+  @Column(name="cpf", length=14, nullable = false, unique = true)
 	private String cpf;
 
 	@Column(length = 50, nullable = false)
@@ -32,14 +31,13 @@ public class Cadastro implements Serializable {
 	@Column(length = 50)
 	private String telefone;
 
-	@Column(length = 50)
+	@Column(name="login", length=20 , unique = true)
 	private String login;
 
 	@Column(length = 50)
 	private String senha;
 
 	@OneToOne
-	@JoinColumn(name = "end_id", referencedColumnName = "id")
 	private Endereco endereco;
 
 	public Cadastro() {
@@ -58,10 +56,6 @@ public class Cadastro implements Serializable {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getCpf() {

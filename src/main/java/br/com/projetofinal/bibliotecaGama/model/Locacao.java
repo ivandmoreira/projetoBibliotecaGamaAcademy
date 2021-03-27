@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-
+import javax.persistence.OneToOne;
 @Entity
-@Table(name = "tbl_locacao")
 public class Locacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,10 +31,13 @@ public class Locacao implements Serializable {
 	@JoinColumn(name = "vl_total")
 	private Double valorTotal;
 
-	@JoinColumn(name= "cad_id")
+	@OneToOne
 	private Cadastro cadastro;
+	@Enumerated(EnumType.ORDINAL)
 
 	private LocacaoStatusEnum status;
+	@OneToOne
+	private LocacaoItem locacaoItem;
 	
 	@JoinColumn(name = "locItem_Id")
 	private LocacaoItem locacaoItem;
@@ -112,7 +115,5 @@ public class Locacao implements Serializable {
 	public void setLocacaoItem(LocacaoItem locacaoItem) {
 		this.locacaoItem = locacaoItem;
 	}
-
-	
 	
 }

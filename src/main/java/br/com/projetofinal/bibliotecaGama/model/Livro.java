@@ -1,29 +1,33 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
+
 import java.io.Serializable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import javax.persistence.Table;
 
+/**
+ * @author Ivan D. Moreira
+ */
 @Entity
-@Table(name = "tbl_livro")
 public class Livro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+	@Column(length = 13)
 	private String isbn;
-	
-	@Column(length = 50, nullable = false)
+	@Column(length = 50)
 	private String titulo;
-	
-	@Column(length = 5, nullable = false)
+	@Column(precision = 4 , scale = 2)
+
 	private Double valorDiaria;
 	
 	@Column(length = 5, nullable = false)
@@ -35,11 +39,7 @@ public class Livro implements Serializable {
 	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+  
 	public String getIsbn() {
 		return isbn;
 	}

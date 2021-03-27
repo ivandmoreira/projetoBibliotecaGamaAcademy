@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbl_endereco")
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -57,10 +56,6 @@ public class Endereco implements Serializable {
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getCep() {
