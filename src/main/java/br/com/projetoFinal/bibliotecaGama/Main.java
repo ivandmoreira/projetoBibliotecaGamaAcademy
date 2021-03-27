@@ -3,6 +3,7 @@ package br.com.projetoFinal.bibliotecaGama;
 import java.util.Scanner;
 
 import br.com.projetoFinal.bibliotecaGama.controller.CadastroController;
+import br.com.projetoFinal.bibliotecaGama.controller.LivroController;
 
 public class Main {
 
@@ -18,7 +19,7 @@ public static void main(String[] args) {
 
 		System.out.println("## Escolha uma das opcoes abaixo ##");
 		System.out.println("1 - Tela usuarios");
-//		System.out.println("2 - Tela locacao");
+		System.out.println("2 - Tela livro");
 //		System.out.println("3 - ");
 		System.out.println("0 - Sair do programa");
 		System.out.println("_______________________");
@@ -33,6 +34,8 @@ public static void main(String[] args) {
 			controllerCadastro.run();
 			break;
 		case 2:
+			LivroController livroController = new LivroController();
+			livroController.run();
 			break;
 		case 3:
 			break;
