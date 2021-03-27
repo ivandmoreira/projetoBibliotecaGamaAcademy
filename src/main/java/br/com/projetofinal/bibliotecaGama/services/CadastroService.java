@@ -1,5 +1,8 @@
 package br.com.projetofinal.bibliotecaGama.services;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +17,16 @@ public class CadastroService {
 	
 	public Cadastro salva(Cadastro cad) {
 		return cadastroRespository.save(cad);
+	}
+
+	public Optional<Cadastro> buscarPorId(Integer id) {
+		Optional<Cadastro> cad = cadastroRespository.findById(id);
+		
+		return cad;
+	}
+
+	public ArrayList<Cadastro> buscarTodos() {
+
+		return (ArrayList<Cadastro>) cadastroRespository.findAll();
 	}
 }

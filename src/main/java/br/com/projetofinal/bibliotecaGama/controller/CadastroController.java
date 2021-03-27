@@ -4,9 +4,11 @@ package br.com.projetofinal.bibliotecaGama.controller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,32 +28,33 @@ public class CadastroController {
 	@Autowired
 	private CadastroService cadastroService;
 	
-	@Autowired EnderecoRepository enderecoRepository;
+	@Autowired 
+	private EnderecoRepository enderecoRepository;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public List<Cadastro> listar() {
+	public ArrayList<Cadastro> listar() {
 		
-		Endereco end = new Endereco("123456789", "rua", "123", "Bangu", "Rio de Janeiro", "RJ", 321654);		
-		
-		
-		Cadastro cad1 = new Cadastro("12345678", "Lazaro", "lazaro@lazaro.com", "21986458745", "Lazaro.marinho", "123456", end);
-		
-		enderecoRepository.save(end);
-		cadastroService.salva(cad1);
-		
-		List<Cadastro> lista = new ArrayList<Cadastro>();
-		lista.add(cad1);
-		return lista;
+		ArrayList<Cadastro> listaCad = cadastroService.buscarTodos();
+		return listaCad;
 	}
 	
-//	@RequestMapping(method=RequestMethod.POST)
-//	public ResponseEntity<Void> salvar(@RequestBody Cadastro cad){
-//		
-//		cad = cadastroService.salva(cad);
-//		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-//				.path("/{id}").buildAndExpand(cad.getId()).toUri();
-//		
-//		return ResponseEntity.created(uri).build();
-//		
-//	}
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> buscarId(@PathVariable Integer id) {
+		
+		Optional<Cadastro> cad = cadastroService.buscarPorId(id);
+		return ResponseEntity.ok().body(cad);
+	}
+	
+	
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> salvar(@RequestBody Cadastro cad){
+		
+		cad = cadastroService.salva(cad);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(cad.getId()).toUri();
+		
+		return ResponseEntity.created(uri).build();
+		
+	}
 }
