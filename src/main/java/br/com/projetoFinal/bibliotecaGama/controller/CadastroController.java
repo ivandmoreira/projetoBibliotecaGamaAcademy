@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Endereco;
-import br.com.projetoFinal.bibliotecaGama.repository.JpaRepository;
+import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 import br.com.projetoFinal.bibliotecaGama.service.EnderecoService;
 import br.com.projetoFinal.bibliotecaGama.util.Validadores;
 
@@ -16,7 +16,7 @@ public class CadastroController {
 	
 	public void run() {
 
-		JpaRepository jpaRepository;
+		JpaCadastroRepository jpaCadastroRepository;
 		
 		System.out.println("\n## Abriu tela usuarios ##\n");
 
@@ -78,34 +78,33 @@ public class CadastroController {
 
 				Cadastro cadastro = new Cadastro(cpf, nome, email, telefone, login, senha,endereco);
 
-				jpaRepository = new JpaRepository();
-				jpaRepository.insert(endereco);
-				jpaRepository.insert(cadastro);
-				jpaRepository.fechar();
+				jpaCadastroRepository = new JpaCadastroRepository();
+				jpaCadastroRepository.insert(cadastro);
+				jpaCadastroRepository.fechar();
 				
 				System.out.println("Cadastro efetuado com sucesso!\n");
 				break;
 			case 2:
 				System.out.println("imprimir todas as pessoas cadastradas\n");
 
-				jpaRepository = new JpaRepository();
-				List<Cadastro> results = jpaRepository.selectAll();
+				jpaCadastroRepository = new JpaCadastroRepository();
+				List<Cadastro> results = jpaCadastroRepository.selectAll();
 				
 				for (Cadastro result : results) {
 				      System.out.println(result.getCpf());
 				}
 				
-				jpaRepository.fechar();
+				jpaCadastroRepository.fechar();
 				break;
 			case 3:
 				System.out.println("Informe o id: ");
 				int idSearch = Integer.parseInt(scanner.nextLine());
 				
-				jpaRepository = new JpaRepository();
-				Cadastro auxCadastro = jpaRepository.select(idSearch);
+				jpaCadastroRepository = new JpaCadastroRepository();
+				Cadastro auxCadastro = jpaCadastroRepository.select(idSearch);
 				System.out.println(auxCadastro.getNome());
 				
-				jpaRepository.fechar();
+				jpaCadastroRepository.fechar();
 				
 				break;
 			default:

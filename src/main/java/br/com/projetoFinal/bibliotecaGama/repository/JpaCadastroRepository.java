@@ -13,45 +13,23 @@ import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoItem;
 
-public class JpaRepository implements Repository<Cadastro> {
+public class JpaCadastroRepository implements Repository<Cadastro> {
 	private EntityManager entityManager;
 
-	public JpaRepository() {
+	public JpaCadastroRepository() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("biblioteca_PU");
 		entityManager = factory.createEntityManager();
 	}
 
 	@Override
-	public void insert(Object e) {
-		if(e instanceof Cadastro) {
-			e = (Cadastro) e;
-		}else if (e instanceof Endereco){
-			e = (Endereco) e;
-		}else if (e instanceof Livro){
-			e = (Livro) e;
-		}else if (e instanceof Locacao){
-			e = (Locacao) e;
-		}else if (e instanceof LocacaoItem){
-			e = (LocacaoItem) e;
-		}
+	public void insert(Cadastro e) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(e);
 		entityManager.getTransaction().commit();
 	}
 
 	@Override
-	public void update(Object e) {
-		if(e instanceof Cadastro) {
-			e = (Cadastro) e;
-		}else if (e instanceof Endereco){
-			e = (Endereco) e;
-		}else if (e instanceof Livro){
-			e = (Livro) e;
-		}else if (e instanceof Locacao){
-			e = (Locacao) e;
-		}else if (e instanceof LocacaoItem){
-			e = (LocacaoItem) e;
-		}
+	public void update(Cadastro e) {
 		entityManager.getTransaction().begin();
 		entityManager.merge(e);
 		entityManager.getTransaction().commit();
@@ -71,6 +49,5 @@ public class JpaRepository implements Repository<Cadastro> {
 	public void fechar() {
 		entityManager.clear();
 		entityManager.close();
-	}
-	
+	}	
 }

@@ -1,5 +1,6 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class Cadastro {
 	@Column(name="senha", length=50)
 	private String senha;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", referencedColumnName="id")
 	private Endereco endereco;
 	
