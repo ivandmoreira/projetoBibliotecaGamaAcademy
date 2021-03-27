@@ -1,5 +1,7 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,38 +13,40 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tbl_cadastro")
-public class Cadastro {
+public class Cadastro implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", nullable = false)
 	private Integer id;
-	
-	@Column(name="cpf", length=14, nullable = false)
+
+	@Column(length = 14, nullable = false)
 	private String cpf;
-	
-	@Column(name="nome", length=50)
+
+	@Column(length = 50, nullable = false)
 	private String nome;
-	
-	@Column(name="email", length=50)
+
+	@Column(length = 50)
 	private String email;
 
-	@Column(name="telefone", length=50)
+	@Column(length = 50)
 	private String telefone;
 
-	@Column(name="login", length=50)
+	@Column(length = 50)
 	private String login;
 
-	@Column(name="senha", length=50)
+	@Column(length = 50)
 	private String senha;
-	
+
 	@OneToOne
-	@JoinColumn(name = "endereco_id", referencedColumnName="id")
+	@JoinColumn(name = "end_id", referencedColumnName = "id")
 	private Endereco endereco;
-	
-	public Cadastro(){}
-	
-	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha, Endereco endereco) {
+
+	public Cadastro() {
+	}
+
+	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha,
+			Endereco endereco) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;

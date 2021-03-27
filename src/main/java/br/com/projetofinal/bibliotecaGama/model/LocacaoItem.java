@@ -1,15 +1,40 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class LocacaoItem {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "tbl_locItem")
+public class LocacaoItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@JoinColumn(name="dt_prev_ent")
 	private Date dataPrevisaoEntrega;
+	
+	@JoinColumn(name="dt_ent")
 	private Date dataEntrega;
+	
+	
 	private Integer diarias;
+	
+	@JoinColumn(name="vr_diat")
 	private Double valoDiaria;
+	
+	@JoinColumn(name="vr_loc")
 	private Double valorLocacao;
+	
+	@JoinColumn(name="livro_id")
 	private Livro Livro;
 	
 	public Integer getId() {
