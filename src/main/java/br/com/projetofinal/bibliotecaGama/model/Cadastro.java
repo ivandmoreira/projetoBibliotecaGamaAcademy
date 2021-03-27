@@ -1,28 +1,56 @@
-package br.com.projetoFinal.bibliotecaGama.model;
+package br.com.projetofinal.bibliotecaGama.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-/**
- * @author Ivan D. Moreira
- */
 @Entity
+@Table(name = "tbl_cadastro")
 public class Cadastro {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", nullable = false)
 	private Integer id;
+	
+	@Column(name="cpf", length=14, nullable = false)
 	private String cpf;
+	
+	@Column(name="nome", length=50)
 	private String nome;
+	
+	@Column(name="email", length=50)
 	private String email;
+
+	@Column(name="telefone", length=50)
 	private String telefone;
+
+	@Column(name="login", length=50)
 	private String login;
+
+	@Column(name="senha", length=50)
 	private String senha;
+	
 	@OneToOne
+	@JoinColumn(name = "endereco_id", referencedColumnName="id")
 	private Endereco endereco;
+	
+	public Cadastro(){}
+	
+	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha, Endereco endereco) {
+		this.cpf = cpf;
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+		this.login = login;
+		this.senha = senha;
+		this.endereco = endereco;
+	}
 
 	public Integer getId() {
 		return id;

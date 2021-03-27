@@ -1,4 +1,4 @@
-package br.com.projetoFinal.bibliotecaGama.model;
+package br.com.projetofinal.bibliotecaGama.model;
 /**
  * @author Ivan D. Moreira
  */
