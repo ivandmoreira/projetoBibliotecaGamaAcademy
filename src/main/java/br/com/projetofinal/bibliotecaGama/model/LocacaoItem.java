@@ -27,11 +27,9 @@ public class LocacaoItem implements Serializable {
 	private Double valoDiaria;
 	
 	private Double valorLocacao;
-  
-	private Livro Livro;
 
 	@OneToMany
-	private List<Livro> Livro;
+	private List<Livro> Livros;
 
 	public Integer getId() {
 		return id;
@@ -81,11 +79,4 @@ public class LocacaoItem implements Serializable {
 		this.valorLocacao = valorLocacao;
 	}
 
-	public List<Livro> getLivro() {
-		return Livro;
-	}
-
-	public void setLivro(List<Livro> livro) {
-		Livro = livro;
-	}
 }
