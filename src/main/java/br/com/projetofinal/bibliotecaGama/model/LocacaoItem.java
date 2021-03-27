@@ -1,5 +1,6 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -10,15 +11,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class LocacaoItem {
+public class LocacaoItem implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	private Date dataPrevisaoEntrega;
+	
 	private Date dataEntrega;
+	
 	private Integer diarias;
+  
 	private Double valoDiaria;
+	
 	private Double valorLocacao;
+  
+	private Livro Livro;
+
 	@OneToMany
 	private List<Livro> Livro;
 
