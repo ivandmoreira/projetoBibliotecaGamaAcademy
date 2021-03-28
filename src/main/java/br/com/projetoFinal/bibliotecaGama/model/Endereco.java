@@ -1,47 +1,29 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-@Entity
-@Table(name = "tbl_endereco")
+@Embeddable
 public class Endereco {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", nullable = false)
-	private Integer id;
 
-	@Column(name="cep", length=9, nullable = false)
+	@Column(length=10)
 	private String cep;
-
-	@Column(name="logradouro", length=40, nullable = true)
+	
+	@Column(length=150)
 	private String logradouro;
 	
-	@Column(name="bairro", length=40, nullable = true)
+	@Column(length=50)
 	private String bairro;
 
-	@Column(name="localidade", length=40, nullable = true)
+	@Column(length=50)
 	private String localidade;
 
-	@Column(name="uf", length=2, nullable = true)
+	@Column(length=3)
 	private String uf;
 	
-	@Column(name="ibge", length=40, nullable = true)
+	@Column(length=20)
 	private Integer ibge;
-	
-	public Endereco() {}
-	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+
 	public String getCep() {
 		return cep;
 	}
@@ -78,11 +60,5 @@ public class Endereco {
 	public void setIbge(Integer ibge) {
 		this.ibge = ibge;
 	}
-
-	@Override
-	public String toString() {
-		return "Endereco {id=" + id + ", cep=" + cep + ", logradouro=" + logradouro + ", bairro=" + bairro
-				+ ", localidade=" + localidade + ", uf=" + uf + ", ibge=" + ibge + "}\n";
-	}	
 	
 }

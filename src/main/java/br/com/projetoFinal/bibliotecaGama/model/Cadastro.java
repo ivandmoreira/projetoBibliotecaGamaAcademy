@@ -1,14 +1,21 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "tbl_cadastro")
@@ -19,39 +26,31 @@ public class Cadastro {
 	@Column(name="id", nullable = false)
 	private Integer id;
 	
-	@Column(name="cpf", length=14, nullable = false)
+	@Column(name="cpf", length=14, nullable = false, unique = true)
 	private String cpf;
 	
-	@Column(name="nome", length=50)
+	@Column(name="nome", length=100)
 	private String nome;
-	
-	@Column(name="email", length=50)
-	private String email;
+		
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Column(length=100)
+	private List<String> emails = new ArrayList<String>();
 
-	@Column(name="telefone", length=50)
-	private String telefone;
+	//EntityGraph
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cadastro")
+	private List<Telefone> telefones  = new ArrayList<Telefone>();
 
-	@Column(name="login", length=50)
+	@Column(name="login", length=20, unique = true)
 	private String login;
 
-	@Column(name="senha", length=50)
+	@Column(name="senha", length=150)
 	private String senha;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "endereco_id", referencedColumnName="id")
+
+	@Embedded
 	private Endereco endereco;
 	
 	public Cadastro(){}
-	
-	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha, Endereco endereco) {
-		this.cpf = cpf;
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.login = login;
-		this.senha = senha;
-		this.endereco = endereco;
-	}
 
 	public Integer getId() {
 		return id;
@@ -77,22 +76,26 @@ public class Cadastro {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public void setEmails(List<String> emails) {
+		this.emails = emails;
+	}
+	public List<String> getEmails() {
+		return emails;
+	}
+	public void addEmail(String email) {
+		emails.add(email);
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public List<Telefone> getTelefones() {
+		return telefones;
 	}
-
-	public String getTelefone() {
-		return telefone;
+	public void addTelefone(Telefone telefone) {
+		telefone.setCadastro(this);
+		telefones.add(telefone);
 	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
 	}
-
 	public String getLogin() {
 		return login;
 	}
