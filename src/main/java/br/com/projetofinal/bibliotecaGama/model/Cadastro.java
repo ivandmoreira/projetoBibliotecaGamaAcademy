@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 public class Cadastro implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,7 @@ public class Cadastro implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	
 	
+	@CPF(message ="CPF Invalido")
     @Column(name="cpf", length=14, nullable = false, unique = true)
 	private String cpf;
 
@@ -41,15 +44,14 @@ public class Cadastro implements Serializable {
 	public Cadastro() {
 	}
 
-	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha,
-			Endereco endereco) {
-		this.cpf = cpf;
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.login = login;
-		this.senha = senha;
-		this.endereco = endereco;
+	public Cadastro(Cadastro cad) {
+		this.cpf = cad.getCpf();
+		this.nome = cad.getNome();
+		this.email = cad.getEmail();
+		this.telefone = cad.getTelefone();
+		this.login = cad.getLogin();
+		this.senha = cad.getSenha();
+		this.endereco = cad.getEndereco();
 	}
 
 	public Integer getId() {

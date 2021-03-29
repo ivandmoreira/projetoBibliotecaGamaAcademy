@@ -46,13 +46,9 @@ public class CadastroController {
 	
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@RequestBody Cadastro cad){
+	public void salvar(@RequestBody Cadastro cad){
 		
-		cad = cadastroService.salva(cad);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(cad.getId()).toUri();
-		
-		return ResponseEntity.created(uri).build();
+		cadastroService.salva(cad);
 		
 	}
 }
