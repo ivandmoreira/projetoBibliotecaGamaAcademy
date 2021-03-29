@@ -1,41 +1,46 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import java.io.Serializable;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * @author Jorge Ferraz
  */
 @Entity
-public class Livro {
+@SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class Livro implements Serializable {
+	private static final long serialVersionUID = 1L;
 
+	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
-	
-	@Column(name="isbn", length=50, nullable = false)
+	@Column(length = 13)
 	private String isbn;
-	
-	@Column(name="titulo", length=150, nullable = false)
+	@Column(length = 50)
 	private String titulo;
-	
-	@Column(name="valordiaria", length=50)
+	@Column(precision = 4 , scale = 2)
+
 	private Double valorDiaria;
 	
-	@Column(name="exemplares", length=50)
+	@Column(length = 5, nullable = false)
 	private Integer exemplares;
 	
-	@Column(name="reservados", length=50)
+	@Column(length = 5, nullable = false)
 	private Integer reservados;
-
 	
 	public Livro() {
+		
 	}
-
 	public Livro(String isbn, String titulo, Double vd, Integer ex, int reservados) {
 		this.isbn = isbn;
 		this.titulo = titulo;
@@ -44,14 +49,11 @@ public class Livro {
 		this.reservados = reservados;
 	}
 
+
 	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+  
 	public String getIsbn() {
 		return isbn;
 	}

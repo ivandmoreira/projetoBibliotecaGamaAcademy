@@ -1,5 +1,6 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,111 +14,117 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
-@Table(name = "tbl_cadastro")
-public class Cadastro {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", nullable = false)
-	private Integer id;
-	
-	@Column(name="cpf", length=14, nullable = false, unique = true)
-	private String cpf;
-	
-	@Column(name="nome", length=100)
-	private String nome;
+	@Entity
+	@SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+	public class Cadastro implements Serializable {
+		private static final long serialVersionUID = 1L;
 		
-	@ElementCollection(fetch = FetchType.EAGER)
-	@Column(length=100)
-	private List<String> emails = new ArrayList<String>();
+		public static final String SEQUENCE_NAME = "SEQUENCE_CADASTRO";
 
-	//EntityGraph
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cadastro")
-	private List<Telefone> telefones  = new ArrayList<Telefone>();
+		@Id
+		@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
+		private Integer id;	
+		
+	  @Column(name="cpf", length=14, nullable = false, unique = true)
+		private String cpf;
 
-	@Column(name="login", length=20, unique = true)
-	private String login;
+		@Column(length = 50, nullable = false)
+		private String nome;
 
-	@Column(name="senha", length=150)
-	private String senha;
+		@Column(length = 50)
+		private String email;
 
-	@Embedded
-	private Endereco endereco;
-	
-	public Cadastro(){}
+		@Column(length = 50)
+		private String telefone;
 
-	public Integer getId() {
-		return id;
-	}
+		@Column(name="login", length=20 , unique = true)
+		private String login;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+		@Column(length = 50)
+		private String senha;
 
-	public String getCpf() {
-		return cpf;
-	}
+		@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
+		private Endereco endereco;
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+		public Cadastro() {
+		}
 
-	public String getNome() {
-		return nome;
-	}
+		public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha,
+				Endereco endereco) {
+			this.cpf = cpf;
+			this.nome = nome;
+			this.email = email;
+			this.telefone = telefone;
+			this.login = login;
+			this.senha = senha;
+			this.endereco = endereco;
+		}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+		public Integer getId() {
+			return id;
+		}
 
-	public void setEmails(List<String> emails) {
-		this.emails = emails;
-	}
-	public List<String> getEmails() {
-		return emails;
-	}
-	public void addEmail(String email) {
-		emails.add(email);
-	}
+		public String getCpf() {
+			return cpf;
+		}
 
-	public List<Telefone> getTelefones() {
-		return telefones;
-	}
-	public void addTelefone(Telefone telefone) {
-		telefone.setCadastro(this);
-		telefones.add(telefone);
-	}
-	public void setTelefones(List<Telefone> telefones) {
-		this.telefones = telefones;
-	}
-	public String getLogin() {
-		return login;
-	}
+		public void setCpf(String cpf) {
+			this.cpf = cpf;
+		}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+		public String getNome() {
+			return nome;
+		}
 
-	public String getSenha() {
-		return senha;
-	}
+		public void setNome(String nome) {
+			this.nome = nome;
+		}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+		public String getEmail() {
+			return email;
+		}
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+		public void setEmail(String email) {
+			this.email = email;
+		}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+		public String getTelefone() {
+			return telefone;
+		}
 
-}
+		public void setTelefone(String telefone) {
+			this.telefone = telefone;
+		}
+
+		public String getLogin() {
+			return login;
+		}
+
+		public void setLogin(String login) {
+			this.login = login;
+		}
+
+		public String getSenha() {
+			return senha;
+		}
+
+		public void setSenha(String senha) {
+			this.senha = senha;
+		}
+
+		public Endereco getEndereco() {
+			return endereco;
+		}
+
+		public void setEndereco(Endereco endereco) {
+			this.endereco = endereco;
+		}
+
+	}
