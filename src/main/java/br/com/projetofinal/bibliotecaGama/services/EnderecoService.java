@@ -1,10 +1,8 @@
-package br.com.projetofinal.bibliotecaGama.service;
+package br.com.projetofinal.bibliotecaGama.services;
 
 import java.net.URL;
 
-import com.google.gson.Gson;
 
-import br.com.projetofinal.bibliotecaGama.model.Endereco;
 
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;

@@ -3,7 +3,6 @@ package br.com.projetofinal.bibliotecaGama.controller;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
-import br.com.projetofinal.bibliotecaGama.model.Endereco;
-import br.com.projetofinal.bibliotecaGama.repository.EnderecoRepository;
 import br.com.projetofinal.bibliotecaGama.services.CadastroService;
 
 
@@ -30,8 +27,6 @@ public class CadastroController {
 	@Autowired
 	private CadastroService cadastroService;
 	
-	@Autowired 
-	private EnderecoRepository enderecoRepository;
 	
 	@CrossOrigin
 	@GetMapping
