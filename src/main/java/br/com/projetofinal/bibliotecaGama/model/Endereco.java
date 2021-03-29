@@ -7,14 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@SequenceGenerator(name = Endereco.SEQUENCE_NAME, sequenceName = Endereco.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String SEQUENCE_NAME = "SEQUENCE_ENDERECO";
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 
 	@Column(length = 9, nullable = false)
@@ -39,11 +43,11 @@ public class Endereco implements Serializable {
 	private Integer ibge;
 
 	public Endereco() {
-		
+
 	}
 
-	public Endereco( String cep, String logradouro, String numero, String bairro, String localidade,
-			String uf, int ibge) {
+	public Endereco(String cep, String logradouro, String numero, String bairro, String localidade, String uf,
+			int ibge) {
 		super();
 		this.cep = cep;
 		this.logradouro = logradouro;
@@ -53,8 +57,6 @@ public class Endereco implements Serializable {
 		this.uf = uf;
 		this.ibge = ibge;
 	}
-
-	
 
 	public Integer getId() {
 		return id;

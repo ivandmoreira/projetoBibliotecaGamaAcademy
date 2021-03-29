@@ -4,19 +4,24 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
+@SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Cadastro implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String SEQUENCE_NAME = "SEQUENCE_CADASTRO";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;	
 	
   @Column(name="cpf", length=14, nullable = false, unique = true)
@@ -37,7 +42,7 @@ public class Cadastro implements Serializable {
 	@Column(length = 50)
 	private String senha;
 
-	@OneToOne
+	@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
 	private Endereco endereco;
 
 	public Cadastro() {
