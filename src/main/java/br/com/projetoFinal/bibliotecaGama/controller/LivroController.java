@@ -3,11 +3,7 @@ package br.com.projetoFinal.bibliotecaGama.controller;
 import java.util.List;
 import java.util.Scanner;
 
-import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Livro;
-import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
-import br.com.projetoFinal.bibliotecaGama.repository.JpaLivroRepository;
-import br.com.projetoFinal.bibliotecaGama.service.CadastroService;
 import br.com.projetoFinal.bibliotecaGama.service.LivroService;
 
 public class LivroController {
@@ -15,7 +11,7 @@ public class LivroController {
 	private LivroService livroService;
 	
 	public void run() {
-		System.out.println("\n## Abriu tela usuarios ##\n");
+		System.out.println("\n## Abriu tela livros ##\n");
 		Livro livro;
 		scanner = new Scanner(System.in);
 

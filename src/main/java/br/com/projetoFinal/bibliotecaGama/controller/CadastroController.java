@@ -40,7 +40,7 @@ public class CadastroController {
 				}
 				break;
 			case 2:
-				List<Cadastro> results = getTodosCadastros();
+				List<Cadastro> results = getAllUsers();
 
 				for (Cadastro result : results) {
 					System.out.println(result.getCpf());
@@ -51,7 +51,7 @@ public class CadastroController {
 				System.out.println("Informe o id: ");
 				int id = Integer.parseInt(scanner.nextLine());
 				
-				cadastro = getUsuario(id);
+				cadastro = getUser(id);
 				
 				if(cadastro != null) {
 					System.out.println(cadastro.getCpf());
@@ -73,12 +73,12 @@ public class CadastroController {
 		return cadastroService.cadastrarUsuario(cadastro);
 	}
 	
-	public List<Cadastro> getTodosCadastros() {
+	public List<Cadastro> getAllUsers() {
 		cadastroService = new CadastroService();
 		return cadastroService.buscarTodos();
 	}
 	
-	public Cadastro getUsuario(Integer id) {
+	public Cadastro getUser(Integer id) {
 		cadastroService = new CadastroService();
 		return cadastroService.buscarPorId(id);
 	}

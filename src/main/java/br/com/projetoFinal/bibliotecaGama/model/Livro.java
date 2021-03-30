@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
@@ -35,6 +40,12 @@ public class Livro implements Serializable {
 	@Column(length = 5, nullable = false)
 	private Integer reservados;
 
+//	@ManyToOne
+//    @JoinColumn(name="locacaoItem_id", nullable=true)
+//    private LocacaoItem locacaoItem;
+	@OneToOne
+	@JsonBackReference
+	private LocacaoItem locacaoItem;
 	
 	public Livro() {
 	}
@@ -45,6 +56,14 @@ public class Livro implements Serializable {
 		this.valorDiaria = vd;
 		this.exemplares = ex;
 		this.reservados = reservados;
+	}
+
+	public LocacaoItem getLocacaoItem() {
+		return locacaoItem;
+	}
+
+	public void setLocacaoItem(LocacaoItem locacaoItem) {
+		this.locacaoItem = locacaoItem;
 	}
 
 	public Integer getId() {

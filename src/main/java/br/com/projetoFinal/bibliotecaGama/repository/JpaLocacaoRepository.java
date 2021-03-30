@@ -17,13 +17,12 @@ public class JpaLocacaoRepository implements Repository<Locacao> {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("biblioteca_PU");
 		entityManager = factory.createEntityManager();
 	}
-	
+
 	@Override
 	public void insert(Locacao e) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(e);
 		entityManager.getTransaction().commit();
-		
 	}
 
 	@Override
@@ -31,13 +30,12 @@ public class JpaLocacaoRepository implements Repository<Locacao> {
 		entityManager.getTransaction().begin();
 		entityManager.merge(e);
 		entityManager.getTransaction().commit();
-		
 	}
 
 	@Override
 	public Locacao select(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		return entityManager.find(Locacao.class,id);
 	}
 
 	@Override
@@ -45,5 +43,11 @@ public class JpaLocacaoRepository implements Repository<Locacao> {
 		Query query = entityManager.createQuery("SELECT l FROM Locacao l"); //JPQL
 		return query.getResultList();
 	}
+	
+	public void fechar() {
+		entityManager.clear();
+		entityManager.close();
+	}
+	
 
 }
