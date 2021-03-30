@@ -1,13 +1,22 @@
 package br.com.projetoFinal.bibliotecaGama.controller;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
+<<<<<<< Updated upstream
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 
 public class CadastroController {
 	private Scanner scanner;
+=======
+import br.com.projetoFinal.bibliotecaGama.service.CadastroService;
+
+public class CadastroController {
+	private Scanner scanner;
+	private CadastroService cadastroService;
+>>>>>>> Stashed changes
 	
 	public void run() {
 
@@ -34,6 +43,7 @@ public class CadastroController {
 			switch(option) {
 			case 0: break;
 			case 1:
+<<<<<<< Updated upstream
 				System.out.println("tela de cadastrar pessoas\n");
 				System.out.print("Digite seu cpf: ");
 				String cpf 		= scanner.nextLine();
@@ -77,6 +87,31 @@ public class CadastroController {
 				System.out.println(auxCadastro.getNome());
 				
 				jpaCadastroRepository.fechar();
+=======
+				Cadastro cadastro = new Cadastro();
+				cadastro = createUser(cadastro);
+				if(cadastro != null) {
+					System.out.println("Cadastro realizado com sucesso");
+				}
+				break;
+			case 2:
+				List<Cadastro> results = getTodosCadastros();
+
+				for (Cadastro result : results) {
+					System.out.println(result.getCpf());
+				}
+
+				break;
+			case 3:
+				System.out.println("Informe o id: ");
+				int id = Integer.parseInt(scanner.nextLine());
+				
+				cadastro = getUsuario(id);
+				
+				if(cadastro != null) {
+					System.out.println(cadastro.getCpf());
+				}
+>>>>>>> Stashed changes
 				
 				break;
 			default:
@@ -88,4 +123,23 @@ public class CadastroController {
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
+<<<<<<< Updated upstream
+=======
+	
+	private Cadastro createUser(Cadastro cadastro) {
+		cadastroService = new CadastroService();
+		return cadastroService.cadastrarUsuario(cadastro);
+	}
+	
+	public List<Cadastro> getTodosCadastros() {
+		cadastroService = new CadastroService();
+		return cadastroService.buscarTodos();
+	}
+	
+	public Cadastro getUsuario(Integer id) {
+		cadastroService = new CadastroService();
+		return cadastroService.buscarPorId(id);
+	}
+	
+>>>>>>> Stashed changes
 }
