@@ -7,16 +7,16 @@ import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaLivroRepository;
+import br.com.projetoFinal.bibliotecaGama.service.CadastroService;
+import br.com.projetoFinal.bibliotecaGama.service.LivroService;
 
 public class LivroController {
 	private Scanner scanner;
-
+	private LivroService livroService;
+	
 	public void run() {
-
-		JpaLivroRepository jpaLivroRepository;
-
-		System.out.println("\n## Abriu tela de Livros ##\n");
-
+		System.out.println("\n## Abriu tela usuarios ##\n");
+		Livro livro;
 		scanner = new Scanner(System.in);
 
 		int option = 0;
@@ -27,7 +27,7 @@ public class LivroController {
 			System.out.println("1 - Cadastrar um Livro");
 			System.out.println("2 - Buscar livros cadastrados");
 			System.out.println("3 - Buscar livro por id");
-			System.out.println("0 - Sair do programa");
+			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
 
@@ -37,49 +37,30 @@ public class LivroController {
 			case 0:
 				break;
 			case 1:
-				System.out.println("tela de cadastrar livros\n");
-				System.out.print("Digite o isbn: ");
-				String isbn = scanner.nextLine();
-				System.out.print("Digite o titulo: ");
-				String titulo = scanner.nextLine();
-				System.out.print("Digite o valor da diaria: ");
-				String valorDiaria = scanner.nextLine();
-				System.out.print("Digite a quantidade de exemplares: ");
-				String exemplares = scanner.nextLine();
-
-				Double vd = Double.valueOf(valorDiaria);
-				Integer ex = Integer.valueOf(exemplares);
-
-				Livro livro = new Livro(isbn, titulo, vd, ex, 0);
-
-				jpaLivroRepository = new JpaLivroRepository();
-				jpaLivroRepository.insert(livro);
-				jpaLivroRepository.fechar();
-
-				System.out.println("Cadastro efetuado com sucesso!\n");
+				livro = new Livro();
+				livro = createBook(livro);
+				if(livro != null) {
+					System.out.println("Cadastro realizado com sucesso");
+				}
 				break;
 			case 2:
-				System.out.println("imprimir todos os Livros cadastrados\n");
-
-				jpaLivroRepository = new JpaLivroRepository();
-				List<Livro> results = jpaLivroRepository.selectAll();
+				List<Livro> results = getAllBooks();
 
 				for (Livro result : results) {
-					System.out.println(result.getIsbn());
+					System.out.println(result.getTitulo());
 				}
 
-				jpaLivroRepository.fechar();
 				break;
 			case 3:
 				System.out.println("Informe o id: ");
-				int idSearch = Integer.parseInt(scanner.nextLine());
-
-				jpaLivroRepository = new JpaLivroRepository();
-				Livro auxLivro = jpaLivroRepository.select(idSearch);
-				System.out.println(auxLivro.getTitulo());
-
-				jpaLivroRepository.fechar();
-
+				int id = Integer.parseInt(scanner.nextLine());
+				
+				livro = getBook(id);
+				
+				if(livro != null) {
+					System.out.println(livro.getTitulo());
+				}
+				
 				break;
 			default:
 				System.out.println("Opcao nao disponivel\n");
@@ -88,6 +69,22 @@ public class LivroController {
 
 		} while (option != 0);
 
-		System.out.println("\n## Fechou tela de livros ##\n");
+		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
+	
+	private Livro createBook(Livro livro) {
+		livroService = new LivroService();
+		return livroService.cadastrarLivro(livro);
+	}
+	
+	public List<Livro> getAllBooks() {
+		livroService = new LivroService();
+		return livroService.buscarTodos();
+	}
+	
+	public Livro getBook(Integer id) {
+		livroService = new LivroService();
+		return livroService.buscarPorId(id);
+	}
+	
 }

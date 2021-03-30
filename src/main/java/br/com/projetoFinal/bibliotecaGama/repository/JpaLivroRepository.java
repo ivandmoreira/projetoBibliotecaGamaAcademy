@@ -38,7 +38,7 @@ public class JpaLivroRepository implements Repository<Livro> {
 
 	@Override
 	public List<Livro> selectAll() {
-		Query query = entityManager.createQuery("SELECT e FROM livro e"); //JPQL
+		Query query = entityManager.createQuery("SELECT e FROM Livro e"); //JPQL
 		return query.getResultList();
 	}
 	

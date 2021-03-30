@@ -2,8 +2,20 @@ package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.util.Date;
 
-public class LocacaoItem {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
+@Entity
+@SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class LocacaoItem {
+	private static final long serialVersionUID = 1L;
+	public static final String SEQUENCE_NAME = "SEQUENCE_LOCACAOITEM";
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 	private Date dataPrevisaoEntrega;
 	private Date dataEntrega;

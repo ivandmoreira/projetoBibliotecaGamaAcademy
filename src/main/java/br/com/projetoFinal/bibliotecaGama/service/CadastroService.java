@@ -2,22 +2,17 @@ package br.com.projetoFinal.bibliotecaGama.service;
 
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-<<<<<<< HEAD
 import com.google.gson.Gson;
 
-=======
->>>>>>> parent of 65eafb6 (ajustes controller cadastro, valida√ß√µes e remo√ß√£o de entidades)
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Endereco;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 
 public class CadastroService {
-<<<<<<< HEAD
 	
 	private JpaCadastroRepository jpaCadastroRepository;
 	private Scanner scanner;
@@ -44,7 +39,7 @@ public class CadastroService {
 		String cpf = null;
 		do {
 			if (cpf != null)
-				System.out.println("Cpf inv·lido, por favor digite novamente..");
+				System.out.println("Cpf invalido, por favor digite novamente..");
 			System.out.print("Digite seu cpf: ");
 			cpf = scanner.nextLine();
 		} while (!isCpfValid(cpf));
@@ -52,18 +47,20 @@ public class CadastroService {
 		cadastro.setCpf(cpf);
 
 		String nome = null;
+		
 		do {
-			if (cpf != null)
-				System.out.println("nome inv·lido, por favor digite novamente..");
+			if (nome != null)
+				System.out.println("Nome invalido, por favor digite novamente..");
 			System.out.print("Digite seu nome: ");
 			nome = scanner.nextLine();
 		} while (!validaNome(nome));
+		
 		cadastro.setNome(trataNome(nome));
 		
 		String email = null;
 		do {
 			if (email != null)
-				System.out.println("E-mail inv·lido, por favor digite novamente..");
+				System.out.println("E-mail invalido, por favor digite novamente..");
 			System.out.print("Digite seu e-mail: ");
 			email = scanner.nextLine();
 		} while (!isEmailValid(email));
@@ -73,7 +70,7 @@ public class CadastroService {
 		String telefone = null;
 		do {
 			if (telefone != null)
-				System.out.println("Telefone inv·lido, por favor digite novamente..");
+				System.out.println("Telefone invalido, por favor digite novamente..");
 			System.out.print("Digite seu telefone: ");
 			telefone = scanner.nextLine();
 		} while (!isTelefoneValid(telefone));
@@ -94,11 +91,11 @@ public class CadastroService {
 
 		cadastro.setEndereco(endereco);
 
-		System.out.println("\nPara finalizar... seu login poder· ser feito de 3 formas:");
+		System.out.println("\nPara finalizar... seu login podera° ser feito de 3 formas:");
 		do {
 			System.out.println("1 - com Cpf");
 			System.out.println("2 - com Telefone");
-			System.out.println("3 - com Apelido de atÈ 20 caracteres");
+			System.out.println("3 - com Apelido de ate 20 caracteres");
 			System.out.println("_______________________");
 			System.out.print("Digite sua melhor forma de logar: ");
 			option = Integer.parseInt(scanner.nextLine());
@@ -118,7 +115,7 @@ public class CadastroService {
 				if(login != null) {
 					System.out.println("Apelido invalido ou indisponivel!");
 				}
-				System.out.print("Digite seu apelido com no m·ximo 20 caracteres: ");
+				System.out.print("Digite seu apelido com no maximo 20 caracteres: ");
 				login = scanner.nextLine();
 			} while (!isApelidoValid(login) && !isLoginValid(login));
 			
@@ -143,19 +140,19 @@ public class CadastroService {
 		Matcher matcher = pattern.matcher(nome);
 		
 		if(matcher.find()){
-			System.out.println("N„o deve conter n˙meros!");
+			System.out.println("Nao deve conter numeros!");
 			return false;
 		}
 		
-		Pattern pattern2 = Pattern.compile("/[$\\%&*()}{@#?><>,|=_+¨-]/");
+		Pattern pattern2 = Pattern.compile("/[$\\%&*()}{@#?><>,|=_+¬¨-]/");
 		Matcher matcher2 = pattern2.matcher(nome);
 		if(matcher2.find()){
-			System.out.println("N„o pode conter caracteres especiais.");
+			System.out.println("Nao pode conter caracteres especiais.");
 			return false;
 		}
 
 	    if (nome.length() > 70 || nome.length()  < 3) {
-			System.out.println("Nome inv·lido, o tamanho do nome deve ter entre 3 · 70 caracteres.");
+			System.out.println("Nome invalido, o tamanho do nome deve ter entre 3 e 70 caracteres.");
 			return false;
 	    }
 
@@ -179,9 +176,6 @@ public class CadastroService {
     } 
 	
 	private boolean isApelidoValid(String apelido) {
-=======
-	private static boolean isApelidoValid(String apelido) {
->>>>>>> parent of 65eafb6 (ajustes controller cadastro, valida√ß√µes e remo√ß√£o de entidades)
 		return apelido.length() >= 3 && apelido.length() <= 20;
 	}
 	

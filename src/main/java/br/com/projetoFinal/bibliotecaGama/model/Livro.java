@@ -1,46 +1,36 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
-<<<<<<< HEAD
-=======
 import java.io.Serializable;
 
-
->>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-<<<<<<< HEAD
-=======
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
->>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 
-/**
- * @author Jorge Ferraz
- */
-@Entity
-public class Livro {
+@SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class Livro implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id", nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 	
-	@Column(name="isbn", length=50, nullable = false)
+	@Column(length = 13)
 	private String isbn;
 	
-	@Column(name="titulo", length=150, nullable = false)
+	@Column(length = 50)
 	private String titulo;
 	
-	@Column(name="valordiaria", length=50)
+	@Column(precision = 4 , scale = 2)
 	private Double valorDiaria;
 	
-	@Column(name="exemplares", length=50)
+	@Column(length = 5, nullable = false)
 	private Integer exemplares;
 	
-	@Column(name="reservados", length=50)
+	@Column(length = 5)
 	private Integer reservados;
 
 	
