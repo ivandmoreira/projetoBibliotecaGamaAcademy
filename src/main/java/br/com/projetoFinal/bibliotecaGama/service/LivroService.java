@@ -41,6 +41,7 @@ public class LivroService {
 		double valorDiaria = Double.parseDouble(scanner.nextLine());
 		livro.setValorDiaria(valorDiaria);
 		
+//		Número de exemplares do livro maior ou igual a 1
 		System.out.print("Digite a quantidade de exemplares: ");
 		int exemplares = Integer.parseInt(scanner.nextLine());
 		livro.setExemplares(exemplares);

@@ -1,6 +1,6 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +18,10 @@ public class LocacaoItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
-	private Date dataPrevisaoEntrega;
-	private Date dataEntrega;
+	private LocalDate dataPrevisaoEntrega;
+	private LocalDate dataEntrega;
 	private Integer diarias;
-	private Double valoDiaria;
+	private Double valorDiaria;
 	private Double valorLocacao;
 
 	@OneToMany
@@ -29,14 +29,14 @@ public class LocacaoItem {
 			
 	public LocacaoItem() {}
 	
-	public LocacaoItem(Integer id, Date dataPrevisaoEntrega, Date dataEntrega, Integer diarias, Double valoDiaria,
+	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Integer diarias, Double valorDiaria,
 			Double valorLocacao, List<Livro> livros) {
 		super();
 		this.id = id;
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
 		this.dataEntrega = dataEntrega;
 		this.diarias = diarias;
-		this.valoDiaria = valoDiaria;
+		this.valorDiaria = valorDiaria;
 		this.valorLocacao = valorLocacao;
 		this.livros = livros;
 	}
@@ -47,16 +47,16 @@ public class LocacaoItem {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Date getDataPrevisaoEntrega() {
+	public LocalDate getDataPrevisaoEntrega() {
 		return dataPrevisaoEntrega;
 	}
-	public void setDataPrevisaoEntrega(Date dataPrevisaoEntrega) {
+	public void setDataPrevisaoEntrega(LocalDate dataPrevisaoEntrega) {
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
 	}
-	public Date getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 	public Integer getDiarias() {
@@ -65,11 +65,11 @@ public class LocacaoItem {
 	public void setDiarias(Integer diarias) {
 		this.diarias = diarias;
 	}
-	public Double getValoDiaria() {
-		return valoDiaria;
+	public Double getValorDiaria() {
+		return valorDiaria;
 	}
-	public void setValoDiaria(Double valoDiaria) {
-		this.valoDiaria = valoDiaria;
+	public void setValorDiaria(Double valorDiaria) {
+		this.valorDiaria = valorDiaria;
 	}
 	public Double getValorLocacao() {
 		return valorLocacao;

@@ -12,7 +12,10 @@ public class LocacaoController {
 
 	public void run() {
 		System.out.println("\n## Abriu tela locacao ##\n");
+		
 		Locacao locacao;
+		int id;
+		
 		scanner = new Scanner(System.in);
 
 		int option = 0;
@@ -20,9 +23,10 @@ public class LocacaoController {
 		do {
 
 			System.out.println("## Escolha uma das opcoes abaixo ##");
-			System.out.println("1 - Cadastrar uma locacao");
-			System.out.println("2 - Exibir todos as locacoes cadastradas");
-			System.out.println("3 - Buscar locacao por id");
+			System.out.println("1 - Agendar uma locacao");
+			System.out.println("2 - Retirar uma locacao");
+			System.out.println("3 - Exibir todos as locacoes cadastradas");
+			System.out.println("4 - Buscar locacao por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -34,12 +38,27 @@ public class LocacaoController {
 				break;
 			case 1:
 				locacao = new Locacao();
-				locacao = createRent(locacao);
+				locacao = scheduleRental(locacao);
 				if (locacao != null) {
-					System.out.println("Cadastro realizado com sucesso");
+					System.out.println("Agendamento realizado com sucesso");
 				}
 				break;
 			case 2:
+				System.out.println("Informe o id: ");
+				id = Integer.parseInt(scanner.nextLine());
+
+				locacao = getRent(id);
+
+				if (locacao != null) {
+					System.out.println(locacao.getId());
+					locacao = withdrawRental(locacao);
+					if (locacao != null) {
+						System.out.println("Retirada realizada com sucesso");
+					}
+				}				
+				
+				break;
+			case 3:
 				List<Locacao> results = getAllRents();
 
 				for (Locacao result : results) {
@@ -47,9 +66,9 @@ public class LocacaoController {
 				}
 
 				break;
-			case 3:
+			case 4:
 				System.out.println("Informe o id: ");
-				int id = Integer.parseInt(scanner.nextLine());
+				id = Integer.parseInt(scanner.nextLine());
 
 				locacao = getRent(id);
 
@@ -68,9 +87,14 @@ public class LocacaoController {
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
 
-	private Locacao createRent(Locacao locacao) {
+	private Locacao scheduleRental(Locacao locacao) {
 		locacaoService = new LocacaoService();
-		return locacaoService.cadastrarLocacao(locacao);
+		return locacaoService.agendarLocacao(locacao);
+	}	
+
+	private Locacao withdrawRental(Locacao locacao) {
+		locacaoService = new LocacaoService();
+		return locacaoService.retirarLocacao(locacao);
 	}
 
 	public List<Locacao> getAllRents() {
