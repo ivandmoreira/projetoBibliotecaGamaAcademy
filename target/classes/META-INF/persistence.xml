@@ -6,16 +6,16 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 <persistence-unit name="biblioteca_PU">
 <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-	<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mariadb://127.0.0.1:3306/biblioteca_mariadb"/>
-			<property name="javax.persistence.jdbc.user" value="root"/>
-			<property name="javax.persistence.jdbc.password" value=""/>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-			
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
-			<property name="hibernate.show_sql" value="true"/>
-			<property name="hibernate.format_sql" value="false"/>
+	<properties>			
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-18-206-20-102.compute-1.amazonaws.com/d12nfc4kd2r2a0"/>
+            <property name="javax.persistence.jdbc.user" value="ovzdjuecyezgzs"/>
+            <property name="javax.persistence.jdbc.password" value="cc3bd062bcc1d96389362b29f9a19115e2cc44478db51040b4f9d5e316fc7c99"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
 		</properties>
 		
 </persistence-unit>
