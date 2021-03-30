@@ -1,10 +1,21 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+<<<<<<< HEAD
+=======
+import java.io.Serializable;
+
+
+>>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
+=======
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+>>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 
 /**
  * @author Jorge Ferraz

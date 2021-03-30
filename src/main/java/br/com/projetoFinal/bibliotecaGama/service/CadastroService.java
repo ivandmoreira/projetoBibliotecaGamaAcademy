@@ -7,13 +7,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+<<<<<<< HEAD
 import com.google.gson.Gson;
 
+=======
+>>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Endereco;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 
 public class CadastroService {
+<<<<<<< HEAD
 	
 	private JpaCadastroRepository jpaCadastroRepository;
 	private Scanner scanner;
@@ -175,6 +179,9 @@ public class CadastroService {
     } 
 	
 	private boolean isApelidoValid(String apelido) {
+=======
+	private static boolean isApelidoValid(String apelido) {
+>>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 		return apelido.length() >= 3 && apelido.length() <= 20;
 	}
 	

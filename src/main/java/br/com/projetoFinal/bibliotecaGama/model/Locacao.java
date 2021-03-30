@@ -10,7 +10,29 @@ public class Locacao {
 	private Date dataFinalizacao;
 	private Double valorTotal;
 	private Cadastro cadastro;
+<<<<<<< HEAD
 	private LocacaoStatusEnum status;
+=======
+	@Enumerated(EnumType.ORDINAL)
+
+	private LocacaoStatusEnum status;
+	@OneToOne
+	private LocacaoItem locacaoItem;
+
+	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
+			Cadastro cadastro, LocacaoStatusEnum status, LocacaoItem locacaoItem) {
+		super();
+		this.id = id;
+		this.dataAgendamento = dataAgendamento;
+		this.dataRetirada = dataRetirada;
+		this.dataFinalizacao = dataFinalizacao;
+		this.valorTotal = valorTotal;
+		this.cadastro = cadastro;
+		this.status = status;
+		this.locacaoItem = locacaoItem;
+	}
+
+>>>>>>> parent of 65eafb6 (ajustes controller cadastro, validações e remoção de entidades)
 	
 	public Integer getId() {
 		return id;
