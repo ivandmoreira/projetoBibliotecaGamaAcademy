@@ -36,7 +36,7 @@ public class Locacao implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 
 	private LocacaoStatusEnum status;
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	private LocacaoItem locacaoItem;
 
 	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
