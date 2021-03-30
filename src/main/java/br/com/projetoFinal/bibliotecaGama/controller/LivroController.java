@@ -22,7 +22,7 @@ public class LivroController {
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Cadastrar um Livro");
 			System.out.println("2 - Exibir todos os livros cadastrados");
-			System.out.println("3 - Buscar livro por id");
+//			System.out.println("3 - Buscar livro por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -47,17 +47,17 @@ public class LivroController {
 				}
 
 				break;
-			case 3:
-				System.out.println("Informe o id: ");
-				int id = Integer.parseInt(scanner.nextLine());
-				
-				livro = getBook(id);
-				
-				if(livro != null) {
-					System.out.println(livro.getTitulo());
-				}
-				
-				break;
+//			case 3:
+//				System.out.println("Informe o id: ");
+//				int id = Integer.parseInt(scanner.nextLine());
+//				
+//				livro = getBook(id);
+//				
+//				if(livro != null) {
+//					System.out.println(livro.getTitulo());
+//				}
+//				
+//				break;
 			default:
 				System.out.println("Opcao nao disponivel\n");
 				break;

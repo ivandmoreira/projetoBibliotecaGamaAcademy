@@ -40,34 +40,48 @@ public class LocacaoService {
 //		MANIPULAÇÃO DE LIVRO
 		LivroController livroController = new LivroController();
 		Livro livro = livroController.getBook(192);
+		
+		if(livro.getExemplares() >= 1) {
+			
+		}
+		
 //		decrementa 1 do exemplar
 		livro.setExemplares(livro.getExemplares() - 1);
 
-		double valorDiaria = 0.0;
 //		incrementa 1 do reservado
 		livro.setReservados(livro.getReservados() + 1);
+		
+		
 		List<Livro> list = new ArrayList<Livro>();
 		list.add(livro);
+		
+		double valorDiaria = 0.0;
 		valorDiaria = valorDiaria+livro.getValorDiaria();
 
-		livro = livroController.getBook(202);
-		list.add(livro);
-//		decrementa 1 do exemplar
-		livro.setExemplares(livro.getExemplares() - 1);
-//		incrementa 1 do reservado
-		livro.setReservados(livro.getReservados() + 1);
-		valorDiaria = valorDiaria+livro.getValorDiaria();
-
+		
+		
+		
 //		MANIPULACAO DE LOCACAO ITEM		
 		LocacaoItem locacaoItem = new LocacaoItem();
-		locacao.setLocacaoItem(locacaoItem);
 		locacaoItem.setLivros(list);
 		locacaoItem.setValorDiaria(valorDiaria);
+		
+
+		LocalDate dataPrevisaoEntrega = LocalDate.now().plusDays(15);
+		locacaoItem.setDataPrevisaoEntrega(dataPrevisaoEntrega);
+		System.out.println("Previsão de entrega: "+ dataPrevisaoEntrega);
+		
 		
 //		locacaoItem.setDiarias(2);
 //		SET VALOR LOCACAO
 //		locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() * locacaoItem.getDiarias());
 
+		
+		
+		
+
+		locacao.setLocacaoItem(locacaoItem);
+		
 //		MANIPULACAO DE LOCACAO
 //		define a data de agendamento como hoje
 		LocalDate dataAgendamento = LocalDate.now();
@@ -97,13 +111,17 @@ public class LocacaoService {
 
 		System.out.println("tela de retirar locacao\n");
 
+		LocalDate dataRetirada = LocalDate.now();
+		locacao.setDataRetirada(dataRetirada);
+		
+//		alterar status para efetivada
 		locacao.setStatus(LocacaoStatusEnum.EFETIVADA);
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.insert(locacao);
 		jpaLocacaoRepository.fechar();
 
-		System.out.println("Cadastro efetuado com sucesso!\n");
+		System.out.println("Retirada efetuada com sucesso!\n");
 
 		return locacao;
 	}
@@ -112,12 +130,21 @@ public class LocacaoService {
 		scanner = new Scanner(System.in);
 
 		System.out.println("tela de entregar locacao\n");
+		
+		List<Livro> listLivro = locacao.getLocacaoItem().getLivros();
+		listLivro.forEach(System.out::println);
+//		locacao.getLocacaoItem().getLivros().get(0);
+////		incrementa 1 do exemplar
+//		livro.setExemplares(livro.getExemplares() - 1);
+//
+////		decrementa 1 do reservado
+//		livro.setReservados(livro.getReservados() + 1);
 
-		locacao.setStatus(LocacaoStatusEnum.FINALIZADA);
+//		locacao.setStatus(LocacaoStatusEnum.FINALIZADA);
 
-		jpaLocacaoRepository = new JpaLocacaoRepository();
-		jpaLocacaoRepository.insert(locacao);
-		jpaLocacaoRepository.fechar();
+//		jpaLocacaoRepository = new JpaLocacaoRepository();
+//		jpaLocacaoRepository.insert(locacao);
+//		jpaLocacaoRepository.fechar();
 
 		System.out.println("Cadastro efetuado com sucesso!\n");
 
