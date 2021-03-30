@@ -33,9 +33,10 @@ public class Locacao implements Serializable {
 
 	@OneToOne
 	private Cadastro cadastro;
+	
 	@Enumerated(EnumType.ORDINAL)
-
 	private LocacaoStatusEnum status;
+	
 	@OneToOne
 	private LocacaoItem locacaoItem;
 

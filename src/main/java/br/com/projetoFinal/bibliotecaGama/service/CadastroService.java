@@ -4,10 +4,53 @@ import java.util.InputMismatchException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.util.StringUtils;
+
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 
 public class CadastroService {
+	public static boolean validaNome(String nome) {
+		Pattern pattern = Pattern.compile("[0-9]");
+		Matcher matcher = pattern.matcher(nome);
+		if(matcher.find()){
+			System.out.println("Não deve conter números!");
+			return false;
+		}
+		
+		Pattern pattern2 = Pattern.compile("/[$\\%&*()}{@#?><>,|=_+¬-]/");
+		Matcher matcher2 = pattern.matcher(nome);
+		if(matcher2.find()){
+			System.out.println("Não deve conter números!");
+//			throw new Exception('Nome [' . $nome . '] inválido, não pode conter caracteres especiais.');
+			return false;
+		}
+
+
+	    if (nome.length() > 70 || nome.length()  < 3) {
+//	        throw new Exception('Nome [' . $nome . '] inválido, o tamanho do nome deve ter entre 3 á 70 caracteres.');
+			return false;
+	    }
+
+    	return true;
+	}
+	
+	public static String trataNome(String nome) {
+		String after = nome.trim().replaceAll(" +", " ");
+	    return toTitleCase(after);
+	}
+	
+	private static String toTitleCase(String givenString) {
+        String[] arr = givenString.split(" ");
+        StringBuffer sb = new StringBuffer();
+    
+        for (int i = 0; i < arr.length; i++) {
+            sb.append(Character.toUpperCase(arr[i].charAt(0)))
+                .append(arr[i].substring(1)).append(" ");
+        }          
+        return sb.toString().trim();
+    } 
+	
 	private static boolean isApelidoValid(String apelido) {
 		return apelido.length() >= 3 && apelido.length() <= 20;
 	}

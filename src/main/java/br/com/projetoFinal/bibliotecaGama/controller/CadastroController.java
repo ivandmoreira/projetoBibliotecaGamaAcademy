@@ -7,8 +7,6 @@ import com.google.gson.Gson;
 
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Endereco;
-import br.com.projetoFinal.bibliotecaGama.model.Telefone;
-import br.com.projetoFinal.bibliotecaGama.model.TelefoneTipo;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaCadastroRepository;
 import br.com.projetoFinal.bibliotecaGama.service.CadastroService;
 import br.com.projetoFinal.bibliotecaGama.service.EnderecoService;
@@ -98,53 +96,33 @@ public class CadastroController {
 		Cadastro cadastro = new Cadastro();
 		cadastro.setCpf(cpf);
 
-		System.out.print("Digite seu nome: ");
-		String nome = scanner.nextLine();
-		cadastro.setNome(nome);
+		String nome = null;
+		do {
+			if (cpf != null)
+				System.out.println("nome inválido, por favor digite novamente..");
+			System.out.print("Digite seu nome: ");
+			nome = scanner.nextLine();
+		} while (!CadastroService.validaNome(nome));
+		cadastro.setNome(CadastroService.trataNome(nome));
+		
+		String email = null;
+		do {
+			if (email != null)
+				System.out.println("E-mail inválido, por favor digite novamente..");
+			System.out.print("Digite seu e-mail: ");
+			email = scanner.nextLine();
+		} while (!CadastroService.isEmailValid(email));
+		
+		cadastro.setEmail(email);
 
-		boolean bolEmail = false;
-
-		while (!bolEmail) {
-			bolEmail = true;
-
-			String email = null;
-			do {
-				if (email != null)
-					System.out.println("E-mail inválido, por favor digite novamente..");
-				System.out.print("Digite seu e-mail: ");
-				email = scanner.nextLine();
-			} while (!CadastroService.isEmailValid(email));
-			cadastro.addEmail(email);
-
-			System.out.print("Você deseja adicionar outro e-mail? (S ou N): ");
-			String aux = scanner.nextLine();
-			if (aux != null && aux.equalsIgnoreCase("s") || aux.equalsIgnoreCase("sim")) {
-				bolEmail = false;
-			}
-
-		}
-
-		boolean bolTelefone = false;
-
-		while (!bolTelefone) {
-			bolTelefone = true;
-
-			String telefone = null;
-			do {
-				if (telefone != null)
-					System.out.println("Telefone inválido, por favor digite novamente..");
-				System.out.print("Digite seu telefone: ");
-				telefone = scanner.nextLine();
-			} while (!CadastroService.isTelefoneValid(telefone));
-			cadastro.addTelefone(new Telefone(TelefoneTipo.CELULAR, Long.parseLong(telefone)));
-
-			System.out.print("Você deseja adicionar outro numero? (S ou N): ");
-			String aux = scanner.nextLine();
-			if (aux != null && aux.equalsIgnoreCase("s") || aux.equalsIgnoreCase("sim")) {
-				bolTelefone = false;
-			}
-
-		}
+		String telefone = null;
+		do {
+			if (telefone != null)
+				System.out.println("Telefone inválido, por favor digite novamente..");
+			System.out.print("Digite seu telefone: ");
+			telefone = scanner.nextLine();
+		} while (!CadastroService.isTelefoneValid(telefone));
+		cadastro.setTelefone(telefone);
 
 		System.out.println("\nAgora... vamos cadastrar seu endereco!");
 		System.out.print("Digite seu cep: ");
@@ -176,19 +154,7 @@ public class CadastroController {
 			login = cadastro.getCpf();
 		} else if (option == 2) {
 			System.out.println("\nForma selecionada: telefone");
-			System.out.println("Telefones disponiveis:");
-
-			int index = 0;
-			for (Telefone tel : cadastro.getTelefones()) {
-				System.out.println((++index) + " - " + tel.getNumero());
-			}
-
-			do {
-				System.out.print("Digite a opção correspondente: ");
-				option = Integer.parseInt(scanner.nextLine());
-			} while (!(option >= 1 | option <= index));
-
-			login = cadastro.getTelefones().get(--option).getNumero().toString();
+			login = cadastro.getTelefone();
 		} else {
 			System.out.println("\nForma selecionada: apelido");
 

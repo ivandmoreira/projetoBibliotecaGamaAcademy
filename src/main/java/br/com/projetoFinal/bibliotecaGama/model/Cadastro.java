@@ -1,24 +1,17 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 	@Entity
@@ -50,7 +43,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 		@Column(length = 50)
 		private String senha;
 
-		@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
+		@OneToOne( fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 		private Endereco endereco;
 
 		public Cadastro() {

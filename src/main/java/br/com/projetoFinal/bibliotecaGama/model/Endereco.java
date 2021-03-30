@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @SequenceGenerator(name = Endereco.SEQUENCE_NAME, sequenceName = Endereco.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
@@ -27,16 +26,13 @@ public class Endereco implements Serializable {
 	@Column(length = 40, nullable = true)
 	private String logradouro;
 
-	@Column(length = 5, nullable = false)
-	private String numero;
-
 	@Column(length = 40, nullable = true)
 	private String bairro;
 
 	@Column(length = 40, nullable = true)
 	private String localidade;
 
-	@Column(length = 2, nullable = true)
+	@Column(length = 3, nullable = true)
 	private String uf;
 
 	@Column(length = 40, nullable = true)
@@ -46,12 +42,11 @@ public class Endereco implements Serializable {
 
 	}
 
-	public Endereco(String cep, String logradouro, String numero, String bairro, String localidade, String uf,
+	public Endereco(String cep, String logradouro, String bairro, String localidade, String uf,
 			int ibge) {
 		super();
 		this.cep = cep;
 		this.logradouro = logradouro;
-		this.numero = numero;
 		this.bairro = bairro;
 		this.localidade = localidade;
 		this.uf = uf;
@@ -76,14 +71,6 @@ public class Endereco implements Serializable {
 
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public void setNumero(String numero) {
-		this.numero = numero;
 	}
 
 	public String getBairro() {
