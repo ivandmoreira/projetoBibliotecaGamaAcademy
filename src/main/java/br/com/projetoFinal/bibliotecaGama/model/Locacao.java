@@ -39,6 +39,8 @@ public class Locacao implements Serializable {
 	@OneToOne
 	private LocacaoItem locacaoItem;
 
+	public Locacao() {}
+	
 	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
 			Cadastro cadastro, LocacaoStatusEnum status, LocacaoItem locacaoItem) {
 		super();
