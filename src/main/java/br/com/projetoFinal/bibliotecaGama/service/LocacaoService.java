@@ -42,7 +42,7 @@ public class LocacaoService {
 		
 		LocacaoItem locacaoItem = new LocacaoItem();
 		locacao.setLocacaoItem(locacaoItem);
-		locacaoItem.setLivro(list);
+		locacaoItem.setLivros(list);
 		locacaoItem.setDiarias(2);
 		
 		CadastroController cadastroController = new CadastroController();
