@@ -3,7 +3,6 @@ package br.com.projetofinal.bibliotecaGama.services;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.projetofinal.bibliotecaGama.dto.EnderecoDTO;
 import br.com.projetofinal.bibliotecaGama.model.Endereco;
 
 
@@ -16,17 +15,15 @@ public class EnderecoService {
 		return codigoSucesso;
 	}
 	
-	public Endereco viaCep(Endereco cep) throws Exception {
-        String urlChamada = webService + cep.getCep() + "/json";
+	public Endereco viaCep(String cep) throws Exception {
+        String urlChamada = webService + cep + "/json";
 
         try {
         	
         	RestTemplate restTemplate = new RestTemplate();
-        	EnderecoDTO enderecDto = restTemplate.getForObject(urlChamada, EnderecoDTO.class);
+        	Endereco enderec = restTemplate.getForObject(urlChamada, Endereco.class);
         	
-        	Endereco enderecJson = new Endereco(enderecDto, cep.getNumero());
-        	
-            return enderecJson;
+            return enderec;
             
         } catch (Exception e) {
             throw new Exception("ERRO: " + e);

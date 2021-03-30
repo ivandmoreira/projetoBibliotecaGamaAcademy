@@ -2,7 +2,6 @@ package br.com.projetofinal.bibliotecaGama.services;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +25,19 @@ public class CadastroService {
 	
 	public Cadastro salva(Cadastro cad) {
 		
-		Endereco end = this.buscarCep(cad.getEndereco());
+		Endereco end = this.buscarCep(cad.getEndereco().getCep());
+		//aqui estava o problema
+		//se teu dto vai permitir só digitar o CEP pra buscar o resto dos dados 
+		// vc deveria mudar o DTOS
+		//POIS FICA CONFUSO A PASSAGEM DE VALOR
+		end.setNumero(cad.getEndereco().getNumero());
+		
 		cad.setEndereco(end);
 		enderecoRepository.save(cad.getEndereco());
 		return cadastroRespository.save(cad);
 	}
 
-	private Endereco buscarCep(Endereco cep) {
+	private Endereco buscarCep(String cep) {
 		Endereco end = null;
 		
 		try {

@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import br.com.projetofinal.bibliotecaGama.dto.EnderecoDTO;
 
 @Entity
 public class Endereco implements Serializable {
@@ -55,17 +54,6 @@ public class Endereco implements Serializable {
 		this.ibge = end.getIbge();
 	}
 
-	public Endereco(EnderecoDTO end, String numero) {
-		super();
-		this.cep = end.getCep();
-		this.logradouro = end.getLogradouro();
-		this.numero = numero;
-		this.bairro = end.getBairro();
-		this.localidade = end.getLocalidade();
-		this.uf = end.getUf();
-		this.ibge = end.getIbge();
-	}
-	
 
 	public Integer getId() {
 		return id;
