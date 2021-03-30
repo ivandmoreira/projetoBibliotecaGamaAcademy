@@ -26,28 +26,28 @@ public class LivroService {
 	
 	public Livro cadastrarLivro(Livro livro) {
 		scanner = new Scanner(System.in);
-		jpaLivroRepository = new JpaLivroRepository();
+		
 		System.out.println("tela de cadastrar livros\n");
+		
 		System.out.print("Digite o isbn: ");
 		String isbn = scanner.nextLine();
 		livro.setIsbn(isbn);
-		jpaLivroRepository.insert(livro);
 		
 		System.out.print("Digite o titulo: ");
 		String titulo = scanner.nextLine();
 		livro.setTitulo(titulo);
-		jpaLivroRepository.insert(livro);
 		
 		System.out.print("Digite o valor da diaria: ");
 		double valorDiaria = Double.parseDouble(scanner.nextLine());
 		livro.setValorDiaria(valorDiaria);
-		jpaLivroRepository.insert(livro);
 		
 		System.out.print("Digite a quantidade de exemplares: ");
 		int exemplares = Integer.parseInt(scanner.nextLine());
 		livro.setExemplares(exemplares);
-		jpaLivroRepository.insert(livro);
 		
+		livro.setReservados(0);
+
+		jpaLivroRepository = new JpaLivroRepository();
 		jpaLivroRepository.insert(livro);
 		jpaLivroRepository.fechar();
 

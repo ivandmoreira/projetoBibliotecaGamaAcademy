@@ -3,11 +3,13 @@ package br.com.projetoFinal.bibliotecaGama.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+@Entity
 @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Livro implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +32,7 @@ public class Livro implements Serializable {
 	@Column(length = 5, nullable = false)
 	private Integer exemplares;
 	
-	@Column(length = 5)
+	@Column(length = 5, nullable = false)
 	private Integer reservados;
 
 	

@@ -21,8 +21,8 @@ public class CadastroController {
 
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Cadastrar usuario");
-			System.out.println("2 - Imprime pessoas cadastradas");
-			System.out.println("3 - Buscar pessoa por id");
+			System.out.println("2 - Exibir todos os usuarios cadastrados");
+			System.out.println("3 - Buscar usuario por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");

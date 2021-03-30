@@ -25,7 +25,7 @@ public class LivroController {
 
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Cadastrar um Livro");
-			System.out.println("2 - Buscar livros cadastrados");
+			System.out.println("2 - Exibir todos os livros cadastrados");
 			System.out.println("3 - Buscar livro por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
