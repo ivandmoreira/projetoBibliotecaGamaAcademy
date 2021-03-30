@@ -70,7 +70,7 @@ public class LocacaoService {
 		locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() * locacaoItem.getDiarias());
 		
 		CadastroController cadastroController = new CadastroController();
-		locacao.setCadastro(cadastroController.getUser(22));
+		locacao.setCadastro(cadastroController.getUser(32));
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.insert(locacao);
