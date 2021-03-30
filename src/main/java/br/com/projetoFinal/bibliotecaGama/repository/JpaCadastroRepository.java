@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 
@@ -36,40 +35,6 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 	public Cadastro select(Integer id) {
 		return entityManager.find(Cadastro.class,id);
 	}
-	
-	public Cadastro selectCpf(String cpf) {
-		String consulta = "SELECT e FROM Cadastro e WHERE e.cpf = :cpf";
-		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
-		query.setParameter("cpf",cpf);
-		Cadastro cadastro = null;
-		try {
-			cadastro = query.getSingleResult();
-		} catch (Exception e) {
-			System.out.println("Cpf disponível para cadastro");
-		}
-		return cadastro;
-	}
-
-	public <T> Cadastro selectLogin(T login) {
-		String consulta = "SELECT e FROM Cadastro e WHERE e.login = :login";
-		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
-		query.setParameter("login",login);
-		Cadastro cadastro = null;
-		try {
-			cadastro = query.getSingleResult();
-		} catch (Exception e) {
-			System.out.println("Login disponível para cadastro");
-		}
-		return cadastro;
-	}
-////	RETORNO DE UMA LISTA DE OBJETO
-//	public List<Cadastro> selectCpf(String cpf) {
-//		String consulta = "SELECT e FROM Cadastro e WHERE e.cpf = :cpf";
-//		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
-//		query.setParameter("cpf",cpf);
-//		List<cadastro> listaCadastro = query.getResultList();
-//		return listaCadastro;
-//	}
 
 	@Override
 	public List<Cadastro> selectAll() {
@@ -80,5 +45,6 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 	public void fechar() {
 		entityManager.clear();
 		entityManager.close();
-	}	
+	}
+	
 }
