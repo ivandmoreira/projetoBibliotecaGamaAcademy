@@ -90,6 +90,10 @@ public class LocacaoService {
 //		define a data de finalização como daqui a 30 dias, ou seja, se não pegar em 30 dias, solicitação finalizada
 		LocalDate dataFinalizacao = LocalDate.now().plusMonths(1);
 		locacao.setDataFinalizacao(dataFinalizacao);
+		
+
+		LocalDate dataRetirada = LocalDate.now().plusMonths(1);
+		locacao.setDataRetirada(dataRetirada);
 
 		locacao.setStatus(LocacaoStatusEnum.RESERVADA);
 		locacao.setValorTotal(0.0);
