@@ -1,14 +1,11 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
-import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -16,8 +13,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
-public class Livro implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Livro {
 
 	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
 
@@ -43,6 +39,7 @@ public class Livro implements Serializable {
 //	@ManyToOne
 //    @JoinColumn(name="locacaoItem_id", nullable=true)
 //    private LocacaoItem locacaoItem;
+	
 	@OneToOne
 	@JsonBackReference
 	private LocacaoItem locacaoItem;
