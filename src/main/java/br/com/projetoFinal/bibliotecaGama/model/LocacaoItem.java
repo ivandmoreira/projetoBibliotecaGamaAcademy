@@ -1,11 +1,14 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
@@ -22,7 +25,8 @@ public class LocacaoItem {
 	private Integer diarias;
 	private Double valoDiaria;
 	private Double valorLocacao;
-	private Livro Livro;
+	@OneToMany
+	private List<Livro> Livros;
 	
 	public Integer getId() {
 		return id;
@@ -60,10 +64,11 @@ public class LocacaoItem {
 	public void setValorLocacao(Double valorLocacao) {
 		this.valorLocacao = valorLocacao;
 	}
-	public Livro getLivro() {
-		return Livro;
+	public List<Livro> getLivros() {
+		return Livros;
 	}
-	public void setLivro(Livro livro) {
-		Livro = livro;
+	public void setLivros(List<Livro> livros) {
+		Livros = livros;
 	}
+
 }
