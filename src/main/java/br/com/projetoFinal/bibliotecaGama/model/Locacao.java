@@ -3,6 +3,7 @@ package br.com.projetoFinal.bibliotecaGama.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 import javax.persistence.EnumType;
@@ -36,7 +37,7 @@ public class Locacao implements Serializable {
 	@Enumerated(EnumType.ORDINAL)
 
 	private LocacaoStatusEnum status;
-	@OneToOne(orphanRemoval = true)
+	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
 	private LocacaoItem locacaoItem;
 
 	public Locacao() {}

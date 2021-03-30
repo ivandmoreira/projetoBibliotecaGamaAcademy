@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import br.com.projetoFinal.bibliotecaGama.controller.CadastroController;
 import br.com.projetoFinal.bibliotecaGama.controller.LivroController;
+import br.com.projetoFinal.bibliotecaGama.controller.LoginController;
 
 public class Main {
 
@@ -29,9 +30,9 @@ public static void main(String[] args) {
 		case 0:
 			break;
 		case 1:
-//			LoginController loginController = new LoginController();
-//			loginController.logarUsuario(null, null);
-//			break;
+			LoginController loginController = new LoginController();
+			loginController.logarUsuario();
+			break;
 		case 2:
 			CadastroController controllerCadastro = new CadastroController();
 			controllerCadastro.run();

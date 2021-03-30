@@ -1,9 +1,14 @@
 package br.com.projetoFinal.bibliotecaGama.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.com.projetoFinal.bibliotecaGama.controller.CadastroController;
+import br.com.projetoFinal.bibliotecaGama.controller.LivroController;
+import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
+import br.com.projetoFinal.bibliotecaGama.model.LocacaoItem;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaLocacaoRepository;
 
 public class LocacaoService {
@@ -29,23 +34,19 @@ public class LocacaoService {
 		
 		System.out.println("tela de cadastrar locacao\n");
 		
-//		System.out.print("Digite o isbn: ");
-//		String isbn = scanner.nextLine();
-//		livro.setIsbn(isbn);
-//		
-//		System.out.print("Digite o titulo: ");
-//		String titulo = scanner.nextLine();
-//		livro.setTitulo(titulo);
-//		
-//		System.out.print("Digite o valor da diaria: ");
-//		double valorDiaria = Double.parseDouble(scanner.nextLine());
-//		livro.setValorDiaria(valorDiaria);
-//		
-//		System.out.print("Digite a quantidade de exemplares: ");
-//		int exemplares = Integer.parseInt(scanner.nextLine());
-//		livro.setExemplares(exemplares);
-//		
-//		livro.setReservados(0);
+		LivroController livroController = new LivroController();
+
+		Livro livro = livroController.getBook(112);
+		List<Livro> list = new ArrayList<Livro>();
+		list.add(livro);
+		
+		LocacaoItem locacaoItem = new LocacaoItem();
+		locacao.setLocacaoItem(locacaoItem);
+		locacaoItem.setLivro(list);
+		locacaoItem.setDiarias(2);
+		
+		CadastroController cadastroController = new CadastroController();
+		locacao.setCadastro(cadastroController.getUser(22));
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.insert(locacao);
