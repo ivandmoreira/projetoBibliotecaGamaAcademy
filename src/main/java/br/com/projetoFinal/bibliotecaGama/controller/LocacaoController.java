@@ -25,8 +25,9 @@ public class LocacaoController {
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Agendar uma locacao");
 			System.out.println("2 - Retirar uma locacao");
-			System.out.println("3 - Exibir todos as locacoes cadastradas");
-			System.out.println("4 - Buscar locacao por id");
+			System.out.println("3 - Devolver uma locacao");
+			System.out.println("4 - Exibir todos as locacoes cadastradas");
+			System.out.println("5 - Buscar locacao por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -52,13 +53,22 @@ public class LocacaoController {
 				if (locacao != null) {
 					System.out.println(locacao.getId());
 					locacao = withdrawRental(locacao);
-					if (locacao != null) {
-						System.out.println("Retirada realizada com sucesso");
-					}
 				}				
 				
 				break;
 			case 3:
+				System.out.println("Informe o id: ");
+				id = Integer.parseInt(scanner.nextLine());
+
+				locacao = getRent(id);
+
+				if (locacao != null) {
+					System.out.println(locacao.getId());
+					locacao = returnRental(locacao);
+				}				
+				
+				break;
+			case 4:
 				List<Locacao> results = getAllRents();
 
 				for (Locacao result : results) {
@@ -66,7 +76,7 @@ public class LocacaoController {
 				}
 
 				break;
-			case 4:
+			case 5:
 				System.out.println("Informe o id: ");
 				id = Integer.parseInt(scanner.nextLine());
 
@@ -93,6 +103,11 @@ public class LocacaoController {
 	}	
 
 	private Locacao withdrawRental(Locacao locacao) {
+		locacaoService = new LocacaoService();
+		return locacaoService.retirarLocacao(locacao);
+	}
+	
+	private Locacao returnRental(Locacao locacao) {
 		locacaoService = new LocacaoService();
 		return locacaoService.retirarLocacao(locacao);
 	}

@@ -35,10 +35,11 @@ public class LocacaoService {
 	public Locacao agendarLocacao(Locacao locacao) {
 		scanner = new Scanner(System.in);
 		
-		System.out.println("tela de cadastrar locacao\n");
+		System.out.println("tela de agendar locacao\n");
 		
+		
+//		MANIPULAÇÃO DE LIVRO
 		LivroController livroController = new LivroController();
-
 		Livro livro = livroController.getBook(192);
 		List<Livro> list = new ArrayList<Livro>();
 		list.add(livro);
@@ -49,12 +50,20 @@ public class LocacaoService {
 //		incrementa 1 do reservado
 		livro.setReservados(livro.getReservados()+1);
 		
+		
+		
+//		MANIPULACAO DE LOCACAO ITEM		
 		LocacaoItem locacaoItem = new LocacaoItem();
 		locacao.setLocacaoItem(locacaoItem);
 		locacaoItem.setLivros(list);
 		locacaoItem.setDiarias(2);
 		locacaoItem.setValorDiaria(5.0);
+
+		locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() * locacaoItem.getDiarias());
 		
+		
+		
+//		MANIPULACAO DE LOCACAO
 //		define a data de agendamento como hoje
 		LocalDate dataAgendamento = LocalDate.now();
 		locacao.setDataAgendamento(dataAgendamento);
@@ -65,9 +74,6 @@ public class LocacaoService {
 		
 		locacao.setStatus(LocacaoStatusEnum.RESERVADA);
 		locacao.setValorTotal(0.0);
-		
-
-		locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() * locacaoItem.getDiarias());
 		
 		CadastroController cadastroController = new CadastroController();
 		locacao.setCadastro(cadastroController.getUser(32));
@@ -86,38 +92,23 @@ public class LocacaoService {
 		
 		System.out.println("tela de retirar locacao\n");
 		
-		LivroController livroController = new LivroController();
+		locacao.setStatus(LocacaoStatusEnum.EFETIVADA);
+		
+		jpaLocacaoRepository = new JpaLocacaoRepository();
+		jpaLocacaoRepository.insert(locacao);
+		jpaLocacaoRepository.fechar();
 
-		Livro livro = livroController.getBook(192);
-		List<Livro> list = new ArrayList<Livro>();
-		list.add(livro);
+		System.out.println("Cadastro efetuado com sucesso!\n");
 		
-//		decrementa 1 do exemplar
-		livro.setExemplares(livro.getExemplares()-1);
+		return locacao;
+	}
+	
+	public Locacao devolverLocacao(Locacao locacao) {
+		scanner = new Scanner(System.in);
 		
-//		incrementa 1 do reservado
-		livro.setReservados(livro.getReservados()+1);
+		System.out.println("tela de entregar locacao\n");
 		
-		LocacaoItem locacaoItem = new LocacaoItem();
-		locacao.setLocacaoItem(locacaoItem);
-		locacaoItem.setLivros(list);
-		locacaoItem.setDiarias(2);
-		locacaoItem.setValorDiaria(5.0);
-		
-		LocalDate dataAgendamento = LocalDate.now();
-		locacao.setDataAgendamento(dataAgendamento);
-		
-
-		LocalDate dataRetirada = LocalDate.now().plusDays(2);
-//		LocalDate dataRetirada = LocalDate.now().plusDays(2);
-		locacao.setStatus(LocacaoStatusEnum.RESERVADA);
-		locacao.setValorTotal(0.0);
-		
-
-		locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() * locacaoItem.getDiarias());
-		
-		CadastroController cadastroController = new CadastroController();
-		locacao.setCadastro(cadastroController.getUser(22));
+		locacao.setStatus(LocacaoStatusEnum.FINALIZADA);
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.insert(locacao);
