@@ -1,11 +1,16 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -13,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
-public class Livro {
+public class Livro implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
 
@@ -36,13 +42,8 @@ public class Livro {
 	@Column(length = 5, nullable = false)
 	private Integer reservados;
 
-//	@ManyToOne
-//    @JoinColumn(name="locacaoItem_id", nullable=true)
-//    private LocacaoItem locacaoItem;
-	
-	@OneToOne
-	@JsonBackReference
-	private LocacaoItem locacaoItem;
+	@ManyToMany (mappedBy = "livros")
+	private List<LocacaoItem> locacaoItens;
 	
 	public Livro() {
 	}
@@ -54,13 +55,12 @@ public class Livro {
 		this.exemplares = ex;
 		this.reservados = reservados;
 	}
-
-	public LocacaoItem getLocacaoItem() {
-		return locacaoItem;
+	public List<LocacaoItem> getLocacaoItens() {
+		return locacaoItens;
 	}
 
-	public void setLocacaoItem(LocacaoItem locacaoItem) {
-		this.locacaoItem = locacaoItem;
+	public void setLocacaoItens(List<LocacaoItem> locacaoItens) {
+		this.locacaoItens = locacaoItens;
 	}
 
 	public Integer getId() {

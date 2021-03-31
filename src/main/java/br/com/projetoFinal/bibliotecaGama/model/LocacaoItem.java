@@ -1,42 +1,52 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class LocacaoItem {
+	private static final long serialVersionUID = 1L;
 	public static final String SEQUENCE_NAME = "SEQUENCE_LOCACAOITEM";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
-	private LocalDate dataPrevisaoEntrega;
-	private LocalDate dataEntrega;
+	private Date dataPrevisaoEntrega;
+	private Date dataEntrega;
 	private Integer diarias;
-	private Double valorDiaria;
+	private Double valoDiaria;
 	private Double valorLocacao;
 
-	@OneToMany
+	//@OneToMany
+	@ManyToMany
+	@JoinTable(name = "locacaoitem_livro")
 	private List<Livro> livros;
 			
 	public LocacaoItem() {}
 	
-	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Integer diarias, Double valorDiaria,
+	public LocacaoItem(Integer id, Date dataPrevisaoEntrega, Date dataEntrega, Integer diarias, Double valoDiaria,
 			Double valorLocacao, List<Livro> livros) {
 		super();
 		this.id = id;
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
 		this.dataEntrega = dataEntrega;
 		this.diarias = diarias;
-		this.valorDiaria = valorDiaria;
+		this.valoDiaria = valoDiaria;
 		this.valorLocacao = valorLocacao;
 		this.livros = livros;
 	}
@@ -47,16 +57,16 @@ public class LocacaoItem {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public LocalDate getDataPrevisaoEntrega() {
+	public Date getDataPrevisaoEntrega() {
 		return dataPrevisaoEntrega;
 	}
-	public void setDataPrevisaoEntrega(LocalDate dataPrevisaoEntrega) {
+	public void setDataPrevisaoEntrega(Date dataPrevisaoEntrega) {
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
 	}
-	public LocalDate getDataEntrega() {
+	public Date getDataEntrega() {
 		return dataEntrega;
 	}
-	public void setDataEntrega(LocalDate dataEntrega) {
+	public void setDataEntrega(Date dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 	public Integer getDiarias() {
@@ -65,11 +75,11 @@ public class LocacaoItem {
 	public void setDiarias(Integer diarias) {
 		this.diarias = diarias;
 	}
-	public Double getValorDiaria() {
-		return valorDiaria;
+	public Double getValoDiaria() {
+		return valoDiaria;
 	}
-	public void setValorDiaria(Double valorDiaria) {
-		this.valorDiaria = valorDiaria;
+	public void setValoDiaria(Double valoDiaria) {
+		this.valoDiaria = valoDiaria;
 	}
 	public Double getValorLocacao() {
 		return valorLocacao;

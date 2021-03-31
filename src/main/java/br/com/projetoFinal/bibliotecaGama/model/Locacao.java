@@ -1,11 +1,9 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import javax.persistence.EnumType;
@@ -26,27 +24,24 @@ public class Locacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 
-	private LocalDate dataAgendamento;
+	private Date dataAgendamento;
 
+	private Date dataRetirada;
 
-	@Column(nullable = true)
-	private LocalDate dataRetirada;
-
-	private LocalDate dataFinalizacao;
+	private Date dataFinalizacao;
 
 	private Double valorTotal;
 
 	@OneToOne
 	private Cadastro cadastro;
-	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private LocacaoStatusEnum status;
-	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToOne(orphanRemoval = true)
 	private LocacaoItem locacaoItem;
 
 	public Locacao() {}
 	
-	public Locacao(Integer id, LocalDate dataAgendamento, LocalDate dataRetirada, LocalDate dataFinalizacao, Double valorTotal,
+	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
 			Cadastro cadastro, LocacaoStatusEnum status, LocacaoItem locacaoItem) {
 		super();
 		this.id = id;
@@ -67,27 +62,27 @@ public class Locacao implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDate getDataAgendamento() {
+	public Date getDataAgendamento() {
 		return dataAgendamento;
 	}
 
-	public void setDataAgendamento(LocalDate dataAgendamento) {
+	public void setDataAgendamento(Date dataAgendamento) {
 		this.dataAgendamento = dataAgendamento;
 	}
 
-	public LocalDate getDataRetirada() {
+	public Date getDataRetirada() {
 		return dataRetirada;
 	}
 
-	public void setDataRetirada(LocalDate dataRetirada) {
+	public void setDataRetirada(Date dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public LocalDate getDataFinalizacao() {
+	public Date getDataFinalizacao() {
 		return dataFinalizacao;
 	}
 
-	public void setDataFinalizacao(LocalDate dataFinalizacao) {
+	public void setDataFinalizacao(Date dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
 	}
 
