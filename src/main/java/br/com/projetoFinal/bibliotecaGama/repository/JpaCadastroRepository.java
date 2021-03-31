@@ -53,7 +53,7 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 		try {
 			cadastro = query.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("Login disponível para cadastro");
+			System.out.println("Login nao cadastrado");
 		}
 		return cadastro;
 	}
