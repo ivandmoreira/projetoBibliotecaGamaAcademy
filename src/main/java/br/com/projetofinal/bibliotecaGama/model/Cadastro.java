@@ -41,7 +41,6 @@ public class Cadastro implements Serializable {
 	@Column(name="login", length=20 , unique = true)
 	private String login;
 
-	@Column(length = 50)
 	private String senha;
 
 	@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)

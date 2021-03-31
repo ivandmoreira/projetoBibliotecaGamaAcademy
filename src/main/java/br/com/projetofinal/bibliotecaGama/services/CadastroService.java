@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
@@ -23,6 +24,10 @@ public class CadastroService {
 	@Autowired
 	private EnderecoService endService;
 	
+	@Autowired
+	private BCryptPasswordEncoder cryptoSenha;
+	
+	
 	public Cadastro salva(Cadastro cad) {
 		
 		Endereco end = this.buscarCep(cad.getEndereco().getCep());
@@ -34,6 +39,8 @@ public class CadastroService {
 		
 		cad.setEndereco(end);
 		enderecoRepository.save(cad.getEndereco());
+		
+		cad.setSenha(cryptoSenha.encode(cad.getSenha()));
 		return cadastroRespository.save(cad);
 	}
 
