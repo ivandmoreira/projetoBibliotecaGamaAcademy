@@ -9,17 +9,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * @author Ivan D. Moreira
  */
 @Entity
+@SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Livro implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
+	
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 	@Column(length = 13)
 	private String isbn;
