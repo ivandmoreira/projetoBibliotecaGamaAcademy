@@ -1,5 +1,7 @@
 package br.com.projetoFinal.bibliotecaGama.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,28 +95,34 @@ public class LocacaoController {
 				break;
 			case 6:
 				System.out.print("Informe a data no formato aaaa-mm-dd: ");
-				id = Integer.parseInt(scanner.nextLine());
+				
+				String data = scanner.nextLine();
+				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataAgendamento = LocalDate.parse(data,format);
+				
+				locacao = getDateRent(dataAgendamento);
 
-//				locacao = getRent(id);
-//
-//				if (locacao != null) {
-//					System.out.println(locacao.getLocacaoItem().getId());
-//				}
+				if (locacao != null) {
+					System.out.println(locacao.getId());
+				}
 
 				break;
 			case 7:
 				System.out.print("Informe a data no formato aaaa-mm-dd: ");
-				id = Integer.parseInt(scanner.nextLine());
 
-//				locacao = getRent(id);
-//
-//				if (locacao != null) {
-//					System.out.println(locacao.getLocacaoItem().getId());
-//				}
+				String dataRetorno = scanner.nextLine();
+				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataReturn = LocalDate.parse(dataRetorno,formatReturn);
+				
+				locacao = getDateReturn(dataReturn);
+
+				if (locacao != null) {
+					System.out.println(locacao.getId());
+				}
 
 				break;
 			case 8:
-				System.out.println("Status disponíveis:");
+				System.out.println("Status disponiveis:");
 
 				System.out.println("1 - " + LocacaoStatusEnum.EFETIVADA);
 				System.out.println("2 - " + LocacaoStatusEnum.FINALIZADA);
@@ -125,23 +133,23 @@ public class LocacaoController {
 
 				switch (id) {
 				case 1:
-					
+
 					break;
 				case 2:
-					
+
 					break;
 				case 3:
-					
+
 					break;
 				default:
 					break;
 				}
-				
-//				locacao = getRent(-id);
-//
-//				if (locacao != null) {
-//					System.out.println(locacao.getLocacaoItem().getId());
-//				}
+
+				// locacao = getRent(-id);
+				//
+				// if (locacao != null) {
+				// System.out.println(locacao.getLocacaoItem().getId());
+				// }
 
 				break;
 			default:
@@ -177,5 +185,15 @@ public class LocacaoController {
 	public Locacao getRent(Integer id) {
 		locacaoService = new LocacaoService();
 		return locacaoService.buscarPorId(id);
+	}
+
+	public Locacao getDateRent(LocalDate data) {
+		locacaoService = new LocacaoService();
+		return locacaoService.buscarPorDataLocacao(data);
+	}
+
+	public Locacao getDateReturn(LocalDate data) {
+		locacaoService = new LocacaoService();
+		return locacaoService.buscarPorDataRetirada(data);
 	}
 }
