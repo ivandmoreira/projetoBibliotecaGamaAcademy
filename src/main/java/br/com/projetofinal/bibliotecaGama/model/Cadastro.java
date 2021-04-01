@@ -3,6 +3,7 @@ package br.com.projetofinal.bibliotecaGama.model;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,10 +39,10 @@ public class Cadastro implements Serializable {
 	@Column(length = 50)
 	private String telefone;
 
-	@Column(name="login", length=20 , unique = true)
-	private String login;
+	@Embedded
+	private Login login;
 
-	private String senha;
+//	private String senha;
 
 	@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
 	private Endereco endereco;
@@ -55,7 +56,7 @@ public class Cadastro implements Serializable {
 		this.email = cad.getEmail();
 		this.telefone = cad.getTelefone();
 		this.login = cad.getLogin();
-		this.senha = cad.getSenha();
+//		this.senha = cad.getSenha();
 		this.endereco = cad.getEndereco();
 	}
 
@@ -95,21 +96,20 @@ public class Cadastro implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public String getLogin() {
+	public Login getLogin() {
 		return login;
 	}
-
-	public void setLogin(String login) {
+	public void setLogin(Login login) {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+//	public String getSenha() {
+//		return senha;
+//	}
+//
+//	public void setSenha(String senha) {
+//		this.senha = senha;
+//	}
 
 	public Endereco getEndereco() {
 		return endereco;

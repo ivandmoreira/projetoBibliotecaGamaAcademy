@@ -6,5 +6,8 @@ import org.springframework.stereotype.Repository;
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
 @Repository
 public interface CadastroRepository extends CrudRepository<Cadastro, Integer>{
+	
+	//QUERY METHODS
+	Cadastro findByLoginUsuario(String login);
 
 }

@@ -40,7 +40,7 @@ public class CadastroService {
 		cad.setEndereco(end);
 		enderecoRepository.save(cad.getEndereco());
 		
-		cad.setSenha(cryptoSenha.encode(cad.getSenha()));
+		cad.getLogin().setSenha(cryptoSenha.encode(cad.getLogin().getSenha()));
 		return cadastroRespository.save(cad);
 	}
 
