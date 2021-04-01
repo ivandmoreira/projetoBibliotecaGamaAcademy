@@ -2,6 +2,7 @@ package br.com.projetofinal.bibliotecaGama.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,8 +15,18 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private static final String[] SWAGGER_WHITELIST = { "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
-			"/configuration/ui", "/configuration/security", "/swagger-ui.html", "/webjars/**" };
+	private static final String[] SWAGGER_WHITELIST = { 
+			"/v2/api-docs", 
+			"/swagger-resources", 
+			"/swagger-resources/**",
+			"/configuration/ui",
+			"/configuration/security", 
+			"/swagger-ui.html", "/webjars/**" 
+	};
+	
+	private static final String[] PUBLIC_WHITELIST_POST = {
+			"/cadastro",
+	};
 	
 
 	@Bean
@@ -30,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 		.authorizeRequests()
 		.antMatchers(SWAGGER_WHITELIST).permitAll()
+		.antMatchers(HttpMethod.POST, PUBLIC_WHITELIST_POST).permitAll()
 		.antMatchers("/login").permitAll()
 		.anyRequest().authenticated()
 		.and()
