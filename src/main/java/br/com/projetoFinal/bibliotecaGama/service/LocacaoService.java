@@ -50,62 +50,68 @@ public class LocacaoService {
 
 		System.out.println("tela de agendar locacao\n");
 
-		// MANIPULA��O DE LIVRO
+//		######## CASO 1 ########
+		// MANIPULACAO DE LIVRO
 		LivroController livroController = new LivroController();
-		Livro livro = livroController.getBook(192);
-
-		if (livro.getExemplares() >= 1) {
-
-		}
-
-		// decrementa 1 do exemplar
-		livro.setExemplares(livro.getExemplares() - 1);
-
-		// incrementa 1 do reservado
-		livro.setReservados(livro.getReservados() + 1);
-
-		List<Livro> list = new ArrayList<Livro>();
-		list.add(livro);
-
-		double valorDiaria = 0.0;
-		valorDiaria = valorDiaria + livro.getValorDiaria();
+		Livro livro = livroController.getBook(132);
 
 		// MANIPULACAO DE LOCACAO ITEM
 		LocacaoItem locacaoItem = new LocacaoItem();
-		locacaoItem.setLivros(list);
-		locacaoItem.setValorDiaria(valorDiaria);
-
-		LocalDate dataPrevisaoEntrega = LocalDate.now().plusDays(15);
-		locacaoItem.setDataPrevisaoEntrega(dataPrevisaoEntrega);
-		System.out.println("Previs�o de entrega: " + dataPrevisaoEntrega);
-
-		// locacaoItem.setDiarias(2);
-		// SET VALOR LOCACAO
-		// locacaoItem.setValorLocacao(locacaoItem.getValorDiaria() *
-		// locacaoItem.getDiarias());
-
-		locacao.setLocacaoItem(locacaoItem);
+		locacaoItem.setLivro(livro);
+		locacaoItem.setLocacao(locacao);
+//		livro.setLocacaoItem(locacaoItem);
+		
+		locacaoItem.setDiarias(1);
+		
+//		// MANIPULACAO DE LOCACAO
+//		// define a data de agendamento como hoje
+//		LocalDate dataPrevisaoEntrega = LocalDate.now().plusDays(2);
+//		locacao.setDataRetirada(dataPrevisaoEntrega);
+//
+//		locacaoItem.setDataPrevisaoEntrega(dataPrevisaoEntrega);
+		
+		List<LocacaoItem> list = new ArrayList<LocacaoItem>();
+		list.add(locacaoItem);
+//		#######################
+		
+//		
+////		######## CASO 2 ########
+//		// MANIPULACAO DE LIVRO
+//		livroController = new LivroController();
+//		livro = livroController.getBook(112);
+//		
+//		// MANIPULACAO DE LOCACAO ITEM
+//		locacaoItem = new LocacaoItem();
+//		locacaoItem.setLivro(livro);
+//		locacaoItem.setLocacao(locacao);
+//		livro.setLocacaoItem(locacaoItem);
+//		
+//		list.add(locacaoItem);
+////		#######################
+		
+		
+		locacao.setLocacaoItem(list);
+		
+		// MANIPULACAO DE LOCACAO
+		// define a data de agendamento como hoje
+		LocalDate dataRetirada = LocalDate.now();
+		locacao.setDataRetirada(dataRetirada);
 
 		// MANIPULACAO DE LOCACAO
 		// define a data de agendamento como hoje
 		LocalDate dataAgendamento = LocalDate.now();
 		locacao.setDataAgendamento(dataAgendamento);
 
-		// define a data de finaliza��o como daqui a 30 dias, ou seja, se n�o pegar em
-		// 30 dias, solicita��o finalizada
-		LocalDate dataFinalizacao = LocalDate.now().plusMonths(1);
+		// define a data de finalizacao como daqui a 30 dias, ou seja, se nao pegar em
+		// 30 dias, solicitacao finalizada
+		LocalDate dataFinalizacao = LocalDate.now().plusDays(15);
 		locacao.setDataFinalizacao(dataFinalizacao);
-
-		LocalDate dataRetirada = LocalDate.now().plusMonths(1);
-		locacao.setDataRetirada(dataRetirada);
-
-		// locacaoItem.setDiarias( - locacao.getDataRetirada());
 
 		locacao.setStatus(LocacaoStatusEnum.RESERVADA);
 		locacao.setValorTotal(0.0);
 
 		CadastroController cadastroController = new CadastroController();
-		locacao.setCadastro(cadastroController.getUser(32));
+		locacao.setCadastro(cadastroController.getUser(12));
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.insert(locacao);
@@ -141,8 +147,8 @@ public class LocacaoService {
 
 		System.out.println("tela de entregar locacao\n");
 
-		List<Livro> listLivro = locacao.getLocacaoItem().getLivros();
-		listLivro.forEach(System.out::println);
+		// List<Livro> listLivro = locacao.getLocacaoItem().getLivros();
+		// listLivro.forEach(System.out::println);
 		// locacao.getLocacaoItem().getLivros().get(0);
 		//// incrementa 1 do exemplar
 		// livro.setExemplares(livro.getExemplares() - 1);

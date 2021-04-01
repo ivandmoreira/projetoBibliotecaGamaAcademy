@@ -89,17 +89,17 @@ public class LocacaoController {
 				locacao = getRent(id);
 
 				if (locacao != null) {
-					System.out.println(locacao.getLocacaoItem().getId());
+					System.out.println(locacao.getLocacaoItem());
 				}
 
 				break;
 			case 6:
 				System.out.print("Informe a data no formato aaaa-mm-dd: ");
-				
+
 				String data = scanner.nextLine();
 				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataAgendamento = LocalDate.parse(data,format);
-				
+				LocalDate dataAgendamento = LocalDate.parse(data, format);
+
 				locacao = getDateRent(dataAgendamento);
 
 				if (locacao != null) {
@@ -112,8 +112,8 @@ public class LocacaoController {
 
 				String dataRetorno = scanner.nextLine();
 				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataReturn = LocalDate.parse(dataRetorno,formatReturn);
-				
+				LocalDate dataReturn = LocalDate.parse(dataRetorno, formatReturn);
+
 				locacao = getDateReturn(dataReturn);
 
 				if (locacao != null) {

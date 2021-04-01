@@ -2,11 +2,15 @@ package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 
@@ -24,13 +28,16 @@ public class LocacaoItem {
 	private Double valorDiaria;
 	private Double valorLocacao;
 
-	@OneToMany
-	private List<Livro> livros;
+	@OneToOne
+	private Livro livro;
+	
+	@ManyToOne
+	private Locacao locacao;
 			
 	public LocacaoItem() {}
 	
 	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Integer diarias, Double valorDiaria,
-			Double valorLocacao, List<Livro> livros) {
+			Double valorLocacao, Livro livro, Locacao locacao) {
 		super();
 		this.id = id;
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
@@ -38,7 +45,8 @@ public class LocacaoItem {
 		this.diarias = diarias;
 		this.valorDiaria = valorDiaria;
 		this.valorLocacao = valorLocacao;
-		this.livros = livros;
+		this.livro = livro;
+		this.locacao = locacao;
 	}
 
 	public Integer getId() {
@@ -78,12 +86,22 @@ public class LocacaoItem {
 		this.valorLocacao = valorLocacao;
 	}
 
-	public List<Livro> getLivros() {
-		return livros;
+	public Livro getLivro() {
+		return livro;
 	}
 
-	public void setLivros(List<Livro> livros) {
-		this.livros = livros;
+	public void setLivro(Livro livro) {
+		this.livro = livro;
 	}
+
+	public Locacao getLocacao() {
+		return locacao;
+	}
+
+	public void setLocacao(Locacao locacao) {
+		this.locacao = locacao;
+	}
+	
+	
 
 }

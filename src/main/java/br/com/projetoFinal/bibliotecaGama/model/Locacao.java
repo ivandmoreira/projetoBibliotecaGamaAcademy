@@ -3,6 +3,7 @@ package br.com.projetoFinal.bibliotecaGama.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -41,13 +43,14 @@ public class Locacao implements Serializable {
 	
 	@Enumerated(EnumType.STRING)
 	private LocacaoStatusEnum status;
-	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
-	private LocacaoItem locacaoItem;
+	
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "locacao")
+	private List<LocacaoItem> locacaoItem;
 
 	public Locacao() {}
 	
 	public Locacao(Integer id, LocalDate dataAgendamento, LocalDate dataRetirada, LocalDate dataFinalizacao, Double valorTotal,
-			Cadastro cadastro, LocacaoStatusEnum status, LocacaoItem locacaoItem) {
+			Cadastro cadastro, LocacaoStatusEnum status, List<LocacaoItem> locacaoItem) {
 		super();
 		this.id = id;
 		this.dataAgendamento = dataAgendamento;
@@ -115,11 +118,11 @@ public class Locacao implements Serializable {
 		this.status = status;
 	}
 
-	public LocacaoItem getLocacaoItem() {
+	public List<LocacaoItem> getLocacaoItem() {
 		return locacaoItem;
 	}
 
-	public void setLocacaoItem(LocacaoItem locacaoItem) {
+	public void setLocacaoItem(List<LocacaoItem> locacaoItem) {
 		this.locacaoItem = locacaoItem;
 	}
 
