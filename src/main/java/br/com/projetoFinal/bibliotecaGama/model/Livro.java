@@ -5,34 +5,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
-public class Livro {
+public class Livro implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
-	
+
 	@Column(length = 13)
 	private String isbn;
-	
+
 	@Column(length = 50)
 	private String titulo;
-	
-	@Column(precision = 4 , scale = 2)
+
+	@Column(precision = 4, scale = 2)
 	private Double valorDiaria;
-	
+
 	@Column(length = 5, nullable = false)
 	private Integer exemplares;
-	
+
 	@Column(length = 5, nullable = false)
 	private Integer reservados;
-	
+
 	public Livro() {
 	}
 
