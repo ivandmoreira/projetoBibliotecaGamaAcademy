@@ -1,5 +1,6 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,9 +11,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
-public class LocacaoItem {
+@SequenceGenerator(name = LocacaoItem.SEQUENCE_NAME, sequenceName = LocacaoItem.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class LocacaoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	public static final String SEQUENCE_NAME = "SEQUENCE_LOCACAOITEM";
 
 	@Id
@@ -20,7 +22,7 @@ public class LocacaoItem {
 	private Integer id;
 	private LocalDate dataPrevisaoEntrega;
 	private LocalDate dataEntrega;
-	private Integer diarias;
+	private Long diarias;
 	private Double valorDiaria;
 	private Double valorLocacao;
 
@@ -33,7 +35,7 @@ public class LocacaoItem {
 	public LocacaoItem() {
 	}
 
-	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Integer diarias,
+	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Long diarias,
 			Double valorDiaria, Double valorLocacao, Livro livro, Locacao locacao) {
 		super();
 		this.id = id;
@@ -70,11 +72,11 @@ public class LocacaoItem {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Integer getDiarias() {
+	public Long getDiarias() {
 		return diarias;
 	}
 
-	public void setDiarias(Integer diarias) {
+	public void setDiarias(Long diarias) {
 		this.diarias = diarias;
 	}
 
@@ -82,7 +84,7 @@ public class LocacaoItem {
 		return valorDiaria;
 	}
 
-	public void setValoDiaria(Double valorDiaria) {
+	public void setValorDiaria(Double valorDiaria) {
 		this.valorDiaria = valorDiaria;
 	}
 

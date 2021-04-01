@@ -8,6 +8,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/x
 
 	<properties>			
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost/postgres"/>
+            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.password" value="1234"/> -->
+
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-18-206-20-102.compute-1.amazonaws.com/d12nfc4kd2r2a0"/>
             <property name="javax.persistence.jdbc.user" value="ovzdjuecyezgzs"/>
             <property name="javax.persistence.jdbc.password" value="cc3bd062bcc1d96389362b29f9a19115e2cc44478db51040b4f9d5e316fc7c99"/>

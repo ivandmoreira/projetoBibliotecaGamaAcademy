@@ -20,7 +20,7 @@ public class Livro implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 
-	@Column(length = 13)
+	@Column(length = 13, unique = true)
 	private String isbn;
 
 	@Column(length = 50)

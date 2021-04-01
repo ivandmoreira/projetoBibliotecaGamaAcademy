@@ -2,9 +2,12 @@ package br.com.projetoFinal.bibliotecaGama.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
+import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoStatusEnum;
 import br.com.projetoFinal.bibliotecaGama.service.LocacaoService;
@@ -45,28 +48,43 @@ public class LocacaoController {
 				break;
 			case 1:
 				locacao = new Locacao();
-				locacao = scheduleRental(locacao);
+
+				CadastroController cadastroController = new CadastroController();
+				Cadastro cadastro = cadastroController.getUser(32);
+
+				LivroController livroController = new LivroController();
+				Livro livro = livroController.getBook(222);
+
+				List<Livro> listLivro = new ArrayList<>();
+				listLivro.add(livro);
+
+				livro = livroController.getBook(232);
+				listLivro.add(livro);
+
+				locacao = scheduleRental(locacao, cadastro, listLivro);
+
 				if (locacao != null) {
 					System.out.println("Agendamento realizado com sucesso");
 				}
 				break;
 			case 2:
 				System.out.println("Informe o id: ");
-				id = Integer.parseInt(scanner.nextLine());
+				// id = Integer.parseInt(scanner.nextLine());
 
-				locacao = getRent(id);
+				locacao = getRent(442);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
-					locacao = withdrawRental(locacao);
+					System.out.println(locacao.getLocacaoItem().toArray());
+					locacao = takeRental(locacao);
 				}
 
 				break;
 			case 3:
 				System.out.println("Informe o id: ");
-				id = Integer.parseInt(scanner.nextLine());
+				// id = Integer.parseInt(scanner.nextLine());
 
-				locacao = getRent(id);
+				locacao = getRent(442);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
@@ -162,19 +180,19 @@ public class LocacaoController {
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
 
-	private Locacao scheduleRental(Locacao locacao) {
+	private Locacao scheduleRental(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
 		locacaoService = new LocacaoService();
-		return locacaoService.agendarLocacao(locacao);
+		return locacaoService.agendarLocacao(locacao, cadastro, listLivro);
 	}
 
-	private Locacao withdrawRental(Locacao locacao) {
+	private Locacao takeRental(Locacao locacao) {
 		locacaoService = new LocacaoService();
 		return locacaoService.retirarLocacao(locacao);
 	}
 
 	private Locacao returnRental(Locacao locacao) {
 		locacaoService = new LocacaoService();
-		return locacaoService.retirarLocacao(locacao);
+		return locacaoService.devolverLocacao(locacao);
 	}
 
 	public List<Locacao> getAllRents() {
