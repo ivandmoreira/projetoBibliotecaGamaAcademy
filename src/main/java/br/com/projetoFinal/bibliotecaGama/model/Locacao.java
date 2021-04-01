@@ -1,6 +1,7 @@
 package br.com.projetoFinal.bibliotecaGama.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +27,11 @@ public class Locacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
 
-	private Date dataAgendamento;
+	private LocalDate dataAgendamento;
 
-	private Date dataRetirada;
+	private LocalDate dataRetirada;
 
-	private Date dataFinalizacao;
+	private LocalDate dataFinalizacao;
 
 	private Double valorTotal;
 
@@ -66,27 +67,27 @@ public class Locacao implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataAgendamento() {
+	public LocalDate getDataAgendamento() {
 		return dataAgendamento;
 	}
 
-	public void setDataAgendamento(Date dataAgendamento) {
+	public void setDataAgendamento(LocalDate dataAgendamento) {
 		this.dataAgendamento = dataAgendamento;
 	}
 
-	public Date getDataRetirada() {
+	public LocalDate getDataRetirada() {
 		return dataRetirada;
 	}
 
-	public void setDataRetirada(Date dataRetirada) {
+	public void setDataRetirada(LocalDate dataRetirada) {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public Date getDataFinalizacao() {
+	public LocalDate getDataFinalizacao() {
 		return dataFinalizacao;
 	}
 
-	public void setDataFinalizacao(Date dataFinalizacao) {
+	public void setDataFinalizacao(LocalDate dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
 	}
 
