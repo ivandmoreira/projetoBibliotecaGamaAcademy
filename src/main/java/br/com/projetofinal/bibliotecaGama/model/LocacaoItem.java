@@ -1,38 +1,52 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = LocacaoItem.SEQUENCE_NAME, sequenceName = LocacaoItem.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class LocacaoItem implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	public static final String SEQUENCE_NAME = "SEQUENCE_LOCACAOITEM";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
 	private Integer id;
-	
-	private Date dataPrevisaoEntrega;
-	
-	private Date dataEntrega;
-	
-	private Integer diarias;
-  
-	private Double valoDiaria;
-	
+	private LocalDate dataPrevisaoEntrega;
+	private LocalDate dataEntrega;
+	private Long diarias;
+	private Double valorDiaria;
 	private Double valorLocacao;
 
-	@OneToMany
-	private List<Livro> Livros;
+	@OneToOne
+	private Livro livro;
+
+	@ManyToOne
+	private Locacao locacao;
+
+	public LocacaoItem() {
+	}
+
+	public LocacaoItem(Integer id, LocalDate dataPrevisaoEntrega, LocalDate dataEntrega, Long diarias,
+			Double valorDiaria, Double valorLocacao, Livro livro, Locacao locacao) {
+		super();
+		this.id = id;
+		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
+		this.dataEntrega = dataEntrega;
+		this.diarias = diarias;
+		this.valorDiaria = valorDiaria;
+		this.valorLocacao = valorLocacao;
+		this.livro = livro;
+		this.locacao = locacao;
+	}
 
 	public Integer getId() {
 		return id;
@@ -42,36 +56,36 @@ public class LocacaoItem implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDataPrevisaoEntrega() {
+	public LocalDate getDataPrevisaoEntrega() {
 		return dataPrevisaoEntrega;
 	}
 
-	public void setDataPrevisaoEntrega(Date dataPrevisaoEntrega) {
+	public void setDataPrevisaoEntrega(LocalDate dataPrevisaoEntrega) {
 		this.dataPrevisaoEntrega = dataPrevisaoEntrega;
 	}
 
-	public Date getDataEntrega() {
+	public LocalDate getDataEntrega() {
 		return dataEntrega;
 	}
 
-	public void setDataEntrega(Date dataEntrega) {
+	public void setDataEntrega(LocalDate dataEntrega) {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Integer getDiarias() {
+	public Long getDiarias() {
 		return diarias;
 	}
 
-	public void setDiarias(Integer diarias) {
+	public void setDiarias(Long diarias) {
 		this.diarias = diarias;
 	}
 
-	public Double getValoDiaria() {
-		return valoDiaria;
+	public Double getValorDiaria() {
+		return valorDiaria;
 	}
 
-	public void setValoDiaria(Double valoDiaria) {
-		this.valoDiaria = valoDiaria;
+	public void setValorDiaria(Double valorDiaria) {
+		this.valorDiaria = valorDiaria;
 	}
 
 	public Double getValorLocacao() {
@@ -80,6 +94,22 @@ public class LocacaoItem implements Serializable {
 
 	public void setValorLocacao(Double valorLocacao) {
 		this.valorLocacao = valorLocacao;
+	}
+
+	public Livro getLivro() {
+		return livro;
+	}
+
+	public void setLivro(Livro livro) {
+		this.livro = livro;
+	}
+
+	public Locacao getLocacao() {
+		return locacao;
+	}
+
+	public void setLocacao(Locacao locacao) {
+		this.locacao = locacao;
 	}
 
 }

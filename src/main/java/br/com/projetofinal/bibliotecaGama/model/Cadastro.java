@@ -41,7 +41,6 @@ public class Cadastro implements Serializable {
 	@Embedded
 	private Login login;
 
-//	private String senha;
 
 	@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
 	private Endereco endereco;
@@ -55,7 +54,6 @@ public class Cadastro implements Serializable {
 		this.email = cad.getEmail();
 		this.telefone = cad.getTelefone();
 		this.login = cad.getLogin();
-//		this.senha = cad.getSenha();
 		this.endereco = cad.getEndereco();
 	}
 
@@ -101,14 +99,6 @@ public class Cadastro implements Serializable {
 	public void setLogin(Login login) {
 		this.login = login;
 	}
-
-//	public String getSenha() {
-//		return senha;
-//	}
-//
-//	public void setSenha(String senha) {
-//		this.senha = senha;
-//	}
 
 	public Endereco getEndereco() {
 		return endereco;

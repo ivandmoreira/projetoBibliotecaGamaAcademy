@@ -68,8 +68,8 @@ public class SwaggerConfig {
 	private Contact contato() {
  
 		return new Contact(
-				"Gleyson Sampaio",
-				"http://www.digytal.com.br", 
-				"gleyson@digytal.com.br");
+				"Grupo 3",
+				"xxx", 
+				"xxx");
 	}
 }
