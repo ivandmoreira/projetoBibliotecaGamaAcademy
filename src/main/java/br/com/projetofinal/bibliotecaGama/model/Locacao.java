@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import br.com.projetofinal.bibliotecaGama.model.enums.LocacaoStatus;
 @Entity
 @SequenceGenerator(name = Locacao.SEQUENCE_NAME, sequenceName = Locacao.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Locacao implements Serializable {
@@ -34,12 +36,12 @@ public class Locacao implements Serializable {
 	private Cadastro cadastro;
 	@Enumerated(EnumType.ORDINAL)
 
-	private LocacaoStatusEnum status;
+	private LocacaoStatus status;
 	@OneToOne
 	private LocacaoItem locacaoItem;
 
 	public Locacao(Integer id, Date dataAgendamento, Date dataRetirada, Date dataFinalizacao, Double valorTotal,
-			Cadastro cadastro, LocacaoStatusEnum status, LocacaoItem locacaoItem) {
+			Cadastro cadastro, LocacaoStatus status, LocacaoItem locacaoItem) {
 		super();
 		this.id = id;
 		this.dataAgendamento = dataAgendamento;
@@ -96,11 +98,11 @@ public class Locacao implements Serializable {
 		this.cadastro = cadastro;
 	}
 
-	public LocacaoStatusEnum getStatus() {
+	public LocacaoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(LocacaoStatusEnum status) {
+	public void setStatus(LocacaoStatus status) {
 		this.status = status;
 	}
 
