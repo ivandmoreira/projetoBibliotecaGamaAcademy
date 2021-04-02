@@ -12,6 +12,8 @@
 	<groupId>br.com.projetofinal</groupId>
 	<artifactId>bibliotecaGama</artifactId>
 	<version>1.0</version>
+	<packaging>jar</packaging>
+	
 	<name>bibliotecaGama</name>
 	<description>Projeto Final Gama Academy Accenture</description>
 	<properties>
@@ -42,9 +44,6 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> 
-			</dependency> -->
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -56,8 +55,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-test</artifactId> 
-			<scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
