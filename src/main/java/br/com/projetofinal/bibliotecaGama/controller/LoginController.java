@@ -11,12 +11,14 @@ import br.com.projetofinal.bibliotecaGama.model.Login;
 import br.com.projetofinal.bibliotecaGama.model.Sessao;
 import br.com.projetofinal.bibliotecaGama.services.LoginService;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/login")
 public class LoginController {
 	@Autowired
 	private LoginService service;
+	
+	@CrossOrigin
 	@PostMapping
 	public Sessao login(@RequestBody Login login) {
 		return service.logar(login);
