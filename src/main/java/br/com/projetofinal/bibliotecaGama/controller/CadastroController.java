@@ -42,7 +42,7 @@ public class CadastroController {
 		return ResponseEntity.ok().body(cad);
 	}
 	
-	
+	@CrossOrigin
 	@RequestMapping(method=RequestMethod.POST)
 	public void salvar(@RequestBody Cadastro cad){
 		

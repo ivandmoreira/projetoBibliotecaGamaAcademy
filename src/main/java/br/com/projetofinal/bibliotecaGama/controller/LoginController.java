@@ -1,6 +1,7 @@
 package br.com.projetofinal.bibliotecaGama.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import br.com.projetofinal.bibliotecaGama.model.Login;
 import br.com.projetofinal.bibliotecaGama.model.Sessao;
 import br.com.projetofinal.bibliotecaGama.services.LoginService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/login")
 public class LoginController {
