@@ -1,0 +1,41 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+src/main/resources/application.properties
+src/main/resources/application.properties
+target/classes/br/com/projetoFinal/bibliotecaGama/model/LocacaoItem.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Locacao.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Livro.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Endereco.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Cadastro.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Livro.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Endereco.class
+target/classes/br/com/projetoFinal/bibliotecaGama/model/Cadastro.class

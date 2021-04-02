@@ -1,53 +1,63 @@
 package br.com.projetofinal.bibliotecaGama.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+
+import org.hibernate.validator.constraints.br.CPF;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-public class Cadastro {
+@SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class Cadastro implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	public static final String SEQUENCE_NAME = "SEQUENCE_CADASTRO";
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id", nullable = false)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
+	private Integer id;	
 	
-	@Column(name="cpf", length=14, nullable = false, unique = true)
+	@CPF(message ="CPF Invalido")
+    @Column(name="cpf", length=14, nullable = false, unique = true)
 	private String cpf;
-	
-	@Column(name="nome", length=50)
+
+	@Column(length = 50, nullable = false)
 	private String nome;
-	
-	@Column(name="email", length=50)
+
+	@Column(length = 50)
 	private String email;
 
-	@Column(name="telefone", length=50)
+	@Column(length = 50)
 	private String telefone;
 
-	@Column(name="login", length=20 , unique = true)
-	private String login;
+	@Embedded
+	private Login login;
 
-	@Column(name="senha", length=50)
-	private String senha;
-	
-	@OneToOne
+//	private String senha;
+
+	@OneToOne( fetch = FetchType.EAGER, orphanRemoval = true)
 	private Endereco endereco;
-	
-	public Cadastro(){}
-	
-	public Cadastro(String cpf, String nome, String email, String telefone, String login, String senha, Endereco endereco) {
-		this.cpf = cpf;
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.login = login;
-		this.senha = senha;
-		this.endereco = endereco;
+
+	public Cadastro() {
+	}
+
+	public Cadastro(Cadastro cad) {
+		this.cpf = cad.getCpf();
+		this.nome = cad.getNome();
+		this.email = cad.getEmail();
+		this.telefone = cad.getTelefone();
+		this.login = cad.getLogin();
+//		this.senha = cad.getSenha();
+		this.endereco = cad.getEndereco();
 	}
 
 	public Integer getId() {
@@ -86,21 +96,20 @@ public class Cadastro {
 		this.telefone = telefone;
 	}
 
-	public String getLogin() {
+	public Login getLogin() {
 		return login;
 	}
-
-	public void setLogin(String login) {
+	public void setLogin(Login login) {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+//	public String getSenha() {
+//		return senha;
+//	}
+//
+//	public void setSenha(String senha) {
+//		this.senha = senha;
+//	}
 
 	public Endereco getEndereco() {
 		return endereco;
