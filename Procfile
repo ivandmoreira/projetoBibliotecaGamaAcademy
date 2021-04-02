@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/bibliotecaGama-1.0.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar target/1.0/bibliotecaGama-1.0.jar
