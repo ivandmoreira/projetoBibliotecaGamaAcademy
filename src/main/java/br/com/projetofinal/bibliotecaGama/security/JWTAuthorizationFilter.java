@@ -86,11 +86,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		return claimsJws.getBody();
 	}
 
-	/**
-	 * Authentication method in Spring flow
-	 * 
-	 * @param claims
-	 */
+
 	private void setUpSpringAuthentication(Claims claims) {
 		@SuppressWarnings("unchecked")
 		List<String> authorities = (List<String>) claims.get("authorities");
