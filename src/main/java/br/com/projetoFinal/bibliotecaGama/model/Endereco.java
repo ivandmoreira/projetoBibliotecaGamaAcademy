@@ -42,8 +42,7 @@ public class Endereco implements Serializable {
 
 	}
 
-	public Endereco(String cep, String logradouro, String bairro, String localidade, String uf,
-			int ibge) {
+	public Endereco(String cep, String logradouro, String bairro, String localidade, String uf, int ibge) {
 		super();
 		this.cep = cep;
 		this.logradouro = logradouro;

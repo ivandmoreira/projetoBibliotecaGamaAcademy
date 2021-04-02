@@ -36,7 +36,6 @@ public class JpaLocacaoRepository implements Repository<Locacao> {
 
 	@Override
 	public Locacao select(Integer id) {
-		// TODO Auto-generated method stub
 		return entityManager.find(Locacao.class, id);
 	}
 

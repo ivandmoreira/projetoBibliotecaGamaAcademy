@@ -31,7 +31,7 @@ public class CadastroService {
 		return cadastro;
 	}
 
-	public Cadastro cadastrarUsuario(Cadastro cadastro) {
+	public Cadastro cadastrar(Cadastro cadastro) {
 		scanner = new Scanner(System.in);
 		System.out.println("tela de cadastrar pessoas\n");
 		int option = 0;

@@ -35,12 +35,12 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 	public Cadastro selectCpf(String cpf) {
 		String consulta = "SELECT e FROM Cadastro e WHERE e.cpf = :cpf";
 		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
-		query.setParameter("cpf",cpf);
+		query.setParameter("cpf", cpf);
 		Cadastro cadastro = null;
 		try {
 			cadastro = query.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("Cpf disponível para cadastro");
+			System.out.println("Cpf disponivel para cadastro");
 		}
 		return cadastro;
 	}
@@ -48,7 +48,7 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 	public <T> Cadastro selectLogin(T login) {
 		String consulta = "SELECT e FROM Cadastro e WHERE e.login = :login";
 		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
-		query.setParameter("login",login);
+		query.setParameter("login", login);
 		Cadastro cadastro = null;
 		try {
 			cadastro = query.getSingleResult();
@@ -57,21 +57,21 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 		}
 		return cadastro;
 	}
-	
+
 	@Override
 	public Cadastro select(Integer id) {
-		return entityManager.find(Cadastro.class,id);
+		return entityManager.find(Cadastro.class, id);
 	}
 
 	@Override
 	public List<Cadastro> selectAll() {
-		Query query = entityManager.createQuery("SELECT e FROM Cadastro e"); //JPQL
+		Query query = entityManager.createQuery("SELECT e FROM Cadastro e"); // JPQL
 		return query.getResultList();
 	}
-		
+
 	public void fechar() {
 		entityManager.clear();
 		entityManager.close();
 	}
-	
+
 }

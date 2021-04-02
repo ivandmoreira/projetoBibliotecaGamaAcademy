@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import br.com.projetoFinal.bibliotecaGama.controller.CadastroController;
-import br.com.projetoFinal.bibliotecaGama.controller.LivroController;
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
 import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoItem;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoStatusEnum;
+import br.com.projetoFinal.bibliotecaGama.repository.JpaLivroRepository;
 import br.com.projetoFinal.bibliotecaGama.repository.JpaLocacaoRepository;
 
 public class LocacaoService {
@@ -28,8 +27,32 @@ public class LocacaoService {
 
 	public Locacao buscarPorId(Integer id) {
 		jpaLocacaoRepository = new JpaLocacaoRepository();
+		jpaLocacaoRepository.select(id);
 		Locacao locacao = jpaLocacaoRepository.select(id);
 		jpaLocacaoRepository.fechar();
+
+		LocalDate dataHoje = LocalDate.now();
+
+		double valorTotal = 0.0;
+		boolean alterou = false;
+
+		for (LocacaoItem locacaoItem : locacao.getLocacaoItem()) {
+			if (locacaoItem.getDataEntrega() == null) {
+				alterou = true;
+				locacaoItem.setDiarias(calcDiarias(locacao, dataHoje));
+				locacaoItem.setValorLocacao(calcValorLocacao(locacaoItem));
+				valorTotal += locacaoItem.getValorLocacao();
+			}
+		}
+
+		if (alterou) {
+			// set valor total
+			locacao.setValorTotal(valorTotal);
+			jpaLocacaoRepository = new JpaLocacaoRepository();
+			jpaLocacaoRepository.update(locacao);
+			jpaLocacaoRepository.fechar();
+		}
+
 		return locacao;
 	}
 
@@ -63,9 +86,16 @@ public class LocacaoService {
 			locacaoItem.setDiarias(0L);
 			locacaoItem.setValorDiaria(livro.getValorDiaria());
 
+			livro.setExemplares(decrementarExemplares(livro));
+			livro.setReservados(incrementarReservados(livro));
+
 			locacaoItem.setValorLocacao(calcValorLocacao(locacaoItem));
 
 			listLocacaoItem.add(locacaoItem);
+
+			JpaLivroRepository jpaLivroRepository = new JpaLivroRepository();
+			jpaLivroRepository.update(livro);
+			jpaLivroRepository.fechar();
 
 		}
 
@@ -108,16 +138,25 @@ public class LocacaoService {
 		locacao.setDataRetirada(dataHoje);
 
 		// setar previsão de entrega
-		LocalDate dataPrevisaoEntrega = LocalDate.now().plusDays(15);
+		LocalDate dataPrevisaoEntrega = LocalDate.now().plusDays(5);
+
+		double valorTotal = 0.0;
 
 		for (LocacaoItem locacaoItem : locacao.getLocacaoItem()) {
 			locacaoItem.setDataPrevisaoEntrega(dataPrevisaoEntrega);
-			locacaoItem.setDiarias(1L);
+			locacaoItem.setDiarias(calcDiarias(locacao, dataHoje));
 			locacaoItem.setValorLocacao(calcValorLocacao(locacaoItem));
+			valorTotal += locacaoItem.getValorLocacao();
 		}
+
+		// seta uma previsao de data de finalizacao para o dia de previsao de entrega.
+		locacao.setDataFinalizacao(dataPrevisaoEntrega);
 
 		// alterar status para efetivada
 		locacao.setStatus(LocacaoStatusEnum.EFETIVADA);
+
+		// set valor total
+		locacao.setValorTotal(valorTotal);
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.update(locacao);
@@ -133,29 +172,31 @@ public class LocacaoService {
 
 		System.out.println("tela de entregar locacao\n");
 
-		LocalDate dataHoje = LocalDate.now();
+		LocalDate dataHoje = LocalDate.now().plusDays(15);
 
-		double vlLocAcumulado = 0.0;
+		double valorTotal = 0.0;
 
 		for (LocacaoItem locacaoItem : locacao.getLocacaoItem()) {
+
 			locacaoItem.setDataEntrega(dataHoje);
 			locacaoItem.setDiarias(calcDiarias(locacao, dataHoje));
 			locacaoItem.setValorLocacao(calcValorLocacao(locacaoItem));
-			vlLocAcumulado += locacaoItem.getValorLocacao();
+
+			Livro livro = locacaoItem.getLivro();
+
+			livro.setExemplares(incrementarExemplares(livro));
+			livro.setReservados(decrementarReservados(livro));
+
+			valorTotal += locacaoItem.getValorLocacao();
+
+			JpaLivroRepository jpaLivroRepository = new JpaLivroRepository();
+			jpaLivroRepository.update(livro);
+			jpaLivroRepository.fechar();
 		}
 
 		locacao.setStatus(LocacaoStatusEnum.FINALIZADA);
-		locacao.setValorTotal(vlLocAcumulado);
+		locacao.setValorTotal(valorTotal);
 		locacao.setDataFinalizacao(dataHoje);
-
-		// locacao.getLocacaoItem().getLivros().get(0);
-		//// incrementa 1 do exemplar
-		// livro.setExemplares(livro.getExemplares() - 1);
-		//
-		//// decrementa 1 do reservado
-		// livro.setReservados(livro.getReservados() + 1);
-
-		// locacao.setStatus(LocacaoStatusEnum.FINALIZADA);
 
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.update(locacao);
@@ -166,9 +207,24 @@ public class LocacaoService {
 		return locacao;
 	}
 
+	private int decrementarExemplares(Livro livro) {
+		return livro.getExemplares() - 1;
+	}
+
+	private int incrementarReservados(Livro livro) {
+		return livro.getReservados() + 1;
+	}
+
+	private int decrementarReservados(Livro livro) {
+		return livro.getReservados() - 1;
+	}
+
+	private int incrementarExemplares(Livro livro) {
+		return livro.getExemplares() + 1;
+	}
+
 	private long calcDiarias(Locacao locacao, LocalDate data) {
-		long diarias = ChronoUnit.DAYS.between(locacao.getDataRetirada(), data) + 1;
-		return diarias;
+		return ChronoUnit.DAYS.between(locacao.getDataRetirada(), data);
 	}
 
 }

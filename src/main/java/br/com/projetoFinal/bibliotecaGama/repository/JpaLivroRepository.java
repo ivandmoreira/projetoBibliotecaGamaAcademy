@@ -35,28 +35,29 @@ public class JpaLivroRepository implements Repository<Livro> {
 
 	@Override
 	public Livro select(Integer id) {
-		return entityManager.find(Livro.class,id);
+		return entityManager.find(Livro.class, id);
 	}
 
 	@Override
 	public List<Livro> selectAll() {
-		Query query = entityManager.createQuery("SELECT e FROM Livro e"); //JPQL
+		Query query = entityManager.createQuery("SELECT e FROM Livro e"); // JPQL
 		return query.getResultList();
 	}
+
 	public boolean disponivel(Livro e) {
 		String consulta = "SELECT l FROM livro l where l.id = :idParam and l.exemplares >= 1";
-		TypedQuery<Livro> query = entityManager.createQuery(consulta,Livro.class); //JPQL
+		TypedQuery<Livro> query = entityManager.createQuery(consulta, Livro.class); // JPQL
 		query.setParameter("idParam", e.getId());
-		Optional<Livro> livro =  Optional.ofNullable(query.getSingleResult());
-		if(livro.isPresent()){
+		Optional<Livro> livro = Optional.ofNullable(query.getSingleResult());
+		if (livro.isPresent()) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void fechar() {
 		entityManager.clear();
 		entityManager.close();
 	}
-	
+
 }

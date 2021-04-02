@@ -7,10 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoItem;
 
-public class JpaLocacaoItemRepository implements Repository <LocacaoItem> {
+public class JpaLocacaoItemRepository implements Repository<LocacaoItem> {
 
 	private EntityManager entityManager;
 
@@ -36,7 +35,7 @@ public class JpaLocacaoItemRepository implements Repository <LocacaoItem> {
 
 	@Override
 	public LocacaoItem select(Integer id) {
-		return entityManager.find(LocacaoItem.class,id);
+		return entityManager.find(LocacaoItem.class, id);
 	}
 
 	@Override

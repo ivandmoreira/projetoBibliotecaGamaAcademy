@@ -1,15 +1,19 @@
 package br.com.projetoFinal.bibliotecaGama.service;
+
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 public class EnderecoService {
-	private static String webService = "http://viacep.com.br/ws/";
-	private static int codigoSucesso = 200;
-	public int getCodigoSucesso() {
-		return codigoSucesso;
-	}
-	public static String viaCep(String cep) throws Exception {
+    private static String webService = "http://viacep.com.br/ws/";
+    private static int codigoSucesso = 200;
+
+    public int getCodigoSucesso() {
+        return codigoSucesso;
+    }
+
+    public static String viaCep(String cep) throws Exception {
         String urlChamada = webService + cep + "/json";
         try {
             URL url = new URL(urlChamada);

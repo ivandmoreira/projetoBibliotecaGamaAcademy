@@ -8,51 +8,51 @@ import br.com.projetoFinal.bibliotecaGama.controller.LoginController;
 
 public class Main {
 
-public static void main(String[] args) {
-	
-	Scanner scanner = new Scanner(System.in);
+	public static void main(String[] args) {
 
-	int option = 0;
+		Scanner scanner = new Scanner(System.in);
 
-	do {
+		int option = 0;
 
-		System.out.println("## Escolha uma das opcoes abaixo ##");
-		System.out.println("1 - Logar-se");
-		System.out.println("2 - Tela de usuario");
-		System.out.println("3 - Tela de livro");
-		System.out.println("0 - Sair do programa");
-		System.out.println("_______________________");
-		System.out.print("Digite sua opcao: ");
+		do {
 
-		option = Integer.parseInt(scanner.nextLine());
+			System.out.println("## Escolha uma das opcoes abaixo ##");
+			System.out.println("1 - Logar-se");
+			System.out.println("2 - Tela de usuario");
+			System.out.println("3 - Tela de livro");
+			System.out.println("0 - Sair do programa");
+			System.out.println("_______________________");
+			System.out.print("Digite sua opcao: ");
 
-		switch (option) {
-		case 0:
-			break;
-		case 1:
-			LoginController loginController = new LoginController();
-			loginController.logarUsuario();
-			break;
-		case 2:
-			CadastroController controllerCadastro = new CadastroController();
-			controllerCadastro.run();
-			break;
-		case 3:
-			LivroController livroController = new LivroController();
-			livroController.run();
-			break;
-		default:
-			System.out.println("Opcao nao disponivel\n");
-			break;
-		}
+			option = Integer.parseInt(scanner.nextLine());
 
-	} while (option != 0);
+			switch (option) {
+			case 0:
+				break;
+			case 1:
+				LoginController loginController = new LoginController();
+				loginController.logarUsuario();
+				break;
+			case 2:
+				CadastroController controllerCadastro = new CadastroController();
+				controllerCadastro.run();
+				break;
+			case 3:
+				LivroController livroController = new LivroController();
+				livroController.run();
+				break;
+			default:
+				System.out.println("Opcao nao disponivel\n");
+				break;
+			}
 
-	scanner.close();
-	System.out.println("Programa finalizado!");
-}
-	
-  public String sayHello() {
-    return "Hell! 00";
-  }
+		} while (option != 0);
+
+		scanner.close();
+		System.out.println("Programa finalizado!");
+	}
+
+	public String sayHello() {
+		return "Hell! 00";
+	}
 }

@@ -32,11 +32,10 @@ public class LocacaoController {
 			System.out.println("1 - Agendar uma locacao");
 			System.out.println("2 - Retirar uma locacao");
 			System.out.println("3 - Devolver uma locacao");
-			System.out.println("4 - Exibir todos as locacoes cadastradas");
-			System.out.println("5 - Buscar locacao por id");
-			System.out.println("6 - Buscar por Data de Agendamento ");
-			System.out.println("7 - Buscar por Data de Retirada ");
-			System.out.println("8 - Buscar por Status de locacao ");
+			System.out.println("4 - Buscar locacao por id");
+			System.out.println("5 - Buscar por Data de Agendamento ");
+			System.out.println("6 - Buscar por Data de Retirada ");
+			System.out.println("7 - Buscar por Status de locacao ");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -49,19 +48,25 @@ public class LocacaoController {
 			case 1:
 				locacao = new Locacao();
 
+				System.out.println("id do usuario: ");
+				id = Integer.parseInt(scanner.nextLine());
+
 				CadastroController cadastroController = new CadastroController();
-				Cadastro cadastro = cadastroController.getUser(32);
+				Cadastro cadastro = cadastroController.getById(id);
+
+				System.out.println("id do livro: ");
+				id = Integer.parseInt(scanner.nextLine());
 
 				LivroController livroController = new LivroController();
-				Livro livro = livroController.getBook(222);
+				Livro livro = livroController.getById(id);
 
 				List<Livro> listLivro = new ArrayList<>();
 				listLivro.add(livro);
 
-				livro = livroController.getBook(232);
-				listLivro.add(livro);
+				// livro = livroController.getBook(182);
+				// listLivro.add(livro);
 
-				locacao = scheduleRental(locacao, cadastro, listLivro);
+				locacao = agendar(locacao, cadastro, listLivro);
 
 				if (locacao != null) {
 					System.out.println("Agendamento realizado com sucesso");
@@ -69,56 +74,61 @@ public class LocacaoController {
 				break;
 			case 2:
 				System.out.println("Informe o id: ");
-				// id = Integer.parseInt(scanner.nextLine());
+				id = Integer.parseInt(scanner.nextLine());
 
-				locacao = getRent(442);
+				locacao = getById(id);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
-					System.out.println(locacao.getLocacaoItem().toArray());
-					locacao = takeRental(locacao);
+					locacao = retirar(locacao);
 				}
 
 				break;
 			case 3:
 				System.out.println("Informe o id: ");
-				// id = Integer.parseInt(scanner.nextLine());
+				id = Integer.parseInt(scanner.nextLine());
 
-				locacao = getRent(442);
+				locacao = getById(id);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
-					locacao = returnRental(locacao);
+					locacao = devolver(locacao);
 				}
 
 				break;
 			case 4:
-				List<Locacao> results = getAllRents();
+				System.out.print("Informe o id: ");
+				id = Integer.parseInt(scanner.nextLine());
 
-				for (Locacao result : results) {
-					System.out.println(result.getStatus());
+				locacao = getById(id);
+
+				if (locacao != null) {
+					System.out.println(locacao.getId());
 				}
 
 				break;
 			case 5:
-				System.out.print("Informe o id: ");
-				id = Integer.parseInt(scanner.nextLine());
-
-				locacao = getRent(id);
-
-				if (locacao != null) {
-					System.out.println(locacao.getLocacaoItem());
-				}
-
-				break;
-			case 6:
 				System.out.print("Informe a data no formato aaaa-mm-dd: ");
 
 				String data = scanner.nextLine();
 				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate dataAgendamento = LocalDate.parse(data, format);
 
-				locacao = getDateRent(dataAgendamento);
+				locacao = getByDate(dataAgendamento);
+
+				if (locacao != null) {
+					System.out.println(locacao.getId());
+				}
+
+				break;
+			case 6:
+				System.out.print("Informe a data no formato aaaa-mm-dd: ");
+
+				String dataRetorno = scanner.nextLine();
+				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dataReturn = LocalDate.parse(dataRetorno, formatReturn);
+
+				locacao = getByDateRetirada(dataReturn);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
@@ -126,20 +136,6 @@ public class LocacaoController {
 
 				break;
 			case 7:
-				System.out.print("Informe a data no formato aaaa-mm-dd: ");
-
-				String dataRetorno = scanner.nextLine();
-				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-				LocalDate dataReturn = LocalDate.parse(dataRetorno, formatReturn);
-
-				locacao = getDateReturn(dataReturn);
-
-				if (locacao != null) {
-					System.out.println(locacao.getId());
-				}
-
-				break;
-			case 8:
 				System.out.println("Status disponiveis:");
 
 				System.out.println("1 - " + LocacaoStatusEnum.EFETIVADA);
@@ -163,12 +159,6 @@ public class LocacaoController {
 					break;
 				}
 
-				// locacao = getRent(-id);
-				//
-				// if (locacao != null) {
-				// System.out.println(locacao.getLocacaoItem().getId());
-				// }
-
 				break;
 			default:
 				System.out.println("Opcao nao disponivel\n");
@@ -180,37 +170,32 @@ public class LocacaoController {
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
 
-	private Locacao scheduleRental(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
+	private Locacao agendar(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
 		locacaoService = new LocacaoService();
 		return locacaoService.agendarLocacao(locacao, cadastro, listLivro);
 	}
 
-	private Locacao takeRental(Locacao locacao) {
+	private Locacao retirar(Locacao locacao) {
 		locacaoService = new LocacaoService();
 		return locacaoService.retirarLocacao(locacao);
 	}
 
-	private Locacao returnRental(Locacao locacao) {
+	private Locacao devolver(Locacao locacao) {
 		locacaoService = new LocacaoService();
 		return locacaoService.devolverLocacao(locacao);
 	}
 
-	public List<Locacao> getAllRents() {
-		locacaoService = new LocacaoService();
-		return locacaoService.buscarTodos();
-	}
-
-	public Locacao getRent(Integer id) {
+	public Locacao getById(Integer id) {
 		locacaoService = new LocacaoService();
 		return locacaoService.buscarPorId(id);
 	}
 
-	public Locacao getDateRent(LocalDate data) {
+	public Locacao getByDate(LocalDate data) {
 		locacaoService = new LocacaoService();
 		return locacaoService.buscarPorDataLocacao(data);
 	}
 
-	public Locacao getDateReturn(LocalDate data) {
+	public Locacao getByDateRetirada(LocalDate data) {
 		locacaoService = new LocacaoService();
 		return locacaoService.buscarPorDataRetirada(data);
 	}

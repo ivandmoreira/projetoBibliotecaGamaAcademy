@@ -1,6 +1,5 @@
 package br.com.projetoFinal.bibliotecaGama.controller;
 
-import java.util.List;
 import java.util.Scanner;
 
 import br.com.projetoFinal.bibliotecaGama.model.Livro;
@@ -9,7 +8,7 @@ import br.com.projetoFinal.bibliotecaGama.service.LivroService;
 public class LivroController {
 	private Scanner scanner;
 	private LivroService livroService;
-	
+
 	public void run() {
 		System.out.println("\n## Abriu tela livros ##\n");
 		Livro livro;
@@ -21,8 +20,6 @@ public class LivroController {
 
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Cadastrar um Livro");
-			System.out.println("2 - Exibir todos os livros cadastrados");
-//			System.out.println("3 - Buscar livro por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -34,30 +31,11 @@ public class LivroController {
 				break;
 			case 1:
 				livro = new Livro();
-				livro = createBook(livro);
-				if(livro != null) {
+				livro = cadastrar(livro);
+				if (livro != null) {
 					System.out.println("Cadastro realizado com sucesso");
 				}
 				break;
-			case 2:
-				List<Livro> results = getAllBooks();
-
-				for (Livro result : results) {
-					System.out.println(result.getTitulo());
-				}
-
-				break;
-//			case 3:
-//				System.out.println("Informe o id: ");
-//				int id = Integer.parseInt(scanner.nextLine());
-//				
-//				livro = getBook(id);
-//				
-//				if(livro != null) {
-//					System.out.println(livro.getTitulo());
-//				}
-//				
-//				break;
 			default:
 				System.out.println("Opcao nao disponivel\n");
 				break;
@@ -67,20 +45,15 @@ public class LivroController {
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
-	
-	private Livro createBook(Livro livro) {
+
+	private Livro cadastrar(Livro livro) {
 		livroService = new LivroService();
 		return livroService.cadastrarLivro(livro);
 	}
-	
-	public List<Livro> getAllBooks() {
-		livroService = new LivroService();
-		return livroService.buscarTodos();
-	}
-	
-	public Livro getBook(Integer id) {
+
+	public Livro getById(Integer id) {
 		livroService = new LivroService();
 		return livroService.buscarPorId(id);
 	}
-	
+
 }

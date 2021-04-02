@@ -1,6 +1,5 @@
 package br.com.projetoFinal.bibliotecaGama.controller;
 
-import java.util.List;
 import java.util.Scanner;
 
 import br.com.projetoFinal.bibliotecaGama.model.Cadastro;
@@ -9,7 +8,7 @@ import br.com.projetoFinal.bibliotecaGama.service.CadastroService;
 public class CadastroController {
 	private Scanner scanner;
 	private CadastroService cadastroService;
-	
+
 	public void run() {
 		System.out.println("\n## Abriu tela usuarios ##\n");
 
@@ -21,8 +20,6 @@ public class CadastroController {
 
 			System.out.println("## Escolha uma das opcoes abaixo ##");
 			System.out.println("1 - Cadastrar usuario");
-			System.out.println("2 - Exibir todos os usuarios cadastrados");
-			System.out.println("3 - Buscar usuario por id");
 			System.out.println("0 - Voltar tela");
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
@@ -34,29 +31,10 @@ public class CadastroController {
 				break;
 			case 1:
 				Cadastro cadastro = new Cadastro();
-				cadastro = createUser(cadastro);
-				if(cadastro != null) {
+				cadastro = cadastrar(cadastro);
+				if (cadastro != null) {
 					System.out.println("Cadastro realizado com sucesso");
 				}
-				break;
-			case 2:
-				List<Cadastro> results = getAllUsers();
-
-				for (Cadastro result : results) {
-					System.out.println(result.getCpf());
-				}
-
-				break;
-			case 3:
-				System.out.println("Informe o id: ");
-				int id = Integer.parseInt(scanner.nextLine());
-				
-				cadastro = getUser(id);
-				
-				if(cadastro != null) {
-					System.out.println(cadastro.getCpf());
-				}
-				
 				break;
 			default:
 				System.out.println("Opcao nao disponivel\n");
@@ -67,20 +45,15 @@ public class CadastroController {
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
-	
-	private Cadastro createUser(Cadastro cadastro) {
+
+	private Cadastro cadastrar(Cadastro cadastro) {
 		cadastroService = new CadastroService();
-		return cadastroService.cadastrarUsuario(cadastro);
+		return cadastroService.cadastrar(cadastro);
 	}
-	
-	public List<Cadastro> getAllUsers() {
-		cadastroService = new CadastroService();
-		return cadastroService.buscarTodos();
-	}
-	
-	public Cadastro getUser(Integer id) {
+
+	public Cadastro getById(Integer id) {
 		cadastroService = new CadastroService();
 		return cadastroService.buscarPorId(id);
 	}
-	
+
 }
