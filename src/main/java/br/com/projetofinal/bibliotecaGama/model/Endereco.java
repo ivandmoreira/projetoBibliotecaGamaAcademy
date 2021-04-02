@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @SequenceGenerator(name = Endereco.SEQUENCE_NAME, sequenceName = Endereco.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)

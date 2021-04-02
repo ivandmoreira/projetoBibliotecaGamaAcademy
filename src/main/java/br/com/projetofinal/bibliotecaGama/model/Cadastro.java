@@ -13,7 +13,6 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.br.CPF;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity
 @SequenceGenerator(name = Cadastro.SEQUENCE_NAME, sequenceName = Cadastro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
