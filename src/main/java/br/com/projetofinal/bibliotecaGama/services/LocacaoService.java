@@ -3,13 +3,18 @@ package br.com.projetofinal.bibliotecaGama.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+import org.hibernate.type.LocalDateTimeType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Service;
-
 import br.com.projetofinal.bibliotecaGama.dto.LocacaoDto;
 import br.com.projetofinal.bibliotecaGama.dto.LocacaoItemDto;
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
@@ -23,13 +28,10 @@ import br.com.projetofinal.bibliotecaGama.repository.LocacaoRepository;
 
 @Service
 public class LocacaoService {
-
 	@Autowired
 	private CadastroService cadastroService;
-
 	@Autowired
 	private LivroService livrosService;
-
 	@Autowired
 	private LocacaoRepository locacaoRepository;
 	@Autowired
@@ -53,18 +55,18 @@ public class LocacaoService {
 
 		locacaoRepository.save(locacao);
 		for (LocacaoItemDto locacaoItemDto : locDto.getLocacaoItem()) {
-			
+
 			LocacaoItem objetoLocacaoItem = new LocacaoItem();
 			objetoLocacaoItem.setLocacao(locacao);
 			objetoLocacaoItem.setDataPrevisaoEntrega(locacaoItemDto.getDataPrevisaoEntrega());
-			 Optional<Livro> livro = livroRepository.VerificaDisponibilidade(locacaoItemDto.getLivro_id());
-			if(livro.isPresent()) {
-			Livro livroDisponivel = livro.get();
-			livrosService.decrementarExemplares(livroDisponivel);
-			livrosService.incrementarReservados(livroDisponivel);
-			objetoLocacaoItem.setLivro(livroDisponivel);
-			
-		}
+			Optional<Livro> livro = livroRepository.VerificaDisponibilidade(locacaoItemDto.getLivro_id());
+			if (livro.isPresent()) {
+				Livro livroDisponivel = livro.get();
+				livrosService.decrementarExemplares(livroDisponivel);
+				livrosService.incrementarReservados(livroDisponivel);
+				objetoLocacaoItem.setLivro(livroDisponivel);
+
+			}
 			locacaoItemRepository.save(objetoLocacaoItem);
 			locacaoItens.add(objetoLocacaoItem);
 		}
@@ -72,4 +74,34 @@ public class LocacaoService {
 		return locacao;
 	}
 
+	public Iterable<Locacao> buscarLocacao() {
+		return locacaoRepository.findAll();
+	}
+
+	public Optional<Locacao> buscarPorId(int id) {
+		return locacaoRepository.findById(id);
+	}
+
+	public void retirarLivro(int id) {
+		Optional<Locacao> retirando = locacaoRepository.findById(id);
+
+		retirando.get().setDataRetirada(dataAtual());
+		retirando.get().setStatus(LocacaoStatus.EFETIVADA);
+
+		locacaoRepository.save(retirando.get());
+
+	}
+
+	public void entregarLivro(int id) {
+		Optional<Locacao> entregarLivro = locacaoRepository.findById(id);
+		entregarLivro.get().setDataFinalizacao(dataAtual());
+		entregarLivro.get().setStatus(LocacaoStatus.FINALIZADA);
+
+		locacaoRepository.save(entregarLivro.get());
+	}
+
+	private LocalDate dataAtual() {
+		LocalDate dat = LocalDate.now();
+		return dat;
+	}
 }
