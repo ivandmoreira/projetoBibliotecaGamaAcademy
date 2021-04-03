@@ -10,15 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName = Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
-public class Livro implements Serializable {
-	private static final long serialVersionUID = 1L;
+// @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName =
+// Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
+public class Livro extends AbstractModel {
+	// private static final long serialVersionUID = 1L;
 
-	public static final String SEQUENCE_NAME = "SEQUENCE_LIVRO";
+	// public static String SEQUENCE_NAME = "SEQUENCE_LIVRO";
+	// this.SEQUENCE_NAME="SEQUENCE_LIVRO";
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE_NAME)
-	private Integer id;
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	// SEQUENCE_NAME)
+	// private Integer id;
 
 	@Column(length = 14, unique = true)
 	private String isbn;
@@ -36,9 +39,11 @@ public class Livro implements Serializable {
 	private Integer reservados;
 
 	public Livro() {
+		super();
 	}
 
 	public Livro(String isbn, String titulo, Double vd, Integer ex, int reservados) {
+		super();
 		this.isbn = isbn;
 		this.titulo = titulo;
 		this.valorDiaria = vd;
@@ -46,13 +51,13 @@ public class Livro implements Serializable {
 		this.reservados = reservados;
 	}
 
-	public Integer getId() {
-		return id;
-	}
+	// public Integer getId() {
+	// return id;
+	// }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	// public void setId(Integer id) {
+	// this.id = id;
+	// }
 
 	public String getIsbn() {
 		return isbn;
