@@ -1,7 +1,9 @@
 package br.com.projetofinal.bibliotecaGama.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import br.com.projetofinal.bibliotecaGama.model.Cadastro;
 import br.com.projetofinal.bibliotecaGama.model.Livro;
 import br.com.projetofinal.bibliotecaGama.model.Locacao;
 import br.com.projetofinal.bibliotecaGama.model.LocacaoItem;
+import br.com.projetofinal.bibliotecaGama.model.enums.LocacaoStatus;
+import br.com.projetofinal.bibliotecaGama.repository.LocacaoItemRepository;
+import br.com.projetofinal.bibliotecaGama.repository.LocacaoRepository;
 
 @Service
 public class LocacaoService {
@@ -23,62 +28,50 @@ public class LocacaoService {
 	@Autowired
 	private LivroService livrosService;
 	
-	Locacao loc = new Locacao();
-	
-	List<LocacaoItem> locIt = new ArrayList<>();
+	@Autowired
+	private LocacaoRepository locacaoRepository;
+	@Autowired
+	private LocacaoItemRepository locacaoItemRepository;
 	
 	public Locacao salvar(LocacaoDto locDto) {
 		
-		buscarCadastro(locDto.getUsuario_id());
-		buscarLivro(locDto.getLocacaoItem());
+		Locacao locacao = new Locacao();
+				locacao.setStatus(LocacaoStatus.RESERVADA);
 		
-		return null;
-	}
-
-	private void buscarLivro(List<LocacaoItemDto> locacaoItem) {
-		int index = 0;
-		for(LocacaoItemDto liv : locacaoItem) {
-			System.out.println("id do Livro "+ liv.getLivro_id());
+		Optional <Cadastro> cadastro = cadastroService.buscarPorId(locDto.getUsuario_id());
+		
+		List<LocacaoItem> locacaoItens = new ArrayList<LocacaoItem>();
+		
+		locacao.setCadastro(cadastro.isPresent()?cadastro.get():null);
+		locacao.setLocacaoItem(locacaoItens);
+		
+		locacaoRepository.save(locacao);
+		for (LocacaoItemDto locacaoItemDto : locDto.getLocacaoItem()) {
 			
-			Optional<Livro> livro = livrosService.buscarPorId(liv.getLivro_id());
-			
-			System.out.println(index + " dados do livro " + livro.get().getTitulo());
-			
-			index++;
-			
-			
-			
-//			locIt.add(livro.get());
-			
+			LocacaoItem objetoLocacaoItem = new LocacaoItem();
+			objetoLocacaoItem.setLocacao(locacao);
+			objetoLocacaoItem.setDataPrevisaoEntrega(locacaoItemDto.getDataPrevisaoEntrega());
+			Optional<Livro> livro = livrosService.buscarPorId(locacaoItemDto.getLivro_id());
+			objetoLocacaoItem.setLivro(livro.isPresent()?livro.get():livro.get());
+			locacaoItemRepository.save(objetoLocacaoItem);
+			locacaoItens.add(objetoLocacaoItem);
 		}
+
+
 		
-//		Iterable<Livro> livro = livrosService.buscarPorId(locacaoItem);
-//		List<Livro> livros = livrosService.buscarLivros(livros_id);
-//		loc.setLocacaoItem(livros);
-		
+		return locacao;
 	}
+
 	
-//##########################################################################################
 	
-//	private void buscarLivro(List<LocacaoItemDto> locacaoItem) {
-//		
-//		for (LocacaoItemDto liv : locacaoItem) {
-//			Livro livroRetorno = livrosService.buscarPorId2(liv.getLivro_id());
-//			
-//			locIt.add(e)
-//			locIt.add(livroRetorno.getClass());
-//		}
-//	}
-	
-//##############################################################################################	
 	
 
-	private void buscarCadastro(int usuario) {
-		
-		Optional<Cadastro> cad = cadastroService.buscarPorId(usuario);
-		
-		loc.setCadastro(cad.get());
-		
-		
-	}
+	
+
+	
+
+	
+
+
+
 }
