@@ -10,6 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import br.com.projetofinal.bibliotecaGama.dto.LocacaoItemDto;
+
+
 @Entity
 @SequenceGenerator(name = LocacaoItem.SEQUENCE_NAME, sequenceName = LocacaoItem.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class LocacaoItem implements Serializable {
@@ -32,6 +35,7 @@ public class LocacaoItem implements Serializable {
 	@ManyToOne
 	private Locacao locacao;
 
+	
 	public LocacaoItem() {
 	}
 
@@ -46,6 +50,10 @@ public class LocacaoItem implements Serializable {
 		this.valorLocacao = valorLocacao;
 		this.livro = livro;
 		this.locacao = locacao;
+	}
+
+	public LocacaoItem(LocacaoItemDto obj) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getId() {
