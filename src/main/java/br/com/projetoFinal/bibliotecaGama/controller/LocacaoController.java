@@ -11,6 +11,7 @@ import br.com.projetoFinal.bibliotecaGama.model.Livro;
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
 import br.com.projetoFinal.bibliotecaGama.model.LocacaoStatusEnum;
 import br.com.projetoFinal.bibliotecaGama.service.LocacaoService;
+import br.com.projetoFinal.bibliotecaGama.util.Validadores;
 
 public class LocacaoController {
 	private Scanner scanner;
@@ -24,7 +25,7 @@ public class LocacaoController {
 
 		scanner = new Scanner(System.in);
 
-		int option = 0;
+		String option;
 
 		do {
 
@@ -40,63 +41,90 @@ public class LocacaoController {
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
 
-			option = Integer.parseInt(scanner.nextLine());
+			option = scanner.nextLine();
 
 			switch (option) {
-			case 0:
+			case "0":
 				break;
-			case 1:
+			case "1":
 				locacao = new Locacao();
 
-				System.out.println("id do usuario: ");
+				System.out.print("id do usuario: ");
 				id = Integer.parseInt(scanner.nextLine());
 
 				CadastroController cadastroController = new CadastroController();
 				Cadastro cadastro = cadastroController.getById(id);
-
-				System.out.println("id do livro: ");
-				id = Integer.parseInt(scanner.nextLine());
-
-				LivroController livroController = new LivroController();
-				Livro livro = livroController.getById(id);
+				if (cadastro == null) {
+					System.out.println("Cadastro nao encontrado");
+					break;
+				}
 
 				List<Livro> listLivro = new ArrayList<>();
-				listLivro.add(livro);
+				LivroController livroController = new LivroController();
 
-				// livro = livroController.getBook(182);
-				// listLivro.add(livro);
+				boolean verificador = false;
+				while (!verificador) {
+					verificador = true;
 
-				locacao = agendar(locacao, cadastro, listLivro);
+					System.out.print("id do livro: ");
+					id = Integer.parseInt(scanner.nextLine());
 
-				if (locacao != null) {
-					System.out.println("Agendamento realizado com sucesso");
+					if (!livroController.hasExemplares(id)) {
+						System.out.println("Esse livro nao existe ou esta sem exemplares disponiveis.");
+					} else {
+						Livro livro = livroController.getById(id);
+						listLivro.add(livro);
+					}
+
+					System.out.print("Você deseja adicionar outro livro? (S ou N): ");
+					String aux = scanner.nextLine();
+					if (aux != null && aux.equalsIgnoreCase("s") || aux.equalsIgnoreCase("sim")) {
+						verificador = false;
+					}
+
 				}
+
+				if (listLivro != null) {
+					locacao = agendar(locacao, cadastro, listLivro);
+
+					if (locacao != null) {
+						System.out.println("Agendamento realizado com sucesso");
+						System.out.println(locacao.toString());
+					}
+				} else {
+					System.err.println("Nenhum livro foi selecionado, agendamento cancelado.");
+				}
+
 				break;
-			case 2:
-				System.out.println("Informe o id: ");
+			case "2":
+				System.out.println("id da locacao: ");
 				id = Integer.parseInt(scanner.nextLine());
 
 				locacao = getById(id);
 
+				if (locacao.getStatus() == LocacaoStatusEnum.EFETIVADA) {
+					System.out.println("Livros ja retirados.");
+					break;
+				}
+
 				if (locacao != null) {
-					System.out.println(locacao.getId());
 					locacao = retirar(locacao);
+					System.out.println(locacao.toString());
 				}
 
 				break;
-			case 3:
+			case "3":
 				System.out.println("Informe o id: ");
 				id = Integer.parseInt(scanner.nextLine());
 
 				locacao = getById(id);
 
 				if (locacao != null) {
-					System.out.println(locacao.getId());
 					locacao = devolver(locacao);
 				}
 
 				break;
-			case 4:
+			case "4":
 				System.out.print("Informe o id: ");
 				id = Integer.parseInt(scanner.nextLine());
 
@@ -107,25 +135,33 @@ public class LocacaoController {
 				}
 
 				break;
-			case 5:
-				System.out.print("Informe a data no formato aaaa-mm-dd: ");
+			case "5":
+				System.out.print("Formato aaaa-MM-dd\nInforme a data: ");
 
 				String data = scanner.nextLine();
+				if (!Validadores.data(data)) {
+					System.err.println("Data invalida ou escrita no formato incorreto");
+					break;
+				}
 				DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate dataAgendamento = LocalDate.parse(data, format);
 
-				locacao = getByDate(dataAgendamento);
+				locacao = getByDateLocacao(dataAgendamento);
 
 				if (locacao != null) {
 					System.out.println(locacao.getId());
 				}
 
 				break;
-			case 6:
-				System.out.print("Informe a data no formato aaaa-mm-dd: ");
+			case "6":
+				System.out.print("Formato aaaa-MM-dd\nInforme a data: ");
 
 				String dataRetorno = scanner.nextLine();
-				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				if (!Validadores.data(dataRetorno)) {
+					System.err.println("Data invalida ou escrita no formato incorreto");
+					break;
+				}
+				DateTimeFormatter formatReturn = DateTimeFormatter.ofPattern("dd-mm-yyyy");
 				LocalDate dataReturn = LocalDate.parse(dataRetorno, formatReturn);
 
 				locacao = getByDateRetirada(dataReturn);
@@ -135,28 +171,36 @@ public class LocacaoController {
 				}
 
 				break;
-			case 7:
+			case "7":
 				System.out.println("Status disponiveis:");
 
-				System.out.println("1 - " + LocacaoStatusEnum.EFETIVADA);
-				System.out.println("2 - " + LocacaoStatusEnum.FINALIZADA);
-				System.out.println("3 - " + LocacaoStatusEnum.RESERVADA);
+				System.out.println("1 - " + LocacaoStatusEnum.RESERVADA);
+				System.out.println("2 - " + LocacaoStatusEnum.EFETIVADA);
+				System.out.println("3 - " + LocacaoStatusEnum.FINALIZADA);
 
 				System.out.print("Informe o digito correspondente: ");
-				id = Integer.parseInt(scanner.nextLine());
+				option = scanner.nextLine();
 
-				switch (id) {
-				case 1:
-
+				List<Locacao> listLocacao = null;
+				switch (option) {
+				case "1":
+					listLocacao = getByStatus(LocacaoStatusEnum.RESERVADA);
 					break;
-				case 2:
-
+				case "2":
+					listLocacao = getByStatus(LocacaoStatusEnum.EFETIVADA);
 					break;
-				case 3:
-
+				case "3":
+					listLocacao = getByStatus(LocacaoStatusEnum.FINALIZADA);
 					break;
 				default:
+					System.out.println("Opcao nao disponivel\n");
 					break;
+				}
+
+				if (listLocacao != null) {
+					for (Locacao locacao2 : listLocacao) {
+						System.out.println(locacao2.toString());
+					}
 				}
 
 				break;
@@ -165,38 +209,43 @@ public class LocacaoController {
 				break;
 			}
 
-		} while (option != 0);
+		} while (!option.equals("0"));
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
 
 	private Locacao agendar(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
 		locacaoService = new LocacaoService();
-		return locacaoService.agendarLocacao(locacao, cadastro, listLivro);
+		return locacaoService.agendar(locacao, cadastro, listLivro);
 	}
 
 	private Locacao retirar(Locacao locacao) {
 		locacaoService = new LocacaoService();
-		return locacaoService.retirarLocacao(locacao);
+		return locacaoService.retirar(locacao);
 	}
 
 	private Locacao devolver(Locacao locacao) {
 		locacaoService = new LocacaoService();
-		return locacaoService.devolverLocacao(locacao);
+		return locacaoService.devolver(locacao);
 	}
 
 	public Locacao getById(Integer id) {
 		locacaoService = new LocacaoService();
-		return locacaoService.buscarPorId(id);
+		return locacaoService.getById(id);
 	}
 
-	public Locacao getByDate(LocalDate data) {
+	public Locacao getByDateLocacao(LocalDate data) {
 		locacaoService = new LocacaoService();
-		return locacaoService.buscarPorDataLocacao(data);
+		return locacaoService.getByDataLocacao(data);
 	}
 
 	public Locacao getByDateRetirada(LocalDate data) {
 		locacaoService = new LocacaoService();
-		return locacaoService.buscarPorDataRetirada(data);
+		return locacaoService.getByDataRetirada(data);
+	}
+
+	public List<Locacao> getByStatus(LocacaoStatusEnum status) {
+		locacaoService = new LocacaoService();
+		return locacaoService.getByStatus(status);
 	}
 }

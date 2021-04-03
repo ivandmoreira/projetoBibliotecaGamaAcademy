@@ -14,7 +14,7 @@ public class CadastroController {
 
 		scanner = new Scanner(System.in);
 
-		int option = 0;
+		String option;
 
 		do {
 
@@ -24,12 +24,12 @@ public class CadastroController {
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
 
-			option = Integer.parseInt(scanner.nextLine());
+			option = scanner.nextLine();
 
 			switch (option) {
-			case 0:
+			case "0":
 				break;
-			case 1:
+			case "1":
 				Cadastro cadastro = new Cadastro();
 				cadastro = cadastrar(cadastro);
 				if (cadastro != null) {
@@ -41,7 +41,7 @@ public class CadastroController {
 				break;
 			}
 
-		} while (option != 0);
+		} while (!option.equals("0"));
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}

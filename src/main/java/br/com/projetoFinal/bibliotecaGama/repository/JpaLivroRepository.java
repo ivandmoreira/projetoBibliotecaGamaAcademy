@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -44,15 +45,17 @@ public class JpaLivroRepository implements Repository<Livro> {
 		return query.getResultList();
 	}
 
-	public boolean disponivel(Livro e) {
-		String consulta = "SELECT l FROM livro l where l.id = :idParam and l.exemplares >= 1";
+	public boolean disponivel(Integer id) {
+		String consulta = "SELECT l FROM Livro l where l.id = :idParam and l.exemplares >= 1";
 		TypedQuery<Livro> query = entityManager.createQuery(consulta, Livro.class); // JPQL
-		query.setParameter("idParam", e.getId());
-		Optional<Livro> livro = Optional.ofNullable(query.getSingleResult());
-		if (livro.isPresent()) {
+		query.setParameter("idParam", id);
+		try {
+			query.getSingleResult();
 			return true;
+		} catch (NoResultException e) {
+			return false;
 		}
-		return false;
+
 	}
 
 	public void fechar() {

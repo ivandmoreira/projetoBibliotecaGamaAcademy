@@ -45,7 +45,7 @@ public class JpaCadastroRepository implements Repository<Cadastro> {
 		return cadastro;
 	}
 
-	public <T> Cadastro selectLogin(T login) {
+	public Cadastro selectLogin(String login) {
 		String consulta = "SELECT e FROM Cadastro e WHERE e.login = :login";
 		TypedQuery<Cadastro> query = entityManager.createQuery(consulta, Cadastro.class);
 		query.setParameter("login", login);

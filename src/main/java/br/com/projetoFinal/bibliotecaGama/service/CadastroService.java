@@ -33,53 +33,47 @@ public class CadastroService {
 
 	public Cadastro cadastrar(Cadastro cadastro) {
 		scanner = new Scanner(System.in);
-		System.out.println("tela de cadastrar pessoas\n");
-		int option = 0;
+		System.out.println("tela de cadastrar pessoas");
 
-		String cpf = null;
-		while (!isCpfValid(cpf)) {
-			if (cpf != null)
-				System.out.println("Cpf invalido, por favor digite novamente..");
-			System.out.print("Digite seu cpf: ");
+		String cpf;
+		do {
+			System.out.print("Cpf: ");
 			cpf = scanner.nextLine();
-		}
+		} while (!isCpfValid(cpf));
 
 		cadastro.setCpf(cpf);
 
-		String nome = null;
-
-		while (!validaNome(nome)) {
-			if (nome != null)
-				System.out.println("Nome invalido, por favor digite novamente..");
-			System.out.print("Digite seu nome: ");
+		String nome;
+		do {
+			System.out.print("Nome: ");
 			nome = scanner.nextLine();
-		}
+		} while (!validaNome(nome));
 
 		cadastro.setNome(trataNome(nome));
 
-		String email = null;
-		while (!isEmailValid(email)) {
-			if (email != null)
-				System.out.println("E-mail invalido, por favor digite novamente..");
-			System.out.print("Digite seu e-mail: ");
+		String email;
+		do {
+			System.out.print("E-mail email@email.com: ");
 			email = scanner.nextLine();
-		}
+		} while (!isEmailValid(email));
 
 		cadastro.setEmail(email);
 
-		String telefone = null;
-		while (!isTelefoneValid(telefone)) {
-			if (telefone != null)
-				System.out.println("Telefone invalido, por favor digite novamente..");
-			System.out.print("Digite seu telefone: ");
+		String telefone;
+		do {
+			System.out.print("Telefone xxxxxxxxxxx: ");
 			telefone = scanner.nextLine();
-		}
+		} while (!isTelefoneValid(telefone));
 
 		cadastro.setTelefone(telefone);
 
-		System.out.println("\nAgora... vamos cadastrar seu endereco!");
-		System.out.print("Digite seu cep: ");
-		String cep = scanner.nextLine();
+		System.out.println("Agora... vamos cadastrar seu endereco!");
+
+		String cep;
+		do {
+			System.out.print("Cep xxxxx-xxx: ");
+			cep = scanner.nextLine();
+		} while (!isCepValid(cep));
 
 		Gson gson = new Gson();
 		Endereco endereco = null;
@@ -91,36 +85,10 @@ public class CadastroService {
 
 		cadastro.setEndereco(endereco);
 
-		System.out.println("\nPara finalizar... seu login podera� ser feito de 3 formas:");
-
-		while (!(option == 1 | option == 2 | option == 3)) {
-			System.out.println("1 - com Cpf");
-			System.out.println("2 - com Telefone");
-			System.out.println("3 - com Apelido de ate 20 caracteres");
-			System.out.println("_______________________");
-			System.out.print("Digite sua melhor forma de logar: ");
-			option = Integer.parseInt(scanner.nextLine());
-		}
-
-		String login = null;
-		if (option == 1) {
-			System.out.println("\nForma selecionada: cpf");
-			login = cadastro.getCpf();
-		} else if (option == 2) {
-			System.out.println("\nForma selecionada: telefone");
-			login = cadastro.getTelefone();
-		} else {
-			System.out.println("\nForma selecionada: apelido");
-
-			while (!isApelidoValid(login) && !isLoginValid(login)) {
-				if (login != null) {
-					System.out.println("Apelido invalido ou indisponivel!");
-				}
-				System.out.print("Digite seu apelido com no maximo 20 caracteres: ");
-				login = scanner.nextLine();
-			}
-
-		}
+		String login;
+		do {
+			login = definirLogin(cadastro);
+		} while (login == null);
 
 		cadastro.setLogin(login);
 
@@ -136,24 +104,93 @@ public class CadastroService {
 		return cadastro;
 	}
 
+	private String definirLogin(Cadastro cadastro) {
+		System.out.println("Para finalizar... seu login podera ser realizado de 3 formas:");
+
+		String option = "0";
+
+		System.out.println("1 - com Cpf");
+		System.out.println("2 - com Telefone");
+		System.out.println("3 - com Apelido de ate 20 caracteres");
+		System.out.println("_______________________");
+
+		while (!(option.equals("1") || option.equals("2") || option.equals("3"))) {
+			System.out.print("Digite sua melhor forma de logar: ");
+			option = scanner.nextLine();
+		}
+
+		switch (option) {
+		case "1":
+			return loginComCpf(cadastro);
+		case "2":
+			return loginComTelefone(cadastro);
+		case "3":
+			return loginComApelido();
+		default:
+			return null;
+		}
+	}
+
+	private String loginComApelido() {
+		System.out.println("Forma selecionada: apelido");
+
+		scanner = new Scanner(System.in);
+
+		String login = scanner.nextLine();
+
+		while (!isApelidoValid(login) && !isLoginValid(login)) {
+			if (login != null) {
+				System.err.println("Apelido invalido ou indisponivel!");
+			}
+			System.err.print("Digite seu apelido com no maximo 20 caracteres: ");
+			login = scanner.nextLine();
+		}
+		return login;
+	}
+
+	private String loginComTelefone(Cadastro cadastro) {
+		String login;
+		System.out.println("Forma selecionada: telefone");
+		login = cadastro.getTelefone();
+
+		if (isLoginValid(login)) {
+			return login;
+		} else {
+			System.err.println("Esse login ja esta definido na nossa base de dados.");
+			return null;
+		}
+	}
+
+	private String loginComCpf(Cadastro cadastro) {
+		String login;
+		System.out.println("Forma selecionada: cpf");
+		login = cadastro.getCpf();
+
+		if (isLoginValid(login)) {
+			return login;
+		} else {
+			System.err.println("Esse login ja esta definido na nossa base de dados.");
+			return null;
+		}
+	}
+
 	private boolean validaNome(String nome) {
 		Pattern pattern = Pattern.compile("[0-9]");
 		Matcher matcher = pattern.matcher(nome);
-
 		if (matcher.find()) {
-			System.out.println("Nao deve conter numeros!");
+			System.err.println("Nao deve conter numeros!");
 			return false;
 		}
 
-		Pattern pattern2 = Pattern.compile("/[$\\%&*()}{@#?><>,|=_+¬-]/");
-		Matcher matcher2 = pattern2.matcher(nome);
-		if (matcher2.find()) {
-			System.out.println("Nao pode conter caracteres especiais.");
+		pattern = Pattern.compile("[$\\\\%&*()}{@#?><>,|=_+¬-]");
+		matcher = pattern.matcher(nome);
+		if (matcher.find()) {
+			System.err.println("Nao pode conter caracteres especiais.");
 			return false;
 		}
 
 		if (nome.length() > 70 || nome.length() < 3) {
-			System.out.println("Nome invalido, o tamanho do nome deve ter entre 3 e 70 caracteres.");
+			System.err.println("Nome invalido, o tamanho do nome deve ter entre 3 e 70 caracteres.");
 			return false;
 		}
 
@@ -176,7 +213,23 @@ public class CadastroService {
 	}
 
 	private boolean isApelidoValid(String apelido) {
-		return apelido.length() >= 3 && apelido.length() <= 20;
+		if (apelido.length() >= 3 && apelido.length() <= 20) {
+			return true;
+		} else {
+			System.err.println("Apelido invalido ou indisponivel!");
+			return false;
+		}
+	}
+
+	private boolean isCepValid(String cep) {
+		Pattern pattern = Pattern.compile("[0-9]{5}-[0-9]{3}");
+		Matcher matcher = pattern.matcher(cep);
+		if (!matcher.find()) {
+			System.err.println("Cep invalido.");
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean isTelefoneValid(String numero) {
@@ -188,6 +241,8 @@ public class CadastroService {
 			Matcher matcher = pattern.matcher(numero);
 			if (matcher.matches()) {
 				isTelefoneValid = true;
+			} else {
+				System.err.println("Telefone invalido.");
 			}
 		}
 
@@ -196,14 +251,17 @@ public class CadastroService {
 
 	private boolean isCpfValid(String cpf) {
 		if (!isCpf(cpf)) {
+			System.err.println("Cpf invalido");
 			return false;
 		}
 
 		JpaCadastroRepository jpaCadastroRepository = new JpaCadastroRepository();
 		Cadastro auxCadastro = jpaCadastroRepository.selectCpf(cpf);
 		jpaCadastroRepository.fechar();
-		if (auxCadastro != null)
+		if (auxCadastro != null) {
+			System.err.println("Cpf ja cadastrado na base");
 			return false;
+		}
 		return true;
 	}
 
@@ -224,6 +282,8 @@ public class CadastroService {
 			Matcher matcher = pattern.matcher(email);
 			if (matcher.matches()) {
 				isEmailIdValid = true;
+			} else {
+				System.err.println("\nE-mail inválido");
 			}
 		}
 		return isEmailIdValid;

@@ -10,21 +10,28 @@ public class LivroService {
 	private JpaLivroRepository jpaLivroRepository;
 	private Scanner scanner;
 
-	public List<Livro> buscarTodos() {
+	public List<Livro> getAll() {
 		jpaLivroRepository = new JpaLivroRepository();
 		List<Livro> livro = jpaLivroRepository.selectAll();
 		jpaLivroRepository.fechar();
 		return livro;
 	}
 
-	public Livro buscarPorId(Integer id) {
+	public boolean hasExemplares(Integer id) {
+		jpaLivroRepository = new JpaLivroRepository();
+		boolean temExemplares = jpaLivroRepository.disponivel(id);
+		jpaLivroRepository.fechar();
+		return temExemplares;
+	}
+
+	public Livro getById(Integer id) {
 		jpaLivroRepository = new JpaLivroRepository();
 		Livro livro = jpaLivroRepository.select(id);
 		jpaLivroRepository.fechar();
 		return livro;
 	}
 
-	public Livro cadastrarLivro(Livro livro) {
+	public Livro cadastrar(Livro livro) {
 		scanner = new Scanner(System.in);
 
 		System.out.println("tela de cadastrar livros\n");

@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.projetoFinal.bibliotecaGama.model.Locacao;
+import br.com.projetoFinal.bibliotecaGama.model.LocacaoStatusEnum;
 
 public class JpaLocacaoRepository implements Repository<Locacao> {
 
@@ -42,7 +43,26 @@ public class JpaLocacaoRepository implements Repository<Locacao> {
 	@Override
 	public List<Locacao> selectAll() {
 		Query query = entityManager.createQuery("SELECT l FROM Locacao l"); // JPQL
-		return query.getResultList();
+		List<Locacao> locacao = null;
+		try {
+			locacao = query.getResultList();
+		} catch (Exception e) {
+
+		}
+		return locacao;
+	}
+
+	public List<Locacao> selectAllByStatus(LocacaoStatusEnum status) {
+		String consulta = "SELECT l FROM Locacao l WHERE l.status = :status";
+		TypedQuery<Locacao> query = entityManager.createQuery(consulta, Locacao.class);
+		query.setParameter("status", status);
+		List<Locacao> locacao = null;
+		try {
+			locacao = query.getResultList();
+		} catch (Exception e) {
+
+		}
+		return locacao;
 	}
 
 	public Locacao selectDataLocacaoRetirada(LocalDate dataAgendamento, LocalDate dataRetirada) {

@@ -12,7 +12,7 @@ public class Main {
 
 		Scanner scanner = new Scanner(System.in);
 
-		int option = 0;
+		String option;
 
 		do {
 
@@ -24,20 +24,20 @@ public class Main {
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
 
-			option = Integer.parseInt(scanner.nextLine());
+			option = scanner.nextLine();
 
 			switch (option) {
-			case 0:
+			case "0":
 				break;
-			case 1:
+			case "1":
 				LoginController loginController = new LoginController();
 				loginController.logarUsuario();
 				break;
-			case 2:
+			case "2":
 				CadastroController controllerCadastro = new CadastroController();
 				controllerCadastro.run();
 				break;
-			case 3:
+			case "3":
 				LivroController livroController = new LivroController();
 				livroController.run();
 				break;
@@ -46,7 +46,7 @@ public class Main {
 				break;
 			}
 
-		} while (option != 0);
+		} while (!option.equals("0"));
 
 		scanner.close();
 		System.out.println("Programa finalizado!");

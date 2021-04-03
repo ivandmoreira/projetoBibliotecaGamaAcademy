@@ -1,6 +1,7 @@
 package br.com.projetoFinal.bibliotecaGama.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,15 @@ import br.com.projetoFinal.bibliotecaGama.repository.JpaLocacaoRepository;
 
 public class LocacaoService {
 	private JpaLocacaoRepository jpaLocacaoRepository;
-	private Scanner scanner;
 
-	public List<Locacao> buscarTodos() {
+	public List<Locacao> getAll() {
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		List<Locacao> locacao = jpaLocacaoRepository.selectAll();
 		jpaLocacaoRepository.fechar();
 		return locacao;
 	}
 
-	public Locacao buscarPorId(Integer id) {
+	public Locacao getById(Integer id) {
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		jpaLocacaoRepository.select(id);
 		Locacao locacao = jpaLocacaoRepository.select(id);
@@ -56,23 +56,28 @@ public class LocacaoService {
 		return locacao;
 	}
 
-	public Locacao buscarPorDataLocacao(LocalDate data) {
+	public List<Locacao> getByStatus(LocacaoStatusEnum status) {
+		jpaLocacaoRepository = new JpaLocacaoRepository();
+		List<Locacao> locacao = jpaLocacaoRepository.selectAllByStatus(status);
+		jpaLocacaoRepository.fechar();
+		return locacao;
+	}
+
+	public Locacao getByDataLocacao(LocalDate data) {
 		jpaLocacaoRepository = new JpaLocacaoRepository();
 		Locacao locacao = jpaLocacaoRepository.selectDataLocacaoRetirada(data, null);
 		jpaLocacaoRepository.fechar();
 		return locacao;
 	}
 
-	public Locacao buscarPorDataRetirada(LocalDate data) {
+	public Locacao getByDataRetirada(LocalDate data) {
 		jpaLocacaoRepository = new JpaLocacaoRepository();
-		Locacao locacao = jpaLocacaoRepository.selectDataLocacaoRetirada(data, null);
+		Locacao locacao = jpaLocacaoRepository.selectDataLocacaoRetirada(null, data);
 		jpaLocacaoRepository.fechar();
 		return locacao;
 	}
 
-	public Locacao agendarLocacao(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
-		scanner = new Scanner(System.in);
-
+	public Locacao agendar(Locacao locacao, Cadastro cadastro, List<Livro> listLivro) {
 		System.out.println("tela de agendar locacao\n");
 
 		List<LocacaoItem> listLocacaoItem = new ArrayList<>();
@@ -106,9 +111,8 @@ public class LocacaoService {
 		LocalDate dataAgendamento = LocalDate.now();
 		locacao.setDataAgendamento(dataAgendamento);
 
-		// define a data de finalizacao como daqui a 3 dias, ou seja
-		// Se o livro nao for retirado em 3 dias, a locacao sera finalizada
-		LocalDate dataFinalizacao = LocalDate.now().plusDays(3);
+		// define a data de finalizacao como daqui a 15 dias
+		LocalDate dataFinalizacao = LocalDate.now().plusDays(15);
 		locacao.setDataFinalizacao(dataFinalizacao);
 
 		locacao.setStatus(LocacaoStatusEnum.RESERVADA);
@@ -129,9 +133,7 @@ public class LocacaoService {
 		return locacaoItem.getDiarias() * locacaoItem.getValorDiaria();
 	}
 
-	public Locacao retirarLocacao(Locacao locacao) {
-		scanner = new Scanner(System.in);
-
+	public Locacao retirar(Locacao locacao) {
 		System.out.println("tela de retirar locacao\n");
 
 		LocalDate dataHoje = LocalDate.now();
@@ -167,12 +169,10 @@ public class LocacaoService {
 		return locacao;
 	}
 
-	public Locacao devolverLocacao(Locacao locacao) {
-		scanner = new Scanner(System.in);
-
+	public Locacao devolver(Locacao locacao) {
 		System.out.println("tela de entregar locacao\n");
 
-		LocalDate dataHoje = LocalDate.now().plusDays(15);
+		LocalDate dataHoje = LocalDate.now();
 
 		double valorTotal = 0.0;
 

@@ -14,7 +14,7 @@ public class LivroController {
 		Livro livro;
 		scanner = new Scanner(System.in);
 
-		int option = 0;
+		String option;
 
 		do {
 
@@ -24,12 +24,12 @@ public class LivroController {
 			System.out.println("_______________________");
 			System.out.print("Digite sua opcao: ");
 
-			option = Integer.parseInt(scanner.nextLine());
+			option = scanner.nextLine();
 
 			switch (option) {
-			case 0:
+			case "0":
 				break;
-			case 1:
+			case "1":
 				livro = new Livro();
 				livro = cadastrar(livro);
 				if (livro != null) {
@@ -41,19 +41,24 @@ public class LivroController {
 				break;
 			}
 
-		} while (option != 0);
+		} while (!option.equals("0"));
 
 		System.out.println("\n## Fechou tela usuarios ##\n");
 	}
 
 	private Livro cadastrar(Livro livro) {
 		livroService = new LivroService();
-		return livroService.cadastrarLivro(livro);
+		return livroService.cadastrar(livro);
 	}
 
 	public Livro getById(Integer id) {
 		livroService = new LivroService();
-		return livroService.buscarPorId(id);
+		return livroService.getById(id);
+	}
+
+	public boolean hasExemplares(Integer id) {
+		livroService = new LivroService();
+		return livroService.hasExemplares(id);
 	}
 
 }
