@@ -30,7 +30,7 @@ public class LivroService {
 	public Livro incrementarExemplares(Livro livro) {
 		
 		int qtdExemplares = livro.getExemplares();
-		qtdExemplares=+1;
+		qtdExemplares=qtdExemplares+1;
 		livro.setExemplares(qtdExemplares);;
 		
 		return livro;
@@ -38,7 +38,7 @@ public class LivroService {
 	public Livro decrementarExemplares(Livro livro) {
 		
 		int qtdExemplares = livro.getExemplares();
-		qtdExemplares=-1;
+		qtdExemplares=qtdExemplares-1;
 		livro.setExemplares(qtdExemplares);;
 		
 		return livro;
@@ -46,7 +46,7 @@ public class LivroService {
 	public Livro incrementarReservados(Livro livro) {
 		
 		int qtdReservados = livro.getReservados();
-		qtdReservados=+1;
+		qtdReservados=qtdReservados+1;
 		livro.setReservados(qtdReservados);;
 		
 		return livro;
@@ -54,7 +54,7 @@ public class LivroService {
 	public Livro decrementarReservados(Livro livro) {
 		
 		int qtdReservados = livro.getReservados();
-		qtdReservados=-1;
+		qtdReservados=qtdReservados-1;
 		livro.setReservados(qtdReservados);;
 		
 		return livro;
