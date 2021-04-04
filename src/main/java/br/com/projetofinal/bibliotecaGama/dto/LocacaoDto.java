@@ -20,6 +20,8 @@ public class LocacaoDto {
 
 	private int usuario_id;
 	
+	private String usuario_name;
+	
 	private String Status;
 	
 	private List<LocacaoItemDto> locacaoItem;
@@ -64,6 +66,16 @@ public class LocacaoDto {
 	public void setStatus(String status) {
 		Status = status;
 	}
+
+	public String getUsuario_name() {
+		return usuario_name;
+	}
+
+	public void setUsuario_name(String usuario_name) {
+		this.usuario_name = usuario_name;
+	}
+	
+	
 	
 	
 

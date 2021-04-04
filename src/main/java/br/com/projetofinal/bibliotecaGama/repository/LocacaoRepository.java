@@ -2,9 +2,10 @@ package br.com.projetofinal.bibliotecaGama.repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.projetofinal.bibliotecaGama.model.Locacao;
@@ -13,22 +14,20 @@ import br.com.projetofinal.bibliotecaGama.model.Locacao;
 public interface LocacaoRepository extends CrudRepository<Locacao, Integer> {
 
 
-	List<Locacao> findByDataRetiradaAndDataAgendamentoAndCadastroId(LocalDate dataFinalizacao,
-			LocalDate dataAgendamento, int usuario_id);
+	List<Locacao> findByDataRetiradaAndDataAgendamentoAndCadastroLoginUsuarioIgnoreCase(LocalDate dataFinalizacao,
+			LocalDate dataAgendamento, String usuario_id);
 
 
 
 //	@Query(value = "SELECT l FROM Locacao l" 
-//			+ " JOIN Cadastro c " 
-//			+ " WHERE l.dataAgendamento = :dataAgendamento "
-//			+ " OR l.dataRetirada = :dataFinalizacao " 
-//			+ " OR c.id = : idCadastro " 
-//			+ " OR l.status = :status")
+//			+ " JOIN l.cadastro c " 
+//			+ " WHERE (:dataAgendamento is not null or l.dataAgendamento = :dataAgendamento)"
+//			+ " :dataRetirada IS NOT NULL(AND l.dataRetirada = : dataRetirada)"
+//			)
 //	List<Locacao> buscarEspecifica(
-//			@Param("dataAgendamento") LocalDate dataAgendamento,
-//			@Param("dataFinalizacao") LocalDate dataFinalizacao, 
-//			@Param("usuario") int usuario_id,
-//			@Param("status") String status);
+//			@Param("dataAgendamento") LocalDate dataAgendamento
+//			,@Param("dataRetirada") LocalDate dataRetirada
+//			);
 
 	
 
