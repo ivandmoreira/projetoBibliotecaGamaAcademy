@@ -26,4 +26,37 @@ public class LivroService {
 	public Optional<Livro> buscarPorId(int id) {
 		return livroRepository.findById(id);
 	}
+	
+	public Livro incrementarExemplares(Livro livro) {
+		
+		int qtdExemplares = livro.getExemplares();
+		qtdExemplares=qtdExemplares+1;
+		livro.setExemplares(qtdExemplares);;
+		
+		return livro;
+	}
+	public Livro decrementarExemplares(Livro livro) {
+		
+		int qtdExemplares = livro.getExemplares();
+		qtdExemplares=qtdExemplares-1;
+		livro.setExemplares(qtdExemplares);;
+		
+		return livro;
+	}
+	public Livro incrementarReservados(Livro livro) {
+		
+		int qtdReservados = livro.getReservados();
+		qtdReservados=qtdReservados+1;
+		livro.setReservados(qtdReservados);;
+		
+		return livro;
+	}
+	public Livro decrementarReservados(Livro livro) {
+		
+		int qtdReservados = livro.getReservados();
+		qtdReservados=qtdReservados-1;
+		livro.setReservados(qtdReservados);;
+		
+		return livro;
+	}
 }

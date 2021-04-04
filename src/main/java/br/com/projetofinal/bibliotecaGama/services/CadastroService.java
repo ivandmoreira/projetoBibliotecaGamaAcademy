@@ -65,7 +65,7 @@ public class CadastroService {
 		return cad;
 	}
 
-	public ArrayList<Cadastro> buscarTodos() {
+	public Iterable<Cadastro> buscarTodos() {
 		return (ArrayList<Cadastro>) cadastroRespository.findAll();
 	}
 }
