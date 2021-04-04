@@ -106,9 +106,9 @@ public class LocacaoService {
 		return dat;
 	}
 
-	public Optional<Locacao> buscarPorLocacaoEspecifica(LocacaoDto locacao) {
+	public List<Locacao> buscarPorLocacaoEspecifica(LocacaoDto locacao) {
 		
-		Optional<Locacao> loc1 = locacaoRepository.findByDataRetiradaAndDataAgendamentoAndCadastroId(locacao.getDataFinalizacao(), locacao.getDataAgendamento(), locacao.getUsuario_id());
+		List<Locacao> loc1 = locacaoRepository.findByDataRetiradaOrDataAgendamentoOrCadastroId(locacao.getDataFinalizacao(), locacao.getDataAgendamento(), locacao.getUsuario_id());
 		
 		return loc1;
 	}

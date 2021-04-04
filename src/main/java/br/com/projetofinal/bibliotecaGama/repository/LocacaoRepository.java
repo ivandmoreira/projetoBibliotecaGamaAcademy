@@ -1,6 +1,7 @@
 package br.com.projetofinal.bibliotecaGama.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,7 +13,7 @@ import br.com.projetofinal.bibliotecaGama.model.Locacao;
 public interface LocacaoRepository extends CrudRepository<Locacao, Integer> {
 
 
-	Optional<Locacao> findByDataRetiradaAndDataAgendamentoAndCadastroId(LocalDate dataFinalizacao,
+	List<Locacao> findByDataRetiradaOrDataAgendamentoOrCadastroId(LocalDate dataFinalizacao,
 			LocalDate dataAgendamento, int usuario_id);
 
 

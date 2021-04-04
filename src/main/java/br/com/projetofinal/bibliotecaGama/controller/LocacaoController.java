@@ -46,7 +46,7 @@ public class LocacaoController {
 	
 	@CrossOrigin
 	@GetMapping("/buscaEspeficica")
-	public Optional<Locacao> locacaoEspecifica(LocacaoDto locacao){
+	public List<Locacao> locacaoEspecifica(LocacaoDto locacao){
 		
 		return locacaoService.buscarPorLocacaoEspecifica(locacao);
 	}
