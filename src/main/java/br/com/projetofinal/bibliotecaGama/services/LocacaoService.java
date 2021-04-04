@@ -112,11 +112,12 @@ public class LocacaoService {
 		
 //		List<Locacao> loc1 = locacaoRepository.buscarEspecifica(locacao.getDataAgendamento(), locacao.getDataFinalizacao(), locacao.getUsuario_id(), locacao.getStatus());
 		
-		List<Locacao> loc2 = locacaoRepository.buscarEspecifica(
-				locacao.getDataAgendamento()
+//		List<Locacao> loc2 = locacaoRepository.buscarEspecifica(
+//				locacao.getDataAgendamento()
 //				, locacao.getDataFinalizacao()
-				);
-		return loc2;
+//				);
+		
+		return loc1;
 	}
 	
 
