@@ -16,6 +16,10 @@ public class LocacaoDto {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private LocalDate dataRetirada;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dataFinalizacao;
 
 	private int usuario_id;
@@ -34,6 +38,14 @@ public class LocacaoDto {
 		this.dataAgendamento = dataAgendamento;
 	}
 
+
+	public LocalDate getDataRetirada() {
+		return dataRetirada;
+	}
+
+	public void setDataRetirada(LocalDate dataRetirada) {
+		this.dataRetirada = dataRetirada;
+	}
 
 	public LocalDate getDataFinalizacao() {
 		return dataFinalizacao;
