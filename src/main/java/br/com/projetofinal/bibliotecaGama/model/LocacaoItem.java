@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import br.com.projetofinal.bibliotecaGama.dto.LocacaoItemDto;
 
 
@@ -33,6 +35,7 @@ public class LocacaoItem implements Serializable {
 	private Livro livro;
 
 	@ManyToOne
+	@JsonBackReference
 	private Locacao locacao;
 
 	

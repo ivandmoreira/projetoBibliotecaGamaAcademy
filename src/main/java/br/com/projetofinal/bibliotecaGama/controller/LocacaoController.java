@@ -1,5 +1,6 @@
 package br.com.projetofinal.bibliotecaGama.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,14 @@ public class LocacaoController {
 	}
 	
 	@CrossOrigin
+	@GetMapping("/buscaEspeficica")
+	public Optional<Locacao> locacaoEspecifica(LocacaoDto locacao){
+		
+		return locacaoService.buscarPorLocacaoEspecifica(locacao);
+	}
+	
+	
+	@CrossOrigin
 	@PutMapping(value="/retirar/{id}")
 	public void retirarLivro(@RequestParam int id){
 		
@@ -51,7 +60,7 @@ public class LocacaoController {
 	}
 	
 	@CrossOrigin
-	@PutMapping(value="/entregarLivro")
+	@PutMapping(value="/entregarLivro/{id}")
 	public void entregarLivro(@RequestParam int id) {
 		locacaoService.entregarLivro(id);
 	}

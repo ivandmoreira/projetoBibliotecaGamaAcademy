@@ -9,14 +9,18 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LocacaoDto {
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dataAgendamento;
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd", iso = ISO.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate dataFinalizacao;
 
 	private int usuario_id;
+	
+	private String Status;
 	
 	private List<LocacaoItemDto> locacaoItem;
 
@@ -52,5 +56,15 @@ public class LocacaoDto {
 	public void setLocacaoItem(List<LocacaoItemDto> locacaoItem) {
 		this.locacaoItem = locacaoItem;
 	}
+
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
+	}
+	
+	
 
 }

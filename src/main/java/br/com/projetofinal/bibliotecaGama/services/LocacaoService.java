@@ -95,4 +95,14 @@ public class LocacaoService {
 		LocalDate dat = LocalDate.now();
 		return dat;
 	}
+
+	public Optional<Locacao> buscarPorLocacaoEspecifica(LocacaoDto locacao) {
+		
+		Optional<Locacao> loc1 = locacaoRepository.findByDataRetiradaAndDataAgendamentoAndCadastroId(locacao.getDataFinalizacao(), locacao.getDataAgendamento(), locacao.getUsuario_id());
+		
+		return loc1;
+	}
+	
+
+	
 }
