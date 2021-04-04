@@ -87,7 +87,17 @@ public class LocacaoService {
 		Optional<Locacao> entregarLivro = locacaoRepository.findById(id);
 		entregarLivro.get().setDataFinalizacao(dataAtual());
 		entregarLivro.get().setStatus(LocacaoStatus.FINALIZADA);
-
+		List <LocacaoItem>locacaoItens = entregarLivro.get().getLocacaoItem();
+		for (LocacaoItem locacaoItem : locacaoItens) {
+			Optional<Livro> livro = livroRepository.findById(locacaoItem.getLivro().getId());
+			if(livro.isPresent()) {
+				Livro livroRetornado = livro.get();
+			livrosService.incrementarExemplares(livroRetornado);
+			livrosService.decrementarReservados(livroRetornado);
+			livroRepository.save(livroRetornado);
+			}
+		}
+	
 		locacaoRepository.save(entregarLivro.get());
 	}
 
