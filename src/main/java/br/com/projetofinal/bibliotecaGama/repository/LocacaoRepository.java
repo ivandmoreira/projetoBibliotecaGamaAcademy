@@ -13,7 +13,7 @@ import br.com.projetofinal.bibliotecaGama.model.Locacao;
 public interface LocacaoRepository extends CrudRepository<Locacao, Integer> {
 
 
-	List<Locacao> findByDataRetiradaOrDataAgendamentoOrCadastroId(LocalDate dataFinalizacao,
+	List<Locacao> findByDataRetiradaAndDataAgendamentoAndCadastroId(LocalDate dataFinalizacao,
 			LocalDate dataAgendamento, int usuario_id);
 
 
