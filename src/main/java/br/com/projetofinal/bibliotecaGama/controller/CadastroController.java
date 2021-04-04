@@ -1,7 +1,6 @@
 package br.com.projetofinal.bibliotecaGama.controller;
 
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,9 @@ public class CadastroController {
 	
 	@CrossOrigin
 	@GetMapping
-	public ArrayList<Cadastro> listar() {
+	public Iterable<Cadastro> listar() {
 		
-		ArrayList<Cadastro> listaCad = cadastroService.buscarTodos();
+		Iterable<Cadastro> listaCad = cadastroService.buscarTodos();
 		return listaCad;
 	}
 	
