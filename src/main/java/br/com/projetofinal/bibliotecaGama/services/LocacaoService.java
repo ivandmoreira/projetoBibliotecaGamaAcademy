@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+
 import br.com.projetofinal.bibliotecaGama.dto.LocacaoDto;
 import br.com.projetofinal.bibliotecaGama.dto.LocacaoItemDto;
 import br.com.projetofinal.bibliotecaGama.model.Cadastro;
@@ -87,17 +90,17 @@ public class LocacaoService {
 		Optional<Locacao> entregarLivro = locacaoRepository.findById(id);
 		entregarLivro.get().setDataFinalizacao(dataAtual());
 		entregarLivro.get().setStatus(LocacaoStatus.FINALIZADA);
-		List <LocacaoItem>locacaoItens = entregarLivro.get().getLocacaoItem();
+		List<LocacaoItem> locacaoItens = entregarLivro.get().getLocacaoItem();
 		for (LocacaoItem locacaoItem : locacaoItens) {
 			Optional<Livro> livro = livroRepository.findById(locacaoItem.getLivro().getId());
-			if(livro.isPresent()) {
+			if (livro.isPresent()) {
 				Livro livroRetornado = livro.get();
-			livrosService.incrementarExemplares(livroRetornado);
-			livrosService.decrementarReservados(livroRetornado);
-			livroRepository.save(livroRetornado);
+				livrosService.incrementarExemplares(livroRetornado);
+				livrosService.decrementarReservados(livroRetornado);
+				livroRepository.save(livroRetornado);
 			}
 		}
-	
+
 		locacaoRepository.save(entregarLivro.get());
 	}
 
@@ -107,19 +110,20 @@ public class LocacaoService {
 	}
 
 	public List<Locacao> buscarPorLocacaoEspecifica(LocacaoDto locacao) {
-		
-		List<Locacao> loc1 = locacaoRepository.findByDataRetiradaAndDataAgendamentoAndCadastroLoginUsuarioIgnoreCase(locacao.getDataFinalizacao(), locacao.getDataAgendamento(), locacao.getUsuario_name());
-		
-//		List<Locacao> loc1 = locacaoRepository.buscarEspecifica(locacao.getDataAgendamento(), locacao.getDataFinalizacao(), locacao.getUsuario_id(), locacao.getStatus());
-		
-//		List<Locacao> loc2 = locacaoRepository.buscarEspecifica(
-//				locacao.getDataAgendamento()
-//				, locacao.getDataFinalizacao()
-//				);
-		
-		return loc1;
-	}
-	
 
-	
+
+		Locacao loca = new Locacao();
+		loca.getStatus();
+		LocacaoStatus num = LocacaoStatus.valueOf(locacao.getStatus());
+
+
+//		List<Locacao> loc1 = locacaoRepository
+//				.findByDataAgendamentoAndDataRetiradaAndCadastroLoginUsuarioIgnoreCaseAndStatus(
+//						locacao.getDataAgendamento(), locacao.getDataFinalizacao(), locacao.getUsuario_name(), num);
+		
+		List<Locacao> loc2 = locacaoRepository.buscarEspecifica(locacao.getDataAgendamento(), locacao.getDataFinalizacao(), locacao.getUsuario_name(), num);
+
+		return loc2;
+	}
+
 }
