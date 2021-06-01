@@ -10,18 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-// @SequenceGenerator(name = Livro.SEQUENCE_NAME, sequenceName =
-// Livro.SEQUENCE_NAME, initialValue = 1, allocationSize = 10)
 public class Livro extends AbstractModel {
-	// private static final long serialVersionUID = 1L;
-
-	// public static String SEQUENCE_NAME = "SEQUENCE_LIVRO";
-	// this.SEQUENCE_NAME="SEQUENCE_LIVRO";
-
-	// @Id
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	// SEQUENCE_NAME)
-	// private Integer id;
 
 	@Column(length = 14, unique = true)
 	private String isbn;

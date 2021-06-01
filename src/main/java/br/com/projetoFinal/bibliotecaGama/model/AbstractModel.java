@@ -28,6 +28,7 @@ public abstract class AbstractModel implements Serializable {
     protected AbstractModel() {
         LocalDate now = LocalDate.now();
         this.id = UUID.randomUUID();
+        System.out.println(id);
         this.createdAt = now;
         this.updatedAt = now;
         this.active = true;
@@ -66,3 +67,5 @@ public abstract class AbstractModel implements Serializable {
     }
 
 }
+
+
